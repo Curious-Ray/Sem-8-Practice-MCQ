@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPP CE752 — MCQ Practice</title>
+<meta name="description" content="Multiple Choice Question practice app for EPP CE752 Engineering Professional Practice exam preparation.">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f6f5f2;
+  --bg-card: #ffffff;
+  --bg-secondary: #edecea;
+  --bg-hover: #e4e2df;
+  --text: #1a1a2e;
+  --text-secondary: #5f6368;
+  --text-muted: #9aa0a6;
+  --border: #ddd9d3;
+  --border-hover: #b5b0a8;
+  --accent: #4361ee;
+  --accent-light: #eef0ff;
+  --success: #0f9d58;
+  --success-bg: #e6f4ea;
+  --success-border: #34a853;
+  --danger: #d93025;
+  --danger-bg: #fce8e6;
+  --danger-border: #ea4335;
+  --info: #1a73e8;
+  --info-bg: #e8f0fe;
+  --warning: #e65100;
+  --warning-bg: #fff3e0;
+  --certain: #b71c1c;
+  --certain-bg: #ffebee;
+  --medium: #004d40;
+  --medium-bg: #e0f2f1;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --bg-card: #1e1e1e;
+    --bg-secondary: #2a2a2a;
+    --bg-hover: #333;
+    --text: #e8eaed;
+    --text-secondary: #9aa0a6;
+    --text-muted: #6e6e73;
+    --border: #3a3a3a;
+    --border-hover: #555;
+    --accent: #8ab4f8;
+    --accent-light: #1e2a3a;
+    --success: #81c784;
+    --success-bg: #1b2e1c;
+    --success-border: #4caf50;
+    --danger: #ef9a9a;
+    --danger-bg: #2e1b1b;
+    --danger-border: #e57373;
+    --info: #90caf9;
+    --info-bg: #1b2a3e;
+    --warning: #ffb74d;
+    --warning-bg: #2e2010;
+    --certain: #ef9a9a;
+    --certain-bg: #2e1b1b;
+    --medium: #80cbc4;
+    --medium-bg: #1b2e2c;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 5rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.25rem;
+}
+.header p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Chapter pills */
+.chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.ch-pill {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.ch-pill:hover:not(.active) {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+.ch-pill.active {
+  background: var(--text);
+  color: var(--bg-card);
+  border-color: var(--text);
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.ctrl-btn {
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.ctrl-btn:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+  background: var(--bg-secondary);
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+.stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.stat-num {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+.stat-num.c-blue { color: var(--info); }
+.stat-num.c-green { color: var(--success); }
+.stat-num.c-red { color: var(--danger); }
+
+/* Progress */
+.progress-bar {
+  height: 4px;
+  background: var(--bg-secondary);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Question card */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.q-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.badge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.badge-ch { background: var(--bg-secondary); color: var(--text-secondary); }
+.badge-certain { background: var(--certain-bg); color: var(--certain); }
+.badge-veryhigh { background: var(--warning-bg); color: var(--warning); }
+.badge-high { background: var(--info-bg); color: var(--info); }
+.badge-medium { background: var(--medium-bg); color: var(--medium); }
+.q-counter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.years-tag {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.q-text {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* MCQ Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.option-btn:hover:not(.locked) {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+  margin-top: 1px;
+}
+.option-btn:hover:not(.locked) .option-letter {
+  background: var(--accent);
+  color: #fff;
+}
+.option-text {
+  flex: 1;
+  padding-top: 3px;
+}
+
+/* Answer states */
+.option-btn.correct {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+}
+.option-btn.correct .option-letter {
+  background: var(--success);
+  color: #fff;
+}
+.option-btn.wrong {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+.option-btn.wrong .option-letter {
+  background: var(--danger);
+  color: #fff;
+}
+.option-btn.dimmed {
+  opacity: 0.45;
+}
+.option-btn.locked {
+  cursor: default;
+}
+
+/* Explanation box */
+.explanation {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  animation: slideIn 0.2s ease;
+}
+.explanation-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.explanation-text {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Navigation */
+.nav-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow);
+}
+.nav-btn:hover:not(:disabled) {
+  background: var(--bg-secondary);
+}
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  box-shadow: none;
+}
+.nav-btn.primary {
+  background: var(--text);
+  color: var(--bg-card);
+  border-color: var(--text);
+}
+.nav-btn.primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.nav-label {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mode toggle */
+.mode-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.mode-toggle-inner {
+  display: flex;
+  background: var(--bg-secondary);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border);
+}
+.mode-btn {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.mode-btn.active {
+  background: var(--bg-card);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.mode-btn:hover:not(.active) {
+  color: var(--text);
+}
+
+/* Study mode answer */
+.reveal-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.reveal-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-hover);
+}
+.answer-box {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--success-border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  animation: slideIn 0.2s ease;
+}
+.answer-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--success);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.answer-text {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.answer-text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.mark-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+.mark-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1px solid;
+  transition: all 0.15s ease;
+}
+.mark-correct {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+.mark-wrong {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+.mark-btn:hover { filter: brightness(0.92); }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* Done banner */
+.done-banner {
+  text-align: center;
+  padding: 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.done-banner h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.done-banner p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+.done-score {
+  font-size: 3rem;
+  font-weight: 800;
+}
+.done-score.good { color: var(--success); }
+.done-score.ok { color: var(--warning); }
+.done-score.bad { color: var(--danger); }
+.done-detail {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .app { padding: 1rem 0.75rem 3rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .card { padding: 1.25rem; }
+  .option-btn { padding: 12px 14px; font-size: 0.875rem; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>EPP CE752 — MCQ Practice</h1>
+    <p>Quiz Mode: pick the correct answer. Study Mode: reveal and self-mark.</p>
+  </div>
+
+  <div class="mode-toggle">
+    <div class="mode-toggle-inner">
+      <button class="mode-btn active" id="modeQuiz" onclick="setMode('quiz')">Quiz Mode</button>
+      <button class="mode-btn" id="modeStudy" onclick="setMode('study')">Study Mode</button>
+    </div>
+  </div>
+
+  <div class="chapters" id="chapterBtns"></div>
+
+  <div class="controls">
+    <button class="ctrl-btn" onclick="shuffleQuestions()">Shuffle</button>
+    <button class="ctrl-btn" onclick="resetSession()">Reset Score</button>
+    <button class="ctrl-btn" id="wrongOnlyBtn" onclick="toggleWrongOnly()">Review Wrong</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box"><div class="stat-num c-blue" id="sTotal">0</div><div class="stat-label">Total</div></div>
+    <div class="stat-box"><div class="stat-num c-green" id="sCorrect">0</div><div class="stat-label">Correct</div></div>
+    <div class="stat-box"><div class="stat-num c-red" id="sWrong">0</div><div class="stat-label">Wrong</div></div>
+    <div class="stat-box"><div class="stat-num" id="sScore">--</div><div class="stat-label">Score</div></div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="pgFill" style="width:0%"></div></div>
+
+  <div id="cardArea"></div>
+
+  <div class="nav-row">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">Prev</button>
+    <span class="nav-label" id="navLabel"></span>
+    <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)">Next</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CHAPTERS
+// ============================================================
+const CHAPTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'ch1', label: 'Ch 1: Society' },
+  { id: 'ch2', label: 'Ch 2: Ethics' },
+  { id: 'ch3', label: 'Ch 3: Practice' },
+  { id: 'ch4', label: 'Ch 4: Contract' },
+  { id: 'ch5', label: 'Ch 5: Regulatory' },
+  { id: 'ch6', label: 'Ch 6: Issues' },
+  { id: 'ch7', label: 'Ch 7: Cases' },
+];
+
+// ============================================================
+// MCQ DATA — 4 options per question, correct = index of answer
+// ============================================================
+const ALL_QUESTIONS = [
+
+  // ═══════════════════════════════════════════════════════════
+  // CH1 — Society & Engineering History
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch1', prob:'VERY HIGH', years:'14/19',
+   q:'What is the Latin origin of the word "society"?',
+   options:['Civitas — meaning citizenship','Socius — meaning companion or associate','Populus — meaning people','Communis — meaning shared by all'],
+   correct:1,
+   explanation:'The word "society" comes from the Latin "socius" meaning companion or associate. Society is a group of people sharing common territory, rules, government, culture, values, and beliefs, cooperating for mutual survival. Aristotle said: "Man is a social animal."'},
+
+  {ch:'ch1', prob:'VERY HIGH', years:'14/19',
+   q:'How many elements of society are commonly identified?',
+   options:['7','8','9','10'],
+   correct:2,
+   explanation:'The 9 elements: (1) Plurality — male/female/young/old. (2) Differences — opinion/gender/interest. (3) Dynamic — constantly changing. (4) Interdependence. (5) Cooperation. (6) Likeness — blood/nationality. (7) Mutual understanding. (8) Social control and stability. (9) Culture — traditions, values.'},
+
+  {ch:'ch1', prob:'VERY HIGH', years:'14/19',
+   q:'Which is NOT one of the 5 basic social institutions found in all societies?',
+   options:['Family','Technology','Religion','Economy'],
+   correct:1,
+   explanation:'The 5 basic social institutions are: Family (socialization), Religion (motivation), Economy (production/distribution), Education (transmit skills), and State (protection/laws). Memory aid: FREED. Technology is a force of change, not a social institution.'},
+
+  {ch:'ch1', prob:'VERY HIGH', years:'14/19',
+   q:'According to Talcott Parsons, how many fundamental social needs exist?',
+   options:['4','5','7','6'],
+   correct:3,
+   explanation:'Talcott Parsons identified 6 fundamental social needs: (1) Organizing basic goods/services. (2) Protection from threats. (3) Replacement of members lost by death. (4) Transmission of knowledge. (5) Motivation to fulfill responsibilities. (6) Development of conflict-resolution mechanisms. Memory: O-P-R-T-M-D.'},
+
+  {ch:'ch1', prob:'VERY HIGH', years:'12/19',
+   q:'Who defined social change as "change in human relationships"?',
+   options:['Aristotle','M.P. Jenson','Talcott Parsons','MacIver'],
+   correct:3,
+   explanation:'MacIver defined social change as "change in human relationships." M.P. Jenson described it as "modification in ways of doing and thinking of people." Social change is the alteration in patterns of culture, social structure, and social behavior over time.'},
+
+  {ch:'ch1', prob:'VERY HIGH', years:'12/19',
+   q:'Which is NOT one of the 6 factors that cause social change?',
+   options:['Cultural innovation','Technology','Religion','Population'],
+   correct:2,
+   explanation:'The 6 factors: (1) Cultural innovation. (2) Technology. (3) Geography. (4) Environment. (5) Population. (6) Human actions (ideas, movements, revolutions). Memory: CT-GEPHA. Religion is a social institution, not a primary factor of social change.'},
+
+  {ch:'ch1', prob:'HIGH', years:'9/19',
+   q:'Which type of society first developed cities and used money?',
+   options:['Industrial society','Horticultural society','Pastoral society','Agricultural society'],
+   correct:3,
+   explanation:'Agricultural/Agrarian society (~6,000 years ago) first developed cities and used money. The plow was the key technology, enabling permanent settlements. All social institutions — family, religion, economy, politics, education — developed fully in this era.'},
+
+  {ch:'ch1', prob:'HIGH', years:'9/19',
+   q:'Which country was the first industrial society?',
+   options:['France','United States','England','Germany'],
+   correct:2,
+   explanation:'England was the first industrial society, about 280 years ago. The Industrial Revolution was characterized by machines replacing animals/human labor, majority moving to urban areas, division of labor in factories, development of trade unions, and science/education becoming central institutions.'},
+
+  {ch:'ch1', prob:'HIGH', years:'9/19',
+   q:'What is the correct historical order of the 5 types of societies?',
+   options:['Pastoral → Tribal → Agricultural → Horticultural → Industrial','Tribal → Pastoral → Horticultural → Agricultural → Industrial','Tribal → Horticultural → Pastoral → Agricultural → Industrial','Horticultural → Tribal → Pastoral → Industrial → Agricultural'],
+   correct:1,
+   explanation:'The correct order: (1) Tribal — hunting/gathering. (2) Pastoral — animal domestication. (3) Horticultural — plant cultivation with hoes. (4) Agricultural — plow, cities, money. (5) Industrial — machines, factories.'},
+
+  {ch:'ch1', prob:'MEDIUM', years:'7/19',
+   q:'What did Chang Heng invent in 132 AD?',
+   options:['Compass','Printing press','Seismoscope','Water clock'],
+   correct:2,
+   explanation:'Chang Heng, a Chinese philosopher, invented the Seismoscope in 132 AD — the world\'s first earthquake detection device.'},
+
+  {ch:'ch1', prob:'MEDIUM', years:'7/19',
+   q:'Simon Stevin (Netherlands, 1548–1620) is credited with discovering:',
+   options:['Laws of motion','Principle of buoyancy','Theory of elasticity','Triangle of forces'],
+   correct:3,
+   explanation:'Simon Stevin discovered the triangle of forces — the fundamental principle for calculating loads in trusses, cranes, bridges, and other structures. This is a cornerstone of structural engineering.'},
+
+  {ch:'ch1', prob:'MEDIUM', years:'7/19',
+   q:'Where did the first engineering school appear?',
+   options:['England in 1750 AD','Germany in 1850 AD','France in 1800 AD','Italy in 1700 AD'],
+   correct:2,
+   explanation:'The first engineering school appeared in France in 1800 AD, institutionalizing engineering as a formal profession with structured education.'},
+
+  {ch:'ch1', prob:'MEDIUM', years:'7/19',
+   q:'Where did the earliest urban engineering (towns and cities) appear between 3500–3000 BC?',
+   options:['Egypt','Sumer/Mesopotamia (modern Iraq)','Indus Valley','China'],
+   correct:1,
+   explanation:'Towns and cities first appeared in Sumer (Southern Mesopotamia, modern Iraq) between 3500–3000 BC — one of the earliest examples of urban planning and engineering in the world.'},
+
+  {ch:'ch1', prob:'HIGH', years:'10/19',
+   q:'Which is a NEGATIVE impact of technology on society?',
+   options:['Cheaper prices through mass production','Better healthcare and medical diagnosis','Quick global networking','Job displacement by automation'],
+   correct:3,
+   explanation:'Negative impacts include: pollution, new forms of danger (nuclear, cyber), social separation, loss of privacy, computer crimes, lifestyle diseases, and job displacement by automation. Positive impacts include cheaper prices, better healthcare, global networking, and specialization.'},
+
+  // ═══════════════════════════════════════════════════════════
+  // CH2 — Ethics & Professional Practice
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch2', prob:'CERTAIN', years:'19/19',
+   q:'How many characteristics define a profession?',
+   options:['3','4','5','6'],
+   correct:2,
+   explanation:'The 5 characteristics: (1) Systematic knowledge and skill. (2) Authenticity and honor. (3) Public property and evaluation. (4) Bound by code of ethics. (5) Professional culture — shared behaviors and norms within the profession.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'19/19',
+   q:'When was Nepal Engineering Council (NEC) established (in AD)?',
+   options:['1995','1999','2001','1968'],
+   correct:1,
+   explanation:'NEC was established on March 11, 1999 AD (2055/11/27 BS), under the Nepal Engineering Council Act 2055. The first Executive Council was formed under Chairman Er. Ram Babu Sharma. NEA (1968) is a different organization.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'19/19',
+   q:'Under NEC, Category B registration refers to:',
+   options:['Fresh graduate engineer','Non-Nepali engineer','Technician','Professional Engineer (experienced/senior)'],
+   correct:3,
+   explanation:'NEC registration categories: Category A — General Registered Engineer (fresh graduates). Category B — Professional Engineer (experienced, senior). Category C — Non-Nepali (Foreign) Registered Engineer.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'19/19',
+   q:'How many points are in the NEC Professional Code of Conduct?',
+   options:['6','10','8','5'],
+   correct:2,
+   explanation:'The 8 points: (1) Discipline and honesty. (2) Politeness and secrecy. (3) Non-discrimination. (4) Work only in area of expertise. (5) Not do work harmful to profession. (6) Personal responsibility. (7) State name, designation, registration number on documents. (8) No misleading advertisement.'},
+
+  {ch:'ch2', prob:'VERY HIGH', years:'13/19',
+   q:'When was Nepal Engineers\' Association (NEA) established?',
+   options:['1958 AD','1968 AD','1978 AD','1999 AD'],
+   correct:1,
+   explanation:'NEA was established in 1968 AD (2025 BS), located at Pulchowk, Kathmandu. It is an independent, non-profit organization representing 7500+ engineers, governed by a 15-member executive council, and is a member of WFEO.'},
+
+  {ch:'ch2', prob:'VERY HIGH', years:'13/19',
+   q:'Which statement about NEC and NEA is TRUE?',
+   options:['NEC membership is voluntary; NEA registration is mandatory','NEA can legally de-register engineers','NEA was established before NEC','NEC represents and lobbies; NEA regulates'],
+   correct:2,
+   explanation:'NEA (1968 AD) was established 31 years before NEC (1999 AD). NEC is a statutory government body that regulates/registers (mandatory); NEA is a voluntary non-profit that represents/lobbies. Only NEC can de-register engineers.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'19/19',
+   q:'Which is NOT one of the 6 core ethical values?',
+   options:['Honesty','Profitability','Integrity','Self-Discipline'],
+   correct:1,
+   explanation:'The 6 core ethical values are: Honesty, Integrity, Fidelity, Charity, Responsibility, and Self-Discipline. Profitability is a business goal, not an ethical value. Ethics is the science of morality — the study of right and wrong conduct.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'19/19',
+   q:'Which NSPE Canon is listed FIRST among the 6 Fundamental Canons?',
+   options:['Perform services only in areas of competence','Avoid deceptive acts','Hold paramount the safety, health, and welfare of the public','Act as faithful agents for employers'],
+   correct:2,
+   explanation:'The 6 NSPE Canons in order: (1) Hold paramount safety/health/welfare of public. (2) Perform services only in areas of competence. (3) Issue public statements truthfully. (4) Act as faithful agents. (5) Avoid deceptive acts. (6) Conduct themselves honorably.'},
+
+  {ch:'ch2', prob:'VERY HIGH', years:'11/19',
+   q:'A moral dilemma is best described as:',
+   options:['A technical problem requiring expertise','A legal dispute between two parties','A situation with one clear right answer','A painful situation where every possible solution involves some loss'],
+   correct:3,
+   explanation:'A moral dilemma is a painful situation where every possible solution involves some kind of loss or harm. Example: An engineer discovers a chemical leak — reporting it is right but the boss threatens job loss. Every choice has a cost.'},
+
+  {ch:'ch2', prob:'VERY HIGH', years:'11/19',
+   q:'Which law of ethics focuses on "greatest benefit for the greatest number"?',
+   options:['Eternal law','Universalism','Distributive Justice','Utilitarianism'],
+   correct:3,
+   explanation:'The 5 laws of ethics: (1) Eternal — universal moral standards. (2) Utilitarianism — greatest benefit for greatest number. (3) Universalism — act as you\'d want everyone to act. (4) Distributive Justice — fairness/equal rights. (5) Personal Liberty — respect freedom. Memory: EU-UDP.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'17/19',
+   q:'How many essential elements must be proven for negligence?',
+   options:['2','4','5','3'],
+   correct:3,
+   explanation:'Negligence requires proving ALL 3 elements: (1) Duty of care — legal obligation to act in a certain way. (2) Breach of that duty — failed to fulfill the obligation. (3) Resulting damage — injury or loss directly caused by the breach.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'17/19',
+   q:'A tort is best defined as:',
+   options:['A type of contract between two parties','A criminal offense punishable by imprisonment','A civil wrong causing loss or damage to another person','An administrative procedure for licensing'],
+   correct:2,
+   explanation:'A tort is an action or inaction that causes loss or damage to another person — a civil wrong independent of any contract. Grounds: Negligence, Intentional wrong, Strict liability. Objective: compensate victim, prevent repetition.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'17/19',
+   q:'Which is NOT one of the 3 types of liability?',
+   options:['Under contract','In tort','Under statute','Under moral obligation'],
+   correct:3,
+   explanation:'The 3 types of liability: (1) Under contract — works not meeting specification. (2) In tort — causing injury through negligence. (3) Under statute — as defined by law. "Moral obligation" is not a legal liability type.'},
+
+  {ch:'ch2', prob:'CERTAIN', years:'17/19',
+   q:'Vicarious liability means:',
+   options:['An employee is liable for the employer\'s actions','Both parties are always equally liable','An employer is liable for an employee\'s tort during employment','Neither party can be held liable for the other'],
+   correct:2,
+   explanation:'Vicarious liability means an employer is legally liable for a tort committed by their employee during employment, even if the employer didn\'t personally commit it. Example: If a site engineer makes a negligent design error causing collapse, both the engineer AND the consulting firm are liable.'},
+
+  {ch:'ch2', prob:'VERY HIGH', years:'13/19',
+   q:'How many objectives does NEA have?',
+   options:['3','4','5','7'],
+   correct:2,
+   explanation:'NEA has 5 objectives: (1) Facilitate engineering development in Nepal. (2) Promote mutual cooperation among engineers. (3) Ensure maximum participation in national development. (4) Enhance professional ideals. (5) Establish international linkages. NEA is a WFEO member.'},
+
+  // ═══════════════════════════════════════════════════════════
+  // CH3 — Professional Practice in Nepal
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch3', prob:'CERTAIN', years:'16/19',
+   q:'A fresh engineer in the public sector typically enters as which class officer through PSC?',
+   options:['1st Class Gazette Officer','2nd Class Gazette Officer','3rd Class Gazette Officer','4th Class Non-Gazette Officer'],
+   correct:2,
+   explanation:'A fresh graduate typically enters as a 3rd Class Gazette Officer through the Public Service Commission (PSC) examination. Duties are defined by the concerned ministry or department.'},
+
+  {ch:'ch3', prob:'CERTAIN', years:'16/19',
+   q:'Which is a primary duty of a fresh engineer in the public sector?',
+   options:['Setting national engineering policy','Approving government budgets','Execution of project works on site','Hiring senior consultants'],
+   correct:2,
+   explanation:'The 5 main duties: (1) Survey, prefeasibility, feasibility, design, and estimates. (2) Execution of project works on site. (3) Report writing. (4) Facilitate donor agencies. (5) Execute tasks assigned by superiors.'},
+
+  {ch:'ch3', prob:'CERTAIN', years:'16/19',
+   q:'In the private sector, a fresh engineer\'s duties include:',
+   options:['Drafting national legislation','Setting government procurement rules','Preparing EOIs and RFPs to win new contracts','Approving national budgets'],
+   correct:2,
+   explanation:'Private sector duties: (1) Prepare designs, drawings, specifications, and cost estimates. (2) Supervise construction. (3) Maintain client communication. (4) Prepare technical reports and proposals. (5) Assist in preparing EOIs and RFPs.'},
+
+  {ch:'ch3', prob:'CERTAIN', years:'16/19',
+   q:'Which is TRUE about public vs private sector engineering work?',
+   options:['Public sector is performance-based with faster growth','Private sector uses government budget','Public sector has high job security and is seniority-based','Private sector focuses on compliance and donor relations'],
+   correct:2,
+   explanation:'Public sector: government budget, high job security, seniority-based, focus on compliance/reporting/donors. Private sector: client revenue, performance-based, faster growth, focus on client satisfaction/profit/deadlines.'},
+
+  // ═══════════════════════════════════════════════════════════
+  // CH4 — Contract
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch4', prob:'CERTAIN', years:'16/19',
+   q:'What distinguishes a contract from a simple agreement?',
+   options:['A contract must be verbal; an agreement must be written','There is no difference between them','An agreement requires consideration; a contract does not','A contract is legally enforceable; an agreement may not be'],
+   correct:3,
+   explanation:'A contract is a legally enforceable agreement that creates mutual legal obligations. An agreement is simply a meeting of minds — it may not be enforceable. Every contract is an agreement, but not every agreement is a contract.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'16/19',
+   q:'How many essential elements are required for a valid contract?',
+   options:['4','5','6','7'],
+   correct:2,
+   explanation:'The 6 elements: (1) Offer. (2) Acceptance. (3) Consideration — something of value exchanged. (4) Legal capacity — both parties 18+, sound mind. (5) Legal object — lawful purpose. (6) Free consent — no coercion, fraud, or undue influence.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'16/19',
+   q:'A voidable contract is best described as:',
+   options:['Not enforceable from the beginning due to illegal object','Valid until one party chooses to cancel it','Always enforced regardless of circumstances','The same thing as a void contract'],
+   correct:1,
+   explanation:'Void contract: not enforceable from the beginning (illegal/impossible). Voidable: valid until one party cancels — caused by fraud, coercion, or misrepresentation. The aggrieved party can sue for damages.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'A tender (bid) is:',
+   options:['A final signed contract agreement','A court order for project completion','An insurance policy for construction','A written offer to execute specified work at a certain rate'],
+   correct:3,
+   explanation:'A tender is a written offer by a tenderer to execute specified work or supply goods at a certain rate within a stipulated time under certain conditions. It is the first step in contract formation, initiating competitive selection.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'Which is NOT a reason why tendering is necessary?',
+   options:['Proper use of public funds','Value for money','Guaranteed profit for all bidders','Equal opportunity for eligible bidders'],
+   correct:2,
+   explanation:'Tendering is necessary for: (1) Proper use of public funds. (2) Value for money. (3) Equal opportunity. (4) Transparency and accountability. (5) Legal compliance under Public Procurement Act 2063. It does NOT guarantee profit.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'How many essential items must a tender notice contain?',
+   options:['5','6','8','10'],
+   correct:2,
+   explanation:'The 8 items: (1) Name/address of inviting entity. (2) Project name/description/location. (3) Estimated cost and funding source. (4) Bid document price. (5) Submission deadline/location. (6) Bid validity and security amount (2-3%). (7) Bid opening date/time/location. (8) Eligibility criteria.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'What is the bid notice period for NCB (National Competitive Bidding)?',
+   options:['15 days','30 days','45 days','60 days'],
+   correct:1,
+   explanation:'NCB: 30 days in national newspaper/government website. Sealed Quotation: 15 days. ICB (International): 45 days in national English newspaper or international journal.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'Bid validity for NCB projects ≤ Rs. 10 crore is:',
+   options:['60 days','90 days','120 days','150 days'],
+   correct:1,
+   explanation:'For projects ≤ Rs. 10 crore: 90 days bid validity, 120 days bid security validity. For projects > Rs. 10 crore: 120 days bid validity, 150 days bid security validity. Bid security amount = 2–3% of estimated cost.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'Minimum responsive bids required for Sealed Quotation is:',
+   options:['1','2','3','5'],
+   correct:2,
+   explanation:'Sealed Quotation: minimum 3 bids required (re-notice of 7 days if fewer received). NCB: minimum 1 responsive bid is sufficient. Withdrawal is NOT allowed for sealed quotation but is allowed once for NCB.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'Contract signing notice period for NCB is:',
+   options:['7 days','15 days','30 days','45 days'],
+   correct:1,
+   explanation:'NCB: 15-day notice after selection; selection notice published for 7 days. Sealed Quotation: 7-day notice for signing.'},
+
+  {ch:'ch4', prob:'CERTAIN', years:'15/19',
+   q:'Maximum number of firms allowed in a Joint Venture (JV) under NCB is:',
+   options:['2','3','4','5'],
+   correct:1,
+   explanation:'Under NCB: JV allowed, maximum 3 firms, each must hold minimum 25% share. JV is NOT allowed under Sealed Quotation. Bid document cost under NCB is Rs. 1000+; under SQ is Rs. 500 or less.'},
+
+  // ═══════════════════════════════════════════════════════════
+  // CH5 — Regulatory Framework
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch5', prob:'CERTAIN', years:'15/19',
+   q:'How many main types of Intellectual Property Rights (IPR) are there?',
+   options:['3','4','5','6'],
+   correct:1,
+   explanation:'The 4 main types of IPR: (1) Copyright. (2) Patent. (3) Trademark. (4) Industrial Design. IPR are legal rights over creations of the mind — artistic or commercial.'},
+
+  {ch:'ch5', prob:'CERTAIN', years:'15/19',
+   q:'Copyright duration in Nepal under Copyright Act 2059 is:',
+   options:['Author\'s lifetime only','Author\'s lifetime + 25 years','Author\'s lifetime + 50 years','Author\'s lifetime + 70 years'],
+   correct:2,
+   explanation:'Copyright covers literary, artistic, dramatic, and musical works. Duration: lifetime of the author + 50 years after death, under Nepal Copyright Act 2059.'},
+
+  {ch:'ch5', prob:'CERTAIN', years:'15/19',
+   q:'First offense fine for copyright violation in Nepal can be up to:',
+   options:['Rs. 50,000','Rs. 1,00,000','Rs. 2,00,000','Rs. 5,00,000'],
+   correct:1,
+   explanation:'First offense: Fine Rs. 10,000–1,00,000 OR imprisonment up to 6 months, or both. Repeat offense: Fine Rs. 20,000–2,00,000 OR imprisonment up to 1 year, or both — plus compensation.'},
+
+  {ch:'ch5', prob:'CERTAIN', years:'15/19',
+   q:'A patent lasts for:',
+   options:['10 years from filing','15 years from filing','20 years from filing','25 years from filing'],
+   correct:2,
+   explanation:'A patent is a legal right for a new invention. It must be new, inventive (non-obvious), and useful (industrially applicable). Duration: 20 years from the date of filing. Governed by Patent, Design and Trademark Act 2022 (BS).'},
+
+  {ch:'ch5', prob:'CERTAIN', years:'15/19',
+   q:'A trademark is best described as:',
+   options:['A legal right granted for inventions','A government license for construction','A symbol or logo used to identify and distinguish products','A type of copyright for software'],
+   correct:2,
+   explanation:'A trademark is a symbol, word, phrase, or logo used to identify and distinguish products/brands from competitors. Once registered, the owner can sue infringers. Examples: Nike swoosh, Apple symbol, Coca-Cola wordmark.'},
+
+  {ch:'ch5', prob:'VERY HIGH', years:'11/19',
+   q:'Normal working hours under Nepal Labour Act 2074 are:',
+   options:['6 hours/day, 36 hours/week','8 hours/day, 40 hours/week','8 hours/day, 48 hours/week','10 hours/day, 60 hours/week'],
+   correct:2,
+   explanation:'Normal: 8 hours/day, 48 hours/week. Overtime: maximum 4 hours/day, paid at 1.5x the normal rate. These apply to all formal employment in Nepal.'},
+
+  {ch:'ch5', prob:'VERY HIGH', years:'11/19',
+   q:'Annual leave under Nepal Labour Act 2074 is approximately:',
+   options:['12 days/year','15 days/year','18 days/year','24 days/year'],
+   correct:2,
+   explanation:'Annual leave: 1 day per 20 working days (~18 days/year). Sick leave: 12 days/year with full pay. Maternity leave: 98 days. Public holidays per Nepal Government Gazette.'},
+
+  {ch:'ch5', prob:'VERY HIGH', years:'11/19',
+   q:'How many steps of disciplinary action exist under Labour Act 2074?',
+   options:['3','4','5','6'],
+   correct:1,
+   explanation:'The 4 steps in order: (1) Written warning — for minor misconduct. (2) Suspension — up to 3 months. (3) Demotion — reduction in grade. (4) Termination — dismissal for the most serious violations.'},
+
+  {ch:'ch5', prob:'VERY HIGH', years:'11/19',
+   q:'Which is a mandatory health/safety provision under Labour Act 2074?',
+   options:['Company vehicle for all workers','Housing for all employees','PPE (helmets, gloves, harness) provided free of cost','Meal allowance for every shift'],
+   correct:2,
+   explanation:'Mandatory provisions: (1) Safe/healthy workplace. (2) PPE provided free of cost. (3) Accident insurance for construction workers. (4) Annual medical checkup in hazardous environments. (5) Clean drinking water and separate toilets.'},
+
+  // ═══════════════════════════════════════════════════════════
+  // CH6 — Contemporary Issues
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch6', prob:'HIGH', years:'10/19',
+   q:'Who described globalization as "farther, faster, cheaper, and deeper"?',
+   options:['Adam Smith','Karl Marx','Joseph Stiglitz','Thomas Friedman'],
+   correct:3,
+   explanation:'Thomas Friedman described today\'s globalization as "farther, faster, cheaper, and deeper." Globalization is the process of interaction and integration among people, companies, and governments, driven by trade, investment, and information technology.'},
+
+  {ch:'ch6', prob:'HIGH', years:'10/19',
+   q:'Which is a CHALLENGE of globalization for Nepal?',
+   options:['Technology transfer','Economic growth','Brain drain of skilled engineers','Improved professional standards'],
+   correct:2,
+   explanation:'Challenges: brain drain, dependency on foreign technology, cultural erosion, competition from multinationals, environmental degradation. Benefits: technology transfer, innovation, economic growth, cultural exchange, improved standards.'},
+
+  {ch:'ch6', prob:'VERY HIGH', years:'11/19',
+   q:'PPP stands for:',
+   options:['Public-Private Procurement','Public-Private Policy','Private-Public Protocol','Public-Private Partnership'],
+   correct:3,
+   explanation:'PPP = contractual agreement between public and private entities for infrastructure/services in public interest. Key characteristics: formal agreement, public interest goal, risk transfer to private party, private investment at risk, better value for money.'},
+
+  {ch:'ch6', prob:'VERY HIGH', years:'11/19',
+   q:'Which is an example of PPP in Nepal?',
+   options:['Nepal Rastra Bank','Singha Durbar','Gongabu Bus Park','Tribhuvan University'],
+   correct:2,
+   explanation:'PPP examples in Nepal: (1) Gongabu Bus Park — KMC + private operator. (2) Fast-track road (Kathmandu–Terai). (3) Waste management in Kathmandu. (4) Foot-bridges construction. (5) Dharahara management.'},
+
+  {ch:'ch6', prob:'VERY HIGH', years:'12/19',
+   q:'Regarding conflict, which statement is TRUE?',
+   options:['Conflict is always negative and destructive','Conflict only occurs in unprofessional settings','Conflict is the inevitable outcome of behavioral interactions','Conflict can only be resolved through litigation'],
+   correct:2,
+   explanation:'Conflict is described as the inevitable outcome of behavioral interactions. It is NOT always negative — when managed well, it reveals problems, generates better solutions, and improves outcomes. What matters is HOW it is managed.'},
+
+  {ch:'ch6', prob:'VERY HIGH', years:'12/19',
+   q:'What is the correct order of dispute resolution methods from most to least preferred?',
+   options:['Arbitration, Mediation, Negotiation, Litigation, Conciliation','Mediation, Negotiation, Conciliation, Arbitration, Litigation','Negotiation, Mediation, Conciliation, Arbitration, Litigation','Litigation, Arbitration, Conciliation, Mediation, Negotiation'],
+   correct:2,
+   explanation:'Correct order: (1) Negotiation — direct discussion, fastest/cheapest. (2) Mediation — neutral facilitator, non-binding. (3) Conciliation — active conciliator. (4) Arbitration — binding decision. (5) Litigation — court, last resort, most expensive.'},
+
+  {ch:'ch6', prob:'MEDIUM', years:'7/19',
+   q:'The formula for Risk in safety engineering is:',
+   options:['Risk = Cost × Time','Risk = Hazard + Exposure','Risk = Probability × Severity','Risk = Frequency / Duration'],
+   correct:2,
+   explanation:'Risk = Probability × Severity. Probability = how likely the failure occurs. Severity = how bad the consequences are. Safety engineering aims to reduce BOTH. Example: bridges designed above max load (lower probability) with redundant paths (lower severity).'},
+
+  {ch:'ch6', prob:'MEDIUM', years:'6/19',
+   q:'How many steps are in Cost-Benefit Analysis?',
+   options:['2','3','4','5'],
+   correct:1,
+   explanation:'The 3 steps: (1) Calculate all costs — direct (capital, licensing) and indirect (training, labor). (2) Calculate all benefits — increased output, reduced costs. (3) Incorporate time — determine ROI period, model net cash flow over 5–10 years.'},
+
+  {ch:'ch6', prob:'MEDIUM', years:'6/19',
+   q:'Environmental Impact Assessment (EIA) is important in construction because it:',
+   options:['Increases project cost significantly','Is only a legal formality with no real impact','Helps minimize environmental damage through sustainable design','Delays project completion indefinitely'],
+   correct:2,
+   explanation:'Construction depletes resources and causes pollution, but through EIA, sustainable design, eco-friendly materials, and waste management, environmental damage can be minimized. Engineers must balance development with environmental responsibility.'},
+
+  // ═══════════════════════════════════════════════════════════
+  // CH7 — Case Studies
+  // ═══════════════════════════════════════════════════════════
+
+  {ch:'ch7', prob:'VERY HIGH', years:'8/19',
+   q:'In the RCC bridge failure case, who bears PRIMARY responsibility?',
+   options:['The contractor','The government/road department','The material supplier','The consultant/designer'],
+   correct:3,
+   explanation:'The Consultant/Designer bears PRIMARY responsibility: (1) Duty of care — obligation to supervise material testing was breached. (2) Conflict of interest — friendship with contractor compromised supervision (NEC Rule 5). (3) All 3 elements of negligence proven against the consultant.'},
+
+  {ch:'ch7', prob:'VERY HIGH', years:'8/19',
+   q:'In the bridge failure case, the contractor CANNOT validly claim:',
+   options:['The materials were defective','The design was inadequate','"I followed the engineer\'s instructions"','The working conditions were poor'],
+   correct:2,
+   explanation:'The contractor cannot simply claim "I followed the engineer\'s instructions" — a competent contractor has independent quality obligations. The contractor bears secondary responsibility for using untested steel (breach of contract AND professional negligence).'},
+
+  {ch:'ch7', prob:'HIGH', years:'10/19',
+   q:'A contractor friend invites you (the consultant engineer) for weekly dinners and shared accommodation. You should:',
+   options:['Accept to maintain good working relations','Accept dinner but decline accommodation','Decline both offers','Accept but disclose it to the client'],
+   correct:2,
+   explanation:'DECLINE both. Reasons: (1) Conflict of interest — your role is to independently supervise. (2) NEC Code Rule 5 — no improper financial benefit. (3) NEC Code Rule 6 — personal responsibility compromised. Action: politely decline, arrange own accommodation.'},
+
+  {ch:'ch7', prob:'HIGH', years:'10/19',
+   q:'An engineer discovers a chemical leak. The boss threatens job loss if they report it. The engineer should:',
+   options:['Stay silent to protect their job','Report the hazard','Negotiate a raise for silence','Wait for someone else to report it'],
+   correct:1,
+   explanation:'REPORT the hazard. (1) NSPE Canon #1 — safety/health/welfare of public is paramount. (2) Utilitarianism — reporting protects thousands. (3) Universalism — if all engineers stayed silent, society would be endangered. Document, report in writing, escalate if ignored.'},
+
+  {ch:'ch7', prob:'HIGH', years:'5/19',
+   q:'Shashikala (municipality engineer) convinced consultant Pran to change road alignment to benefit her land. Who is MORE guilty?',
+   options:['Pran — he actually changed the design','Both are equally guilty','Shashikala — she abused her official position and initiated it','Neither — no law was broken'],
+   correct:2,
+   explanation:'BOTH guilty, but Shashikala MORE so: (1) Abused official position for personal gain. (2) Had undisclosed conflict of interest. (3) Primary instigator who pressured Pran. (4) Betrayed public trust as government employee. (5) Constitutes corruption. Pran violated NEC Rule 5 but was not the initiator.'},
+
+  {ch:'ch7', prob:'MEDIUM', years:'4/19',
+   q:'ABC\'s engineer Ram negligently installed WAN/LAN at XYZ. The Rs. 2 lakh repair cost should be paid by:',
+   options:['XYZ (the client)','Ram (the negligent engineer) personally','ABC (Ram\'s employer)','Split equally between ABC and XYZ'],
+   correct:2,
+   explanation:'ABC must pay — not XYZ. (1) ABC contracted to deliver a working system — breach of contract. (2) Ram is ABC\'s employee — vicarious liability applies. (3) XYZ can refuse payment until contract is fulfilled. ABC can take internal disciplinary action against Ram under Labour Act 2074.'},
+
+  {ch:'ch7', prob:'VERY HIGH', years:'8/19',
+   q:'A consultant failing to properly supervise due to friendship with the contractor violates which NEC Code rule?',
+   options:['Rule 1 — Discipline and honesty','Rule 3 — Non-discrimination','Rule 5 — Not do work harmful to profession','Rule 8 — No misleading advertisement'],
+   correct:2,
+   explanation:'This is a conflict of interest — a direct violation of NEC Code Rule 5: must not engage in activities harmful to the profession or obtain improper benefit. The consultant should have declared the friendship and either recused themselves or maintained strict professional separation.'},
+];
+
+// ============================================================
+// APP STATE
+// ============================================================
+let mode = 'quiz'; // 'quiz' or 'study'
+let activeChapter = 'all';
+let showWrongOnly = false;
+let questions = [...ALL_QUESTIONS];
+let idx = 0;
+let selectedAnswer = null; // null = not answered, number = chosen option index
+let revealed = false; // study mode: answer revealed?
+let correctCount = 0;
+let wrongCount = 0;
+let answeredSet = new Set();
+let wrongSet = new Set();
+
+// ============================================================
+// HELPERS
+// ============================================================
+function getFiltered() {
+  let qs = activeChapter === 'all' ? [...ALL_QUESTIONS] : ALL_QUESTIONS.filter(q => q.ch === activeChapter);
+  if (showWrongOnly) {
+    qs = qs.filter(q => wrongSet.has(ALL_QUESTIONS.indexOf(q)));
+  }
+  return qs;
+}
+
+function probBadgeClass(p) {
+  const map = { 'CERTAIN': 'badge-certain', 'VERY HIGH': 'badge-veryhigh', 'HIGH': 'badge-high', 'MEDIUM': 'badge-medium' };
+  return map[p] || 'badge-medium';
+}
+
+function formatText(text) {
+  if (!/\(\d+\)/.test(text)) return text;
+  // Put each numbered point on its own line
+  let result = text.replace(/\s*\((\d+)\)\s*/g, '<br><strong>($1)</strong> ');
+  // If text starts with a numbered point, remove leading <br>
+  if (result.startsWith('<br>')) result = result.substring(4);
+  // Add spacing after "Memory:" hints
+  result = result.replace(/Memory:\s*/g, '<br><em>Memory: </em>');
+  return result;
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('modeQuiz').classList.toggle('active', m === 'quiz');
+  document.getElementById('modeStudy').classList.toggle('active', m === 'study');
+  // Reset current card state
+  selectedAnswer = null;
+  revealed = false;
+  renderCard();
+}
+
+function revealAnswer() {
+  revealed = true;
+  renderCard();
+}
+
+function markAnswer(isCorrect) {
+  const q = questions[idx];
+  const origIdx = ALL_QUESTIONS.indexOf(q);
+  if (answeredSet.has(origIdx)) {
+    if (idx < questions.length - 1) setTimeout(() => navigate(1), 200);
+    return;
+  }
+  answeredSet.add(origIdx);
+  if (isCorrect) { correctCount++; wrongSet.delete(origIdx); }
+  else { wrongCount++; wrongSet.add(origIdx); }
+  renderStats();
+  if (idx < questions.length - 1) setTimeout(() => navigate(1), 300);
+  else renderCard();
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+function setChapter(id) {
+  activeChapter = id;
+  showWrongOnly = false;
+  questions = getFiltered();
+  idx = 0;
+  selectedAnswer = null;
+  revealed = false;
+  correctCount = 0;
+  wrongCount = 0;
+  answeredSet = new Set();
+  wrongSet = new Set();
+  renderAll();
+}
+
+function shuffleQuestions() {
+  questions = getFiltered().sort(() => Math.random() - 0.5);
+  idx = 0;
+  selectedAnswer = null;
+  renderCard();
+  renderNav();
+}
+
+function resetSession() {
+  correctCount = 0;
+  wrongCount = 0;
+  answeredSet = new Set();
+  wrongSet = new Set();
+  showWrongOnly = false;
+  questions = getFiltered();
+  idx = 0;
+  selectedAnswer = null;
+  revealed = false;
+  renderAll();
+}
+
+function toggleWrongOnly() {
+  if (wrongCount === 0 && !showWrongOnly) return;
+  showWrongOnly = !showWrongOnly;
+  questions = getFiltered();
+  idx = 0;
+  selectedAnswer = null;
+  document.getElementById('wrongOnlyBtn').style.background = showWrongOnly ? 'var(--danger-bg)' : '';
+  document.getElementById('wrongOnlyBtn').style.color = showWrongOnly ? 'var(--danger)' : '';
+  document.getElementById('wrongOnlyBtn').style.borderColor = showWrongOnly ? 'var(--danger-border)' : '';
+  renderCard();
+  renderNav();
+  renderStats();
+}
+
+function navigate(dir) {
+  idx = Math.max(0, Math.min(questions.length - 1, idx + dir));
+  const origIdx = ALL_QUESTIONS.indexOf(questions[idx]);
+  selectedAnswer = answeredSet.has(origIdx) ? 'already' : null;
+  revealed = false;
+  renderCard();
+  renderNav();
+}
+
+function selectOption(chosenIdx) {
+  if (selectedAnswer !== null) return;
+
+  const q = questions[idx];
+  const origIdx = ALL_QUESTIONS.indexOf(q);
+  if (answeredSet.has(origIdx)) return;
+
+  selectedAnswer = chosenIdx;
+  answeredSet.add(origIdx);
+
+  if (chosenIdx === q.correct) {
+    correctCount++;
+    wrongSet.delete(origIdx);
+  } else {
+    wrongCount++;
+    wrongSet.add(origIdx);
+  }
+
+  renderCard();
+  renderStats();
+}
+
+// ============================================================
+// RENDERING
+// ============================================================
+function renderChapterBtns() {
+  document.getElementById('chapterBtns').innerHTML = CHAPTERS.map(c =>
+    `<button class="ch-pill${activeChapter === c.id ? ' active' : ''}" onclick="setChapter('${c.id}')">${c.label}</button>`
+  ).join('');
+}
+
+function renderStats() {
+  const done = answeredSet.size;
+  const pct = done > 0 ? Math.round(correctCount / done * 100) : null;
+  document.getElementById('sTotal').textContent = questions.length;
+  document.getElementById('sCorrect').textContent = correctCount;
+  document.getElementById('sWrong').textContent = wrongCount;
+  document.getElementById('sScore').textContent = pct !== null ? pct + '%' : '--';
+}
+
+function renderNav() {
+  const pct = questions.length ? Math.round((idx + 1) / questions.length * 100) : 0;
+  document.getElementById('pgFill').style.width = pct + '%';
+  document.getElementById('navLabel').textContent = questions.length ? `${idx + 1} / ${questions.length}` : '';
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx >= questions.length - 1;
+}
+
+function renderCard() {
+  const area = document.getElementById('cardArea');
+
+  if (!questions.length) {
+    area.innerHTML = showWrongOnly
+      ? '<div class="empty-state">No wrong answers to review. Well done!</div>'
+      : '<div class="empty-state">No questions for this selection.</div>';
+    renderNav();
+    return;
+  }
+
+  const q = questions[idx];
+  const origIdx = ALL_QUESTIONS.indexOf(q);
+  const chapterLabel = CHAPTERS.find(c => c.id === q.ch)?.label || q.ch;
+
+  const metaHTML = `
+    <div class="q-meta">
+      <span class="badge badge-ch">${chapterLabel}</span>
+      <span class="badge ${probBadgeClass(q.prob)}">${q.prob}</span>
+      <span class="q-counter">#${idx + 1}</span>
+    </div>
+    <div class="years-tag">Asked in ${q.years} papers</div>
+    <div class="q-text">${q.q}</div>`;
+
+  let bodyHTML = '';
+
+  if (mode === 'quiz') {
+    // ── Quiz Mode: MCQ options ──
+    const isAnswered = selectedAnswer !== null;
+    const letters = ['A', 'B', 'C', 'D'];
+
+    const optionsHTML = q.options.map((opt, i) => {
+      let classes = 'option-btn';
+      if (isAnswered) {
+        classes += ' locked';
+        if (i === q.correct) classes += ' correct';
+        else if (i === selectedAnswer) classes += ' wrong';
+        else classes += ' dimmed';
+      }
+      return `<button class="${classes}" onclick="selectOption(${i})">
+        <span class="option-letter">${letters[i]}</span>
+        <span class="option-text">${opt}</span>
+      </button>`;
+    }).join('');
+
+    bodyHTML = `<div class="options">${optionsHTML}</div>`;
+
+    if (isAnswered) {
+      bodyHTML += `
+        <div class="explanation">
+          <div class="explanation-label">Explanation</div>
+          <div class="explanation-text">${formatText(q.explanation)}</div>
+        </div>`;
+    }
+  } else {
+    // ── Study Mode: reveal answer ──
+    if (revealed) {
+      bodyHTML = `
+        <div class="answer-box">
+          <div class="answer-label">Answer</div>
+          <div class="answer-text">${formatText(q.explanation)}</div>
+        </div>
+        <div class="mark-row">
+          <button class="mark-btn mark-wrong" onclick="markAnswer(false)">Got it wrong</button>
+          <button class="mark-btn mark-correct" onclick="markAnswer(true)">Got it right</button>
+        </div>`;
+    } else {
+      bodyHTML = `<button class="reveal-btn" onclick="revealAnswer()">Show Answer</button>`;
+    }
+  }
+
+  area.innerHTML = `<div class="card">${metaHTML}${bodyHTML}</div>`;
+  renderNav();
+}
+
+function renderAll() {
+  renderChapterBtns();
+  renderStats();
+  renderCard();
+  renderNav();
+}
+
+// Initialize
+renderAll();
+</script>
+</body>
+</html>
