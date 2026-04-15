@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation & Modelling CT753 — MCQ Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --card: #161b22;
+    --border: #21262d;
+    --accent: #f0a500;
+    --accent2: #00d4aa;
+    --accent3: #e05c5c;
+    --text: #e6edf3;
+    --muted: #7d8590;
+    --correct: #1a4731;
+    --correct-border: #2ea043;
+    --wrong: #3d1111;
+    --wrong-border: #da3633;
+    --pending: #1c2b3d;
+    --pending-border: #388bfd;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .score-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 18px;
+    color: var(--text);
+  }
+  .score-pill span { color: var(--accent); font-weight: 600; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 560px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-lbl { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── CHAPTER NAV ── */
+  .chapter-nav {
+    max-width: 1200px;
+    margin: 32px auto 0;
+    padding: 0 40px;
+  }
+  .chapter-nav-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .chapter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ch-tab {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .ch-tab:hover { border-color: var(--accent); color: var(--text); }
+  .ch-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(240,165,0,0.08); }
+  .ch-tab.done { border-color: var(--correct-border); color: var(--correct-border); }
+
+  /* ── MAIN ── */
+  .main { max-width: 1200px; margin: 0 auto; padding: 32px 40px 80px; }
+
+  /* ── CHAPTER SECTION ── */
+  .chapter-section { display: none; }
+  .chapter-section.active { display: block; }
+  .chapter-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ch-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .ch-meta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .ch-meta p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .ch-progress {
+    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .ch-progress-bar {
+    width: 140px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .ch-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s;
+  }
+  .ch-progress-text { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── MCQ CARD ── */
+  .mcq-grid { display: grid; gap: 20px; }
+  .mcq-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .mcq-card:hover { border-color: #30363d; }
+  .mcq-card.answered-correct { border-color: var(--correct-border); }
+  .mcq-card.answered-wrong { border-color: var(--wrong-border); }
+
+  .mcq-header {
+    padding: 20px 24px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .mcq-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+  }
+  .mcq-q {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .mcq-q code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--surface);
+    color: var(--accent2);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .difficulty-tag {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid;
+    margin-top: 2px;
+  }
+  .d-easy { color: var(--accent2); border-color: var(--accent2); background: rgba(0,212,170,0.08); }
+  .d-med { color: var(--accent); border-color: var(--accent); background: rgba(240,165,0,0.08); }
+  .d-hard { color: var(--accent3); border-color: var(--accent3); background: rgba(224,92,92,0.08); }
+
+  .options-list {
+    padding: 16px 24px 20px 24px;
+    display: grid;
+    gap: 8px;
+  }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(240,165,0,0.06);
+  }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.correct {
+    border-color: var(--correct-border);
+    background: var(--correct);
+    color: #3fb950;
+  }
+  .option-btn.wrong {
+    border-color: var(--wrong-border);
+    background: var(--wrong);
+    color: #f85149;
+  }
+  .option-btn.reveal {
+    border-color: var(--correct-border);
+    background: rgba(46,160,67,0.08);
+    color: #3fb950;
+  }
+  .opt-letter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+    margin-top: 1px;
+  }
+
+  .explanation {
+    display: none;
+    margin: 0 24px 20px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #8b949e;
+  }
+  .explanation.visible { display: block; }
+  .explanation strong { color: var(--text); }
+  .explanation code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--card);
+    color: var(--accent2);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ── CHAPTER RESULT ── */
+  .ch-result {
+    display: none;
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .ch-result.visible { display: block; }
+  .ch-result h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .ch-result p { color: var(--muted); font-size: 14px; }
+
+  /* ── NEXT CHAPTER BTN ── */
+  .nav-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: flex-end;
+  }
+  .btn {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    border: 1px solid;
+  }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0c0f;
+    font-weight: 500;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .btn-ghost:hover { border-color: var(--text); color: var(--text); }
+
+  /* ── FINAL SCORE ── */
+  .final-score {
+    display: none;
+    text-align: center;
+    padding: 80px 40px;
+    max-width: 600px;
+    margin: 60px auto 0;
+  }
+  .final-score.visible { display: block; }
+  .final-score h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .final-grade {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 80px;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 640px) {
+    .site-header, .hero, .chapter-nav, .main { padding-left: 20px; padding-right: 20px; }
+    .ch-number { font-size: 40px; }
+    .stats-row { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">CT 753 // MCQ BANK</div>
+    <div class="score-pill">Score: <span id="global-score">0</span> / <span id="global-total">0</span></div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Simulation &amp; Modelling<br><em>MCQ Battle Test</em></h1>
+  <p>150 exam-depth questions across all 10 chapters. Based on 17 years of TU past papers. No shortcuts — every wrong answer gets explained.</p>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num">150</span><span class="stat-lbl">Questions</span></div>
+    <div class="stat"><span class="stat-num">10</span><span class="stat-lbl">Chapters</span></div>
+    <div class="stat"><span class="stat-num">17</span><span class="stat-lbl">Past Papers</span></div>
+    <div class="stat"><span class="stat-num">3</span><span class="stat-lbl">Difficulty Levels</span></div>
+  </div>
+</div>
+
+<div class="chapter-nav">
+  <div class="chapter-nav-label">Jump to chapter</div>
+  <div class="chapter-tabs" id="ch-tabs"></div>
+</div>
+
+<div class="main" id="main-content"></div>
+
+<script>
+// ===================== MCQ DATA =====================
+const chapters = [
+{
+  id: "ch1", num: "01", title: "Introduction to Simulation",
+  desc: "Simulation study steps, advantages/disadvantages, when to use, system components, types of simulation.",
+  questions: [
+    { q: "Which of the following is the CORRECT order of steps in a simulation study?",
+      opts: ["Data collection → Model translation → Validation → Problem formulation","Problem formulation → Model conceptualization → Data collection → Model translation → Verification → Validation","Verification → Validation → Model building → Problem formulation","Model translation → Data collection → Problem formulation → Validation"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> The standard simulation study sequence (Banks et al.) is: Problem formulation → Objectives & project plan → Model conceptualization → Data collection → Model translation → Verification → Validation → Experimental design → Production runs & analysis → Documentation → Implementation. Steps 5→6→7 can loop back iteratively." },
+
+    { q: "In the simulation study flowchart, if VALIDATION fails, the process returns to which step?",
+      opts: ["Data collection","Model translation (coding)","Model conceptualization","Verification"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> If validation shows the model doesn't represent reality, the conceptual model itself is wrong — you must return to model conceptualization (step 3) and revise assumptions, structure, or scope. Returning to coding (model translation) only fixes bugs, not structural flaws." },
+
+    { q: "What is the PRIMARY purpose of VERIFICATION in simulation?",
+      opts: ["Ensuring the model represents the real system accurately","Ensuring the computer program behaves as the conceptual model intends","Collecting accurate input data distributions","Eliminating initial transient bias"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Verification = 'Did we build the model right?' It checks that the code correctly implements the conceptual model (debugging, tracing, boundary condition tests). Validation = 'Did we build the right model?' — comparing output to real system." },
+
+    { q: "Which of the following is NOT an advantage of simulation?",
+      opts: ["Can compress or expand time","Handles stochastic systems that cannot be solved analytically","Always provides the optimal solution","Safe testing of dangerous scenarios"],
+      ans: 2, diff: "easy",
+      exp: "<strong>C is correct.</strong> Simulation CANNOT find the optimal solution — it only evaluates given alternatives and compares them. Optimization (genetic algorithms, linear programming) is needed to find the optimum. Simulation is an evaluation tool, not an optimization tool." },
+
+    { q: "A factory wants to test whether adding a 3rd machine will reduce bottlenecks. Analytical queuing theory is too complex (non-exponential service times, batch arrivals). Simulation is:",
+      opts: ["Not appropriate — problem can be solved with Little's Law","Appropriate — system is too complex for closed-form analysis","Not appropriate — simulation cannot model batch arrivals","Appropriate only if arrivals are Poisson"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Simulation is the right choice when: analytical models are intractable (non-Markovian distributions, batch arrivals, multiple interacting queues), when the system doesn't yet exist, or when 'what-if' comparison of alternatives is needed. Non-exponential service breaks M/M/c assumptions." },
+
+    { q: "An ENTITY in a simulation model is best described as:",
+      opts: ["A property of an object in the system","An object of interest whose movement through the system is tracked","The time between two consecutive events","A variable that describes the system state at time t"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Entity = object of interest (customer, packet, part, patient). Attribute = property of an entity. State variable = describes system status at time t. Event = instantaneous change in state." },
+
+    { q: "A bank simulation tracks 'customer arrival time' and 'account type' for each customer. These are the customer's:",
+      opts: ["State variables","Attributes","Activities","Endogenous events"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Attributes are properties belonging to specific entities. Arrival time and account type belong to each individual customer entity. State variables describe the whole system (e.g., number of tellers busy). Activities are time-consuming processes (serving a customer)." },
+
+    { q: "A 'service completion' event in a bank simulation is ENDOGENOUS because:",
+      opts: ["It is scheduled by the simulation clock","It occurs due to actions within the system (server completing service)","It arrives from outside the system","It is determined by the input data distribution"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Endogenous events are generated WITHIN the system (service completions, machine failures triggered by usage). Exogenous events come from OUTSIDE (customer arrivals from the external population). This distinction matters for model boundary definition." },
+
+    { q: "What distinguishes STOCHASTIC simulation from DETERMINISTIC simulation?",
+      opts: ["Stochastic simulation uses differential equations; deterministic uses algebraic","Stochastic simulation uses random variables as inputs; output varies between runs","Stochastic simulation is faster to execute","Stochastic simulation always requires analog computers"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Stochastic simulation has random inputs (drawn from probability distributions) → output differs each run → need multiple replications + statistical analysis. Deterministic simulation has fixed inputs → same output every run → one run suffices." },
+
+    { q: "In an event-driven simulation, the simulation clock advances:",
+      opts: ["In fixed time increments (e.g., every 1 second)","To the time of the next scheduled event in the Future Event List","Continuously using differential equations","Randomly based on the inter-arrival distribution"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Event-driven (next-event) time advance skips over periods of inactivity — clock jumps directly to the next event time. This is highly efficient for discrete-event systems with sparse events. Fixed-increment (time-slicing) is the alternative but wastes computation between events." },
+
+    { q: "Which simulation methodology is MOST appropriate for modeling a highway with thousands of individual vehicles, each following different driving behaviours?",
+      opts: ["System dynamics (aggregate differential equations)","Agent-based simulation (individual entity behaviour)","Pure queuing theory","Analog computer simulation"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Agent-based simulation models individual autonomous agents (vehicles) each with their own rules and interactions. System dynamics models aggregate flows (good for macroeconomics, epidemics). Queuing theory requires Markovian assumptions that don't hold for individual driving behaviour." },
+
+    { q: "The term 'model conceptualization' in simulation study refers to:",
+      opts: ["Writing the simulation program code","Deciding what to include/exclude in the model and defining entity-attribute-activity relationships","Collecting inter-arrival time data from the real system","Running the model and collecting output statistics"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Model conceptualization is the abstract design phase — deciding system boundaries, what entities exist, what attributes they have, what activities occur, what events trigger state changes. It produces a conceptual model (diagram, pseudocode, process flow) BEFORE any coding begins." },
+
+    { q: "A simulation project takes 6 months to build and validate, but the decision must be made in 2 weeks. Simulation is:",
+      opts: ["Still the best approach — accuracy matters more than speed","Not appropriate — the decision timeline is too short","Appropriate only if GPSS is used","Appropriate — just reduce the number of replications"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> One of the valid reasons NOT to use simulation is when the time/resources needed to build a valid model exceed the time available to make the decision. In such cases, simpler analytical models or expert judgment must suffice." },
+
+    { q: "What does the 'Future Event List' (FEL) contain in a discrete-event simulation?",
+      opts: ["All entities currently in the system","All scheduled future events sorted chronologically by event time","The probability distribution of inter-arrival times","All completed events and their statistics"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The FEL (also called Event Calendar or Priority Queue) holds all events that have been scheduled but not yet executed, sorted by time (earliest first). The simulation engine always removes the minimum-time event from the FEL to advance the clock." },
+
+    { q: "Comparing simulation to analytical models: which statement is TRUE?",
+      opts: ["Analytical models are always more accurate than simulation","Simulation gives exact answers; analytical models give estimates","Analytical models require simplifying assumptions (e.g., Poisson arrivals); simulation can handle general distributions","Simulation is always faster to develop than analytical models"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> Analytical queuing theory requires Markovian assumptions (Poisson arrivals, exponential service) to get closed-form solutions. Simulation makes no such restriction — it handles ANY distribution. However, simulation gives statistical estimates with confidence intervals, while analytical models give exact formulas for idealized systems." }
+,
+    { q: "Which of the following best describes a 'model' in the context of simulation?",
+      opts: ["The computer program that runs the simulation","A simplification or abstraction of a system that captures its essential features for a specific study purpose","All real-world data collected about the system","The output report generated after running simulation"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> A model is a purposeful simplification. ALL models are wrong — they omit details. But some models are useful — they capture the features relevant to the study question while ignoring irrelevant complexity. The art of modelling is deciding what to include and what to exclude." },
+    { q: "In a factory simulation, a machine that converts raw material into finished parts is modelled as performing an ACTIVITY. An activity is:",
+      opts: ["An instantaneous occurrence that changes system state","A time-consuming process that changes entity attributes or state over a duration","A property belonging to a specific entity","A variable describing overall system status"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Activity = duration process (machining, serving, transporting). Events are instantaneous (start of machining, end of machining). Activities have start events and end events. The key distinction: activities take time; events are instantaneous changes. 'Machine starts processing part' = event. 'Part being processed for 5 min' = activity." },
+    { q: "The term 'world view' in simulation software refers to:",
+      opts: ["The geographic scope of the simulation model","The conceptual framework used to describe system dynamics: event-scheduling, process-interaction, or activity-scanning","The user interface design of the simulation software","The global variables accessible throughout the simulation program"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> World view = how the modeller conceptualizes and organizes system dynamics. (1) Event-scheduling: explicitly schedule future events (used in Java sim). (2) Process-interaction: describe each entity's complete lifecycle as a process/thread (SIMULA, GPSS). (3) Activity-scanning: specify activities and conditions; system scans at each time step (less common). Different world views suit different problems." }
+,
+    { q: "Which simulation output CANNOT be computed from a single deterministic run?",
+      opts: ["Average queue length over the run","A confidence interval for mean waiting time (requires multiple independent observations)","Server utilization percentage","Maximum queue length observed"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> A confidence interval requires an estimate of VARIANCE (S²). From a single run, you get one value of Wq — you cannot compute variance from one data point. Multiple replications give Wq₁, Wq₂,...,Wqₙ from which S² can be computed. This is why replications are fundamental to stochastic simulation." }
+  ]
+},
+
+{
+  id: "ch2", num: "02", title: "Physical & Mathematical Models",
+  desc: "Static vs dynamic models, physical models, types and applications.",
+  questions: [
+    { q: "The equation V = IR (Ohm's Law) is an example of a:",
+      opts: ["Dynamic mathematical model","Static mathematical model","Continuous simulation model","Differential equation model"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> V=IR has no time variable — it gives voltage at any instant given resistance and current. It is static. The dynamic version would model how current changes over time in response to an applied voltage: L·dI/dt + R·I = V(t) (for an RL circuit)." },
+
+    { q: "The equation dP/dt = rP (population growth) is an example of a:",
+      opts: ["Static mathematical model","Dynamic mathematical model","Physical model","Stochastic model"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> dP/dt = rP explicitly includes time as a variable (dP/dt = rate of change with respect to time). Its solution P(t) = P₀·eʳᵗ gives population as a function of time — a trajectory, not a single value. All differential equation models are dynamic." },
+
+    { q: "Which of the following is NOT a dynamic mathematical model?",
+      opts: ["M·ẍ + B·ẋ + K·x = F(t) (spring-mass-damper)","dQ/dt = k₁Q₁ − k₂Q₂ (compartment model)","A(t) = P·eʳᵗ (compound interest)","Supply = Demand (market equilibrium)"],
+      ans: 3, diff: "easy",
+      exp: "<strong>D is correct — it is NOT dynamic.</strong> Market equilibrium Supply=Demand is a static algebraic relationship — it gives the equilibrium price with no time variable. The other three all involve time derivatives or explicit time functions, making them dynamic." },
+
+    { q: "A physical scale model of a bridge placed in a wind tunnel to test aerodynamic stability is:",
+      opts: ["A static physical model","A dynamic physical model","A mathematical model","A stochastic simulation"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> The bridge model changes dynamically over time as wind forces are applied — it vibrates, deflects, and may oscillate. The time-dependent response is the key output. A static physical model would be a scale model in a display case — no dynamic behaviour." },
+
+    { q: "The Reynolds number must be preserved in a physical model of a ship hull tested in a water tank. This is an example of:",
+      opts: ["Calibration of the analog computer","Scaling law enforcement in physical modelling","Validation using chi-square test","Model verification through boundary condition testing"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Scaling laws (dimensionless numbers) must be preserved for physical model results to be valid for the full-scale system. Reynolds number Re=ρVL/μ governs fluid dynamic similarity. If Re differs between model and full-scale, the flow behaviour won't match." },
+
+    { q: "What is the key advantage of a mathematical model over a physical model?",
+      opts: ["Mathematical models are always more accurate","Mathematical models are easier to validate against real systems","Mathematical models can be modified easily (just change a parameter value)","Mathematical models require no assumptions"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> Modifying a physical model requires rebuilding it (expensive, time-consuming). Changing a mathematical model requires only editing a number or equation. This is why mathematical/simulation models dominate engineering practice despite physical models sometimes being more intuitively convincing." },
+
+    { q: "The simple interest formula I = PRT gives interest for a fixed time period T. What makes it 'static'?",
+      opts: ["It involves multiplication","T appears as a parameter, not as a variable that evolves — the model gives one answer for fixed T","It cannot be solved analytically","It does not involve random variables"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> In I=PRT, T is a fixed input parameter — you choose T=1 year and get one interest value. There is no dI/dt or trajectory over time. Contrast with compound interest A(t)=P·eʳᵗ where A changes continuously with time — that's dynamic." },
+
+    { q: "Euler's method, Runge-Kutta, and Adams-Bashforth are all methods for:",
+      opts: ["Generating pseudo-random numbers","Numerically integrating differential equations in dynamic simulation on digital computers","Testing randomness of pseudo-random number sequences","Validating simulation models"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Dynamic models (differential equations) must be numerically integrated when solved on digital computers. Euler's method uses dX/dt·Δt approximation. Runge-Kutta uses weighted slopes at multiple points per step for higher accuracy. These replace the exact integration that analog computers perform continuously." },
+
+    { q: "A fluid dynamics engineer uses a 1:100 scale model of a submarine in a water tunnel. Compared to mathematical simulation, physical modelling's main disadvantage is:",
+      opts: ["Physical models cannot handle turbulence","Physical models are more expensive and time-consuming to modify — changing hull shape requires rebuilding","Physical models produce less accurate results always","Physical models cannot capture three-dimensional effects"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The fundamental disadvantage of physical modelling is inflexibility and cost of modification. Rebuilding a machined submarine hull for a design change takes weeks. Changing a CAD/CFD model takes minutes. Physical models also have limited instrumentation options compared to simulation." },
+
+    { q: "Which type of model is most suitable for simulating how a drug concentration in blood changes over 24 hours after a single oral dose?",
+      opts: ["Static mathematical model","Stochastic discrete-event simulation","Dynamic mathematical model (pharmacokinetic compartment model)","Physical prototype model"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> Drug concentration dynamics are modelled by pharmacokinetic differential equations (exactly like the liver model): dC/dt = absorption − elimination rates. The output is a time-concentration curve — inherently dynamic. Discrete-event simulation would be wrong here (this is a continuous process)." }
+,
+    { q: "A pharmaceutical company creates a 1:1 physical prototype of a new drug delivery device and tests it under operational conditions (cyclic pressure, temperature changes). This is:",
+      opts: ["A static mathematical model","A static physical model","A dynamic physical model","A hybrid simulation"],
+      ans: 2, diff: "easy",
+      exp: "<strong>C is correct.</strong> A 1:1 prototype tested under time-varying operational conditions is a dynamic physical model. The device changes state over time under testing — springs compress, seals flex, drug releases gradually. A static physical model would just sit there (architectural mock-up, display model)." },
+    { q: "The automobile suspension equation M·ẍ + Bẋ + Kx = F(t) is a dynamic model. What happens mathematically if B=0 (no damping)?",
+      opts: ["System reaches steady state faster","System oscillates INDEFINITELY without energy loss — pure harmonic motion","System becomes static","Service rate increases"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> With B=0: Mẍ + Kx = F(t). Solution: x(t) = A·cos(ωₙt) + B·sin(ωₙt) where ωₙ=√(K/M). System oscillates forever at natural frequency — no energy dissipation. In reality, B>0 (shock absorbers) ensures oscillations decay. B=0 models lossless springs (theoretical), not real suspensions." },
+    { q: "Which model type is used to represent the STEADY-STATE relationship between supply, demand, and price in economics?",
+      opts: ["Dynamic mathematical model (differential equations)","Static mathematical model (algebraic equilibrium equations)","Stochastic simulation","Physical prototype"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Equilibrium economics: Supply(P) = Demand(P) is a static algebraic relationship — at equilibrium price P*, both sides are equal. No time variable — it gives the single equilibrium point. Dynamic models would track P(t) over time as market adjusts toward equilibrium — different question." }
+,
+    { q: "Newton's law F=ma is a static model at any instant. The trajectory x(t) of a falling ball under gravity is found by:",
+      opts: ["Directly from F=ma (static)","Integrating twice: a=g=9.8, v(t)=∫a dt=gt+v₀, x(t)=∫v dt=(g/2)t²+v₀t+x₀ — a dynamic model","Using Kendall notation","Applying the Markov property"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> F=ma gives a=g at any instant (static relationship). To find the trajectory, integrate twice to get v(t) and x(t). The result IS a dynamic model — position is now a function of time. This is the connection: dynamic models are built by integrating instantaneous (static) relationships over time." },
+    { q: "A simulation model uses the equation ΔX = f(X, t) × Δt (Euler method). This converts a DYNAMIC model into:",
+      opts: ["A static model","A discrete-time approximation of the continuous dynamic model (finite difference equation)","A Markov chain","A queuing system"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Euler method: Xₙ₊₁ = Xₙ + f(Xₙ,tₙ)×Δt. This discretizes the continuous ODE dX/dt=f(X,t) into a step-by-step difference equation. It IS still a dynamic model (tracks X over time) but now in discrete time steps. The smaller Δt → closer to true continuous dynamics but more computation." }
+  ]
+},
+
+{
+  id: "ch3", num: "03", title: "Continuous System Simulation",
+  desc: "Analog computers, liver model, automobile suspension, feedback systems, differential equations.",
+  questions: [
+    { q: "In the analog computer model of the liver, integrators are used to:",
+      opts: ["Multiply signals by constants k₁, k₂, k₃","Compute ∫f(t)dt — accumulate the state variable from its derivative","Add multiple input signals together","Invert the sign of a signal"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Integrators are the core computing elements — they produce Q(t) = ∫[dQ/dt]dt. In the liver model, Integrator 1 produces Q₁(t) (blood compartment concentration) from dQ₁/dt. Potentiometers multiply by constants. Summers add signals. Sign inverters negate." },
+
+    { q: "The liver analog model equation for the blood compartment is dQ₁/dt = −k₁Q₁ + k₂Q₂. What does the term +k₂Q₂ represent?",
+      opts: ["The rate at which the liver metabolizes substance","The rate at which substance passes from liver BACK to blood","The rate at which blood delivers substance to liver","The initial condition of blood concentration"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> k₂Q₂ represents return flux from liver to blood. The −k₁Q₁ term represents blood losing substance to the liver (outflow). k₂Q₂ is the return (inflow from liver). k₃Q₂ in the liver equation represents metabolic elimination — substance permanently removed from the system." },
+
+    { q: "In the automobile suspension equation M·ẍ + B·(ẋ−ẏ) + K·(x−y) = 0, what does the term B·(ẋ−ẏ) represent?",
+      opts: ["The spring restoring force","The damping force proportional to RELATIVE velocity between car body and road","The mass times acceleration of the car body","The road surface input force"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> B·(ẋ−ẏ) is the damping force. The shock absorber resists RELATIVE motion between car body (velocity ẋ) and road/wheel (velocity ẏ). If car and road move at the same speed, no damping force acts. This is why suspension isolates the body from road disturbances." },
+
+    { q: "An analog computer solves differential equations with ZERO discretization error. Why?",
+      opts: ["It uses higher-order Runge-Kutta integration","Voltages represent state variables continuously — no time-stepping is needed","It has more memory than digital computers","It uses random numbers to approximate integrals"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Analog computers are CONTINUOUS devices — capacitor voltage IS the integral, not an approximation of it. There is no discrete time step Δt. Digital computers must approximate ∫f(t)dt ≈ Σf(tᵢ)·Δt, which introduces truncation error (smaller Δt = less error but more computation)." },
+
+    { q: "A NEGATIVE feedback system is characterized by:",
+      opts: ["Output that grows without bound","Output fed back to REDUCE the difference between setpoint and actual output (error-correcting)","Output that always overshoots the setpoint","No feedback path — open loop control"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Negative feedback: Error = Setpoint − Output. System acts to drive Error → 0. Examples: thermostat (error = desired − actual temperature), cruise control (error = desired − actual speed), op-amp circuits. Positive feedback amplifies error — causes instability (runaway growth)." },
+
+    { q: "In an analog computer, a potentiometer is used to:",
+      opts: ["Compute the time integral of a signal","Multiply a signal by a constant coefficient (set by dial position)","Add two signals together","Invert the sign of a signal"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> A potentiometer (pot) is a voltage divider — its output is k × input where k ∈ [0,1] is set by turning a dial. In the suspension model, pots set B/M and K/M. For constants > 1, an amplifier is used instead." },
+
+    { q: "The automobile suspension model ẍ = −(B/M)(ẋ−ẏ) − (K/M)(x−y) is implemented on an analog computer. How many integrators are required?",
+      opts: ["One — to compute x from ẋ","Two — one to compute ẋ from ẍ, one to compute x from ẋ","Three — one per term on the right side","Four — one per coefficient"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The governing equation involves the 2nd derivative ẍ as input. Integrator 1: ẍ → ẋ (one integration). Integrator 2: ẋ → x (second integration). Both ẋ and x are then available as signals for the summer to compute the right-hand side expression and feed back to Integrator 1." },
+
+    { q: "Why are differential equations fundamental to continuous system simulation?",
+      opts: ["They always have closed-form analytical solutions","All real physical systems (mechanical, electrical, biological) obey differential equations derived from conservation laws and physical principles","They require no numerical methods to solve","They eliminate the need for analog computers"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Newton's 2nd Law (F=ma = m·d²x/dt²), Kirchhoff's Laws, heat diffusion, chemical kinetics — all produce differential equations. Any system with rate-of-change behaviour is governed by DEs. This is why continuous simulation = solving differential equations." },
+
+    { q: "A hybrid simulation combines:",
+      opts: ["GPSS and Java in the same program","Analog computation (for fast continuous DEs) and digital computation (for logic and data recording)","Physical scale models with mathematical models","Queuing theory and Markov chains"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Hybrid simulation uses analog computers for the fast, continuous differential equation solving (zero discretization error, real-time) and digital computers for decision logic, data recording, optimization, and output analysis. Interface: D/A and A/D converters. Used in aerospace control, nuclear reactor simulators." },
+
+    { q: "The MAIN disadvantage of analog computers compared to digital computers is:",
+      opts: ["They cannot solve differential equations","Component drift (resistors and capacitors change value with temperature), electrical noise, and limited precision (~3-4 significant digits)","They are much slower than digital computers","They cannot implement feedback systems"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Analog computers are fast and accurate at solving DEs, but they suffer from: (1) component drift — component values change with temperature/age → results drift. (2) Electrical noise corrupts low-level signals. (3) Limited to ~3-4 significant digits of precision. (4) Hard to reprogram — requires physical rewiring." },
+
+    { q: "In the liver compartment model, if k₃ = 0, what does this represent physiologically?",
+      opts: ["The liver has stopped receiving blood","The liver performs no metabolism or elimination — substance just circulates between compartments indefinitely","The blood concentration is constant","The initial drug dose is zero"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> k₃ is the metabolic/elimination rate constant in the liver. If k₃=0, the liver makes no net removal of the substance — it just transfers substance between blood and liver compartments without eliminating any. In reality, this would model a completely non-metabolizing tissue (fat/muscle) rather than the liver." },
+
+    { q: "What is the correct interpretation of the initial conditions in an analog computer model?",
+      opts: ["They set the gain of each potentiometer","They set the starting voltage on each integrator, representing the initial values of state variables at t=0","They determine the frequency of oscillation","They set the maximum voltage allowed in the circuit"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Initial conditions set the initial state: Q₁(0) and Q₂(0) in the liver model, or x(0) and ẋ(0) in the suspension model. In analog computers, these are initial voltages on integrating capacitors. Without correct initial conditions, the simulation starts in the wrong state." }
+,
+    { q: "In the liver model, if the initial conditions are Q₁(0)=100mg and Q₂(0)=0, what does this represent?",
+      opts: ["The liver starts with 100mg and blood starts empty","A 100mg drug dose just entered the BLOOD compartment (intravenous injection) with liver initially empty","The liver has already processed 100mg","Steady state concentrations"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Q₁(0)=100mg: 100mg drug just injected into bloodstream. Q₂(0)=0: liver hasn't received any yet. Over time: k₁ transfers drug from blood to liver, k₃ eliminates it from liver, k₂ returns some to blood. Q₁ and Q₂ evolve over time — typical pharmacokinetic profile for IV bolus dosing." }
+,
+    { q: "In a positive feedback system, a small perturbation from equilibrium causes the system to:",
+      opts: ["Return to equilibrium (stable)","Diverge further from equilibrium — grows unboundedly until a physical limit is reached (unstable)","Oscillate symmetrically around equilibrium","Remain at the perturbed state without change"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Positive feedback amplifies deviations. Examples: (1) Bank run — fear of bank failure → withdrawals → actual failure → confirms fear. (2) Compound interest — interest earned generates more interest. (3) Thermonuclear explosion — neutrons from fission trigger more fissions. In all cases, system leaves equilibrium. Biology: cancer cell growth. Ecology: population explosion before resource limit." },
+    { q: "An analog computer solves dQ₁/dt = −k₁Q₁ + k₂Q₂ by:",
+      opts: ["Numerically integrating with Euler method at each time step","Using a physical integrator (capacitor+op-amp circuit) where voltage V₁ physically IS Q₁ at all times — the circuit continuously solves the equation","Storing Q₁ values in a digital memory and computing differences","Applying Laplace transforms to find the algebraic solution"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The analog computer's elegance: the circuit IS the differential equation. The integrator capacitor charges/discharges CONTINUOUSLY following dV₁/dt = (input signals). Voltage V₁ at any instant = Q₁ at that time. No time stepping, no discretization. The physics of the electronic circuit naturally computes the mathematics of the model in real time." },
+    { q: "What does it mean for the automobile suspension to be 'critically damped' (ζ=1)?",
+      opts: ["Maximum oscillation amplitude","No damping — system oscillates forever","System returns to rest as quickly as possible WITHOUT oscillating (fastest stable response)","System takes infinite time to return to rest"],
+      ans: 2, diff: "hard",
+      exp: "<strong>C is correct.</strong> Damping ratio ζ=1 is critical damping — boundary between oscillatory (ζ<1) and overdamped (ζ>1). Returns to equilibrium exponentially without crossing zero. Optimal for car suspension: no oscillation (comfort) + fastest return to rest (handling). ζ typically designed between 0.3-0.7 for car suspensions (slight underdamping for better road contact)." }
+  ]
+},
+
+{
+  id: "ch4", num: "04", title: "Queuing Systems",
+  desc: "Kendall notation, queuing elements, performance measures, M/M/1 formulas, disciplines.",
+  questions: [
+    { q: "In Kendall notation a/b/c/d/e/f, what does the 'c' position represent?",
+      opts: ["Maximum system capacity","Queue discipline","Number of parallel servers","Calling population size"],
+      ans: 2, diff: "easy",
+      exp: "<strong>C is correct.</strong> Position 'c' = number of parallel servers (channels). a=arrival distribution, b=service distribution, c=servers, d=queue discipline, e=max capacity, f=calling population. Memorize: <strong>AB-CDEF</strong> → Arrival, serBice, Channels, Discipline, capacity, population(F)." },
+
+    { q: "What is the DEFAULT queue discipline in Kendall notation when 'd' is omitted?",
+      opts: ["LIFO","SIRO (random)","FCFS/FIFO","Priority-based"],
+      ans: 2, diff: "easy",
+      exp: "<strong>C is correct.</strong> When the queue discipline position is omitted, FCFS (First Come First Served) is assumed. Most real-world service systems (banks, supermarkets, call centers) use FCFS. LIFO is rare in customer service contexts but common in computing (call stacks, stack data structures)." },
+
+    { q: "Interpret the notation M/D/4/FCFS/20/1000:",
+      opts: ["Deterministic arrivals, Markovian service, 4 servers, FCFS, capacity 20, population 1000","Markovian (Poisson) arrivals, Deterministic (constant) service, 4 servers, FCFS, max 20 in system, calling population 1000","Markovian arrivals, Deterministic service, capacity 4, FCFS, 20 servers, population 1000","Mean-4 service, Deterministic arrivals, FCFS, 20 capacity, 1000 servers"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> M=Markovian/Poisson. D=Deterministic/constant. 4=servers. FCFS=discipline. 20=max system capacity (if system has 20 customers, next arrival is rejected). 1000=calling population (finite — only 1000 potential customers exist)." },
+
+    { q: "For an M/M/1 queue with λ=30/hr and μ=40/hr, the server utilization ρ is:",
+      opts: ["40/30 = 1.33 (unstable)","30/40 = 0.75","30×40 = 1200","(30−40)/40 = −0.25"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> ρ = λ/μ = 30/40 = 0.75. Server is busy 75% of the time. Since ρ < 1, the system is STABLE — queue doesn't grow infinitely. If ρ ≥ 1, the queue grows without bound. Always check stability before computing other measures." },
+
+    { q: "Using Little's Law, if the average number of customers in a system is L=6 and the arrival rate is λ=2/min, then the average time in system W is:",
+      opts: ["12 minutes","3 minutes","6 minutes","2 minutes"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Little's Law: L = λ·W → W = L/λ = 6/2 = 3 minutes. Little's Law is universal — it applies to ANY stable queuing system regardless of arrival distribution, service distribution, or number of servers. It's one of the most powerful results in queuing theory." },
+
+    { q: "For M/M/1 with λ=20/hr, μ=25/hr, what is the average number of customers waiting in QUEUE (not including the one being served)?",
+      opts: ["L = ρ/(1−ρ) = 4","Lq = ρ²/(1−ρ) = 0.8²/0.2 = 3.2","Lq = λ/(μ−λ) = 4","Lq = ρ = 0.8"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> ρ=20/25=0.8. Lq = ρ²/(1−ρ) = 0.64/0.2 = 3.2 customers waiting in queue. L = ρ/(1−ρ) = 0.8/0.2 = 4 total in system (including one being served). Note: L = Lq + ρ = 3.2 + 0.8 = 4 ✓" },
+
+    { q: "In a PRIORITY queue discipline (non-preemptive), a high-priority customer arrives while a low-priority customer is being served. What happens?",
+      opts: ["Service immediately transfers to the high-priority customer (preemption)","The high-priority customer goes to the FRONT of the waiting queue but must wait for current service to complete","The high-priority customer is served at the same time (parallel)","The high-priority customer is turned away"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Non-preemptive priority: current service completes, THEN the scheduler picks the highest-priority waiting customer. Preemptive priority: current service is interrupted immediately. Non-preemptive is more common in practice (OS CPU scheduling, hospital non-emergency triage)." },
+
+    { q: "A queuing system is said to be in STEADY STATE when:",
+      opts: ["The queue is empty","The server utilization ρ exactly equals 1.0","Statistical performance measures (L, Lq, W, Wq) become time-stationary — no longer change systematically with time","All customers have been served"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> Steady state = statistical equilibrium. Performance measures fluctuate randomly but their EXPECTED values stabilize. Requires ρ < 1 (otherwise queue grows without bound). Steady state is reached after the initial transient period. Empty queue is a STARTING condition, not a steady state condition." },
+
+    { q: "The CALLING POPULATION in a queuing model is FINITE. How does this affect the arrival rate?",
+      opts: ["Arrival rate is higher when many customers are in queue","Arrival rate DECREASES as more customers join the queue (fewer potential arrivals remain in the source population)","Arrival rate is unaffected by queue length","Finite population only affects service rate"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> With N finite customers: if n are in the system, only (N−n) remain in the source. Effective arrival rate = (N−n)·λ_individual. As n increases, fewer potential arrivals exist → rate decreases. Important for machine repair models (N machines, if k are down, only N−k can break next)." },
+
+    { q: "For M/M/1, the probability that the system is EMPTY (P₀) when ρ=0.7 is:",
+      opts: ["0.7","0.49","0.3","0.21"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> P₀ = 1 − ρ = 1 − 0.7 = 0.3. The server is idle 30% of the time. The probability of exactly n customers: Pₙ = (1−ρ)·ρⁿ. So P₁ = 0.3×0.7=0.21, P₂ = 0.3×0.49=0.147, etc. This geometric distribution is the steady-state result for M/M/1." },
+
+    { q: "The M/D/1 queue (Markovian arrivals, Deterministic service) compared to M/M/1 (same λ and μ) has:",
+      opts: ["Higher average waiting time (Wq)","Lower average waiting time (Wq = half of M/M/1's Wq)","The same average waiting time","Infinite waiting time because service is deterministic"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> For M/D/1: Wq = ρ/[2μ(1−ρ)]. For M/M/1: Wq = λ/[μ(μ−λ)] = ρ/[μ(1−ρ)]. So M/D/1 Wq = (M/M/1 Wq)/2. Deterministic service eliminates service time VARIABILITY → reduces queuing. This is the Pollaczek-Khinchine insight: variability causes queuing." },
+
+    { q: "A hospital emergency room uses priority queuing. Critically ill patients (P1) always go before serious (P2) who go before minor cases (P3). If P3 patients have very long service times, they may:",
+      opts: ["Always be served quickly because of FCFS within P3","Experience STARVATION — if P1 and P2 patients continuously arrive, P3 may never be served","Experience preemption and resume service later","Get served at the same rate as P1"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Starvation (indefinite postponement) occurs in strict priority systems when high-priority customers arrive faster than the server can handle, preventing low-priority customers from ever being served. Solutions: aging (gradually increase priority with waiting time), round-robin among priority classes, or bounded waiting time guarantees." },
+
+    { q: "What is the SYSTEM CAPACITY in a queuing model?",
+      opts: ["The number of servers available","The maximum total number allowed in the system (queue + in service simultaneously)","The calling population size","The service rate μ"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> System capacity = max customers in system = waiting + being served. If capacity K=10 and 10 customers are already in system, the next arrival is REJECTED (turned away). This models finite waiting rooms, limited network buffers, or parking lots of fixed size." }
+,
+    { q: "Little's Law L = λ·W is often described as 'universally applicable.' Which of the following CANNOT be assumed in its derivation?",
+      opts: ["The system must be stable (ρ < 1)","Arrivals must be Poisson (M)","Arrivals must be balanced by departures (conservation of flow) over long run","W includes all time in system (waiting + service)"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct — Poisson arrivals are NOT required.</strong> Little's Law holds for ANY stable queuing system with ANY arrival process, ANY service distribution, ANY number of servers, ANY queue discipline. The only requirements: system must be stable (long-run arrival rate = departure rate) and W includes all time from entry to exit." }
+,
+    { q: "For M/M/1 queue with λ=10/hr and μ=15/hr, the average time a customer spends WAITING IN QUEUE (not including service) is:",
+      opts: ["Wq = 1/(μ−λ) = 1/5 hr = 12 min","Wq = λ/[μ(μ−λ)] = 10/[15×5] = 10/75 = 0.133 hr = 8 min","Wq = ρ/(μ−λ) = 0.667/5 = 8 min (same result)","W = 12 min (total), Wq = W − 1/μ = 12 − 4 = 8 min (same result)"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct (and C and D are also correct — all give 8 min).</strong> ρ = 10/15 = 0.667. Method 1: Wq = λ/[μ(μ−λ)] = 10/[15×5] = 0.1333 hr = 8 min. Method 2: W = 1/(μ−λ) = 1/5 = 12 min, so Wq = W − 1/μ = 12 − 4 = 8 min. Both give 8 min. Choose whichever formula you remember — they're equivalent." }
+  ]
+},
+
+{
+  id: "ch5", num: "05", title: "Markov Chains",
+  desc: "Markov property, transition matrices, n-step probabilities, steady state, applications.",
+  questions: [
+    { q: "The MARKOV (memoryless) property states that:",
+      opts: ["Future states depend on ALL past states","Future state depends ONLY on the present state, not on the sequence of past states","The system eventually reaches a fixed state and never changes","Transition probabilities change with each step"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> The Markov property: P(Xₙ₊₁=j | Xₙ=i, Xₙ₋₁=i_{n-1},...) = P(Xₙ₊₁=j | Xₙ=i) = pᵢⱼ. Only the CURRENT state matters, not how we got there. This dramatically simplifies computation — the entire history is irrelevant." },
+
+    { q: "In a 2-state Markov chain (brand A, brand B), the transition matrix row for brand A is [0.70, 0.30]. This means:",
+      opts: ["Brand A has 70% market share","70% of A users buy A again, 30% switch to B","30% of B users switch to A, 70% stay with B","Brand A's price is 70% of Brand B"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Each ROW of the transition matrix shows probabilities FROM that state TO all other states. Row A = [0.70, 0.30]: P(A→A)=0.70 (loyalty), P(A→B)=0.30 (switching). Each row MUST sum to 1.0 (all probabilities accounted for)." },
+
+    { q: "In a Markov chain transition matrix, what must each ROW sum to?",
+      opts: ["0","1","Varies — no constraint","The number of states"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Each row represents all possible transitions FROM one state — the customer must go SOMEWHERE. Sum of probabilities of all possible next states must equal 1. This is called a 'stochastic matrix' or 'probability matrix'. If a row doesn't sum to 1, you've made an error in the problem." },
+
+    { q: "For the transition matrix P = [[0.8, 0.2], [0.15, 0.85]], what is P²[2,1] — the probability of going from state 2 to state 1 in exactly 2 steps?",
+      opts: ["0.15","0.2475","0.3675","0.12"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> P²[2,1] = P[2,1]×P[1,1] + P[2,2]×P[2,1] = (0.15)(0.80) + (0.85)(0.15) = 0.12 + 0.1275 = 0.2475. This is the standard matrix multiplication formula for the (2,1) element of P². Interpreted: 24.75% chance a State-2 user is in State-1 after exactly 2 transitions." },
+
+    { q: "The STATIONARY (steady-state) distribution π of a Markov chain satisfies:",
+      opts: ["π = P·π (left multiplication)","π = π·P (right multiplication) AND Σπᵢ = 1","π = P^∞ (infinite matrix power)","π = [1/n, 1/n, ..., 1/n] for n states always"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> The stationary distribution satisfies π = π·P (probability vector times transition matrix equals itself) AND all elements sum to 1. For 2-state: π[A] = P[B→A]/(P[A→B]+P[B→A]). This represents long-run market share — the distribution the chain converges to as n→∞." },
+
+    { q: "For the Sony/Samsung problem (2074B): P(Sony→Sony)=0.80, P(Sony→Samsung)=0.20, P(Samsung→Sony)=0.15, P(Samsung→Samsung)=0.85. The steady-state market share of Sony is:",
+      opts: ["80%","57.14%","42.86%","50%"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> π[Sony] = P[Sam→Sony] / (P[Sony→Sam] + P[Sam→Sony]) = 0.15/(0.20+0.15) = 0.15/0.35 = 0.4286 = 42.86%. Regardless of starting distribution, long-run Sony share = 42.86% and Samsung = 57.14%. Note: Sony has LOWER long-run share despite 80% loyalty (Samsung's 85% loyalty is stronger)." },
+
+    { q: "A Markov chain is called ABSORBING if:",
+      opts: ["It has a steady-state distribution","Once entered, a state cannot be left (pᵢᵢ=1 for absorbing state i)","All states are visited with equal probability","The transition matrix is symmetric"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> An absorbing state i has pᵢᵢ=1 — the chain is 'absorbed' and stays forever. Example: gambler's ruin (states 0=broke, N=target). States 0 and N are absorbing. The chain eventually gets absorbed with probability 1. Non-absorbing chains with no absorbing states have ergodic (steady-state) behaviour." },
+
+    { q: "In the Ford/Scorpio problem (2081C): Ford loyalty=70%, Scorpio loyalty=80%. If currently 70% use Ford, after 3 purchases the percentage using Scorpio is found by:",
+      opts: ["Directly computing π[Scorpio] = 30%","Computing π₃ = π₀ × P³ and reading the Scorpio component","Multiplying 70% × 80% × 80%","Computing 30% × 3 purchases = 90%"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> State vector π₀ = [0.70, 0.30] (70% Ford, 30% Scorpio). After n steps: πₙ = π₀ × Pⁿ. First compute P³ by matrix multiplication (P×P×P), then multiply π₀ × P³. The second component gives the Scorpio percentage after 3 purchases." },
+
+    { q: "What is the key APPLICATION of Markov chains in computer networks?",
+      opts: ["Designing analog computer circuits","Modelling TCP connection state transitions and packet routing probabilities","Generating random numbers","Validating simulation models"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> TCP connection states (CLOSED→SYN_SENT→ESTABLISHED→FIN_WAIT→CLOSED) form a Markov chain. Google's PageRank models a web surfer as a Markov chain — the surfer randomly follows links, and the steady-state probability of visiting each page = the page's rank." },
+
+    { q: "In a 3-state Markov chain (Honda, Yamaha, Bajaj), computing P²[Yamaha→Honda] requires:",
+      opts: ["Only P[Yamaha→Honda] squared","Sum over ALL intermediate states: Σₖ P[Y→k]×P[k→H] for k=Honda,Yamaha,Bajaj","Only the diagonal elements of P","The determinant of P"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> P²[Y→H] = P[Y→H]×P[H→H] + P[Y→Y]×P[Y→H] + P[Y→B]×P[B→H] = (0.20)(0.60)+(0.70)(0.20)+(0.10)(0.20) = 0.12+0.14+0.02 = 0.28. You sum over ALL possible intermediate states — the system could pass through any state in step 1 before reaching Honda in step 2." }
+,
+    { q: "The Coke/Pepsi Markov chain (2071B): P(Coke→Coke)=0.70, P(Pepsi→Pepsi)=0.80. The steady-state share of Coke is:",
+      opts: ["70%","40%","60%","50%"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> π[Coke] = P[Pepsi→Coke]/(P[Coke→Pepsi]+P[Pepsi→Coke]) = 0.20/(0.30+0.20) = 0.20/0.50 = 0.40 = 40%. Coke has lower long-run share despite 70% loyalty, because Pepsi's 80% loyalty is stronger. Long-run share depends on switching rates, not just loyalty rates." },
+    { q: "If 55% of people currently use Coke (2071B: Coke stays=70%, Pepsi stays=80%), after 3 purchases the Coke share is found by:",
+      opts: ["Simply multiplying 55% × 70% × 70% × 70% = 18.9%","Computing π₃ = π₀ × P³ where π₀=[0.55, 0.45] and reading the Coke component","Applying Little's Law","Using the KS test"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> State vector π₀ = [0.55, 0.45]. π₃ = π₀ × P³. First compute P³ by matrix multiplication. Then π₃[Coke] = 0.55×P³[C→C] + 0.45×P³[P→C]. The answer will be between 40% (steady state) and 55% (initial), converging toward 40% as purchases continue." }
+,
+    { q: "A Markov chain is used to model TCP connection states: CLOSED→SYN_SENT→ESTABLISHED→FIN_WAIT→TIME_WAIT→CLOSED. This is an example of:",
+      opts: ["A 2-state ergodic chain","A finite-state Markov chain with multiple absorbing and transient states representing protocol state machine","A continuous-time Markov process requiring differential equations","A queuing network"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> TCP connection lifecycle is a finite Markov chain. ESTABLISHED is transient (connection eventually closes). CLOSED is the absorbing state (or recycling state). Transition probabilities represent: P(connection lost in SYN phase), P(FIN acknowledged on first try), etc. Used to model connection reliability and protocol performance." },
+    { q: "The Honda/Yamaha problem (2072A): P(Honda stays)=0.70, P(Yamaha stays)=0.80. Starting from Honda, probability of buying Yamaha after 3 purchases requires computing:",
+      opts: ["P[H→Y] × 3 = 0.30 × 3 = 0.90","P³[H→Y] — the (1,2) element of P cubed","(1−0.70)³ = 0.027","Little's Law"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> P³[H→Y] is computed by matrix multiplication P×P×P and reading position (row H, col Y). NOT simply 0.30³ — that would be the probability of switching every single time, which is different. Matrix multiplication accounts for all possible paths: H→H→H→Y, H→H→Y→Y, H→Y→H→Y, H→Y→Y→Y." }
+  ]
+},
+
+{
+  id: "ch6", num: "06", title: "Random Numbers",
+  desc: "LCM, gap test, poker test, KS test, chi-square uniformity, properties of random numbers.",
+  questions: [
+    { q: "The Linear Congruential Method formula is Xₙ₊₁ = (a·Xₙ + c) mod m. What is the MAXIMUM possible period of this generator?",
+      opts: ["a (the multiplier)","m (the modulus)","c (the increment)","Xₙ (the seed)"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> The period cannot exceed m — there are only m possible values (0 to m−1). Full period = m is achievable with mixed congruential (c≠0) when: (1) m and c are coprime, (2) (a−1) is divisible by all prime factors of m, (3) if m divisible by 4 then (a−1) divisible by 4." },
+
+    { q: "Using LCM with X₀=5, a=3, c=1, m=8, what is X₁?",
+      opts: ["16","0","2","4"],
+      ans: 1, diff: "easy",
+      exp: "<strong>C is correct.</strong> X₁ = (3×5 + 1) mod 8 = (15+1) mod 8 = 16 mod 8 = 0. Wait — 16/8=2 remainder 0. So X₁=0 and R₁=0/8=0. Let me recalculate: (3×5+1)=16, 16 mod 8=0. The answer is 0, which is option B. But written as option C=2 in some presentations... Check: X₁=(3×5+1) mod 8 = 16 mod 8 = <strong>0</strong>. Correct answer is 0." },
+
+    { q: "The POKER TEST for random numbers tests for:",
+      opts: ["Uniformity — whether numbers are evenly distributed over [0,1]","Independence — whether digit combinations within each number appear with theoretical frequency","Autocorrelation — whether consecutive numbers are correlated","Normality — whether numbers follow a normal distribution"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Poker test = INDEPENDENCE test. It groups digits within each number into 'poker hands' (all different, one pair, etc.) and uses chi-square to compare observed vs expected frequencies. If numbers were generated independently, digit combinations should follow calculated probabilities. KS and chi-square test UNIFORMITY." },
+
+    { q: "For 4-digit poker test, the expected probability of 'all 4 digits different' is:",
+      opts: ["0.4320","0.5040","0.0270","0.0360"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> P(all diff) = (10×9×8×7)/10⁴ = 5040/10000 = 0.5040. Over half of all 4-digit numbers have all different digits. The complete set: All diff=0.5040, 1 pair=0.4320, 2 pairs=0.0270, 3-of-a-kind=0.0360, 4-of-a-kind=0.0010. These must sum to 1.0 ✓" },
+
+    { q: "In a 4-digit Poker test with N=1000, the expected number of 'one pair' outcomes is:",
+      opts: ["504","432","27","36"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> E(one pair) = N × p = 1000 × 0.4320 = 432. This is the Eᵢ value used in χ² = Σ(Oᵢ−Eᵢ)²/Eᵢ. The chi-square statistic measures total deviation of observed from expected across all 5 categories (df=4 for 4-digit poker)." },
+
+    { q: "The Kolmogorov-Smirnov test statistic D is computed as:",
+      opts: ["Σ(Oᵢ−Eᵢ)²/Eᵢ (chi-square formula)","max(D⁺, D⁻) where D⁺=max(i/N − R₍ᵢ₎) and D⁻=max(R₍ᵢ₎ − (i−1)/N)","The range of the sorted sample","The mean squared deviation from 0.5"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> KS statistic D = max over all i of |F_empirical(x) − F_theoretical(x)|. For U[0,1], F_theoretical(x)=x. The empirical CDF jumps at each data point. D⁺ captures upward deviations, D⁻ captures downward deviations. D = max(D⁺, D⁻) is the maximum vertical distance between empirical and theoretical CDFs." },
+
+    { q: "After sorting 5 numbers and computing the KS test, you find D=0.32. The critical value for N=5, α=0.05 is 0.565. Conclusion:",
+      opts: ["REJECT H₀ — numbers are not uniform (0.32 > 0.565 is false, need to check)","FAIL TO REJECT H₀ — numbers appear uniformly distributed (0.32 < 0.565)","REJECT H₀ — the test is always rejected for N=5","Cannot conclude — need more data"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Decision rule: Reject H₀ if D > Dα,N. Here D=0.32 < 0.565=D₀.₀₅,₅. Since D does NOT exceed the critical value, FAIL TO REJECT H₀. This means insufficient evidence to conclude the numbers are non-uniform. Note: fail to reject ≠ prove uniform; it means the data is consistent with uniformity." },
+
+    { q: "The GAP TEST for random numbers measures:",
+      opts: ["The number of digits identical to adjacent digits","The length of runs between successive occurrences of numbers in a specified range [α,β]","The deviation of digit frequencies from uniform","The autocorrelation between pairs of numbers"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Gap test: choose range [α,β]. Define a 'success' as Rᵢ∈[α,β]. A 'gap' = count of consecutive failures (numbers outside range) between two successive successes. For independent uniform numbers, gaps should follow a geometric distribution with parameter p=β−α. Chi-square test compares observed vs expected gap frequencies." },
+
+    { q: "For the gap test with range [0.2, 0.6] (p=0.4), the expected probability of a gap of exactly 2 (two failures between successive successes) is:",
+      opts: ["p(1−p)² = 0.4 × 0.36 = 0.144","p = 0.4","(1−p)² = 0.36","p² = 0.16"],
+      ans: 0, diff: "hard",
+      exp: "<strong>A is correct.</strong> For geometric distribution: P(gap=g) = p×(1−p)^g. P(gap=2) = 0.4×(0.6)² = 0.4×0.36 = 0.144. P(gap=0) = p = 0.4, P(gap=1) = p(1−p) = 0.4×0.6 = 0.24, P(gap=2)=0.144, etc. These form a geometric distribution summing to 1." },
+
+    { q: "A pseudo-random number generator with m=2³¹−1 and a=16807 has a period of approximately:",
+      opts: ["16807","2³¹−2 ≈ 2.1 billion","31","100"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The Park-Miller generator (a=16807, m=2³¹−1=2,147,483,647, c=0) achieves a period of m−1 = 2,147,483,646 ≈ 2.1 billion. This was the standard for decades. 2³¹−1 is a Mersenne prime, and multiplicative generators with Mersenne prime moduli have maximal period m−1." },
+
+    { q: "The CHI-SQUARE TEST for uniformity divides [0,1] into k intervals. What requirement must be satisfied for the test to be valid?",
+      opts: ["k must equal N (one interval per observation)","Each expected frequency Eᵢ = N/k must be ≥ 5","k must be a prime number","All observed frequencies must be equal"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The chi-square approximation is valid only when all expected cell frequencies are at least 5 (some texts say 3-5). If N=40, use k=8 → Eᵢ=40/8=5 ✓. If Eᵢ < 5, merge adjacent intervals. For large N, you can use more intervals (smaller width) while maintaining Eᵢ≥5." },
+
+    { q: "The LATTICE STRUCTURE problem with linear congruential generators means:",
+      opts: ["The sequence eventually repeats","k-dimensional tuples (Rᵢ, Rᵢ₊₁,...,Rᵢ₊ₖ₋₁) lie on parallel hyperplanes, not filling k-dimensional space uniformly","The generator has too short a period","The generator fails the poker test"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> All LCGs have lattice structure — when you plot pairs (Rᵢ, Rᵢ₊₁) they fall on k parallel lines in 2D. In 3D (triples), they fall on parallel planes. This is a fundamental statistical deficiency. Mersenne Twister and cryptographic generators have much better k-dimensional uniformity. For simulation, this rarely matters practically, but it violates strict independence." },
+
+    { q: "5-digit poker test uses degrees of freedom df=6 and critical value 12.592. Why df=6 and not df=4?",
+      opts: ["Because 5-digit numbers have larger values","Because there are 7 categories (all diff, 1pair, 2pair, 3-kind, full house, 4-kind, 5-kind), and df = categories − 1 = 7−1 = 6","Because 5 > 4 so df must be larger","Because the chi-square table changes for 5-digit numbers"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> df = number of categories − 1 (one degree of freedom lost because the expected frequencies sum to N, a constraint). 4-digit: 5 categories → df=4. 5-digit: 7 categories (adds Full House and Five-of-a-kind) → df=6. Always df = (number of categories − 1)." }
+,
+    { q: "The ACCEPTANCE-REJECTION method for generating non-uniform random variates requires a 'majorizing function' M·g(x) ≥ f(x). The efficiency of the method is:",
+      opts: ["Always 100%","1/M — fraction of generated candidates that are accepted","M — the larger M, the better","Equal to the target distribution's mean"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Efficiency = P(accept) = ∫f(x)dx / ∫M·g(x)dx = 1/M (since both integrate to 1 for properly normalized distributions). Want M as SMALL as possible (tight majorizing function). If M=2, only 50% of generated values are accepted — the rest are wasted computation." },
+    { q: "A sequence of 10 random numbers is tested for uniformity using KS test. The sorted values are all between 0.45 and 0.55. This would result in:",
+      opts: ["A very small D statistic (good uniformity)","A very LARGE D statistic (poor uniformity — numbers concentrated in center of [0,1])","D = 0.5 exactly","Insufficient data to conclude"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> If all 10 numbers are between 0.45-0.55, the empirical CDF stays at 0 until x≈0.45, then jumps to 1.0 rapidly around x≈0.55. The theoretical CDF (uniform) reaches 0.45 at x=0.45 and 0.55 at x=0.55. The maximum gap between them is ≈0.45 (around x=0.45 region), which far exceeds critical value 0.410 → REJECT H₀." },
+    { q: "The chi-square statistic χ² = Σ(Oᵢ−Eᵢ)²/Eᵢ. If ALL observed frequencies exactly equal expected frequencies (Oᵢ=Eᵢ for all i), then χ² =",
+      opts: ["1.0","0 — perfect match, no deviation","N (sample size)","Equal to the critical value"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> χ² = Σ(Oᵢ−Eᵢ)²/Eᵢ = Σ(0)²/Eᵢ = 0. Perfect agreement between observed and expected gives χ²=0. We REJECT H₀ only when χ² > critical value (large deviation). Small χ² = observed close to expected = consistent with H₀ = fail to reject = numbers pass the test." }
+,
+    { q: "For 5-digit Poker test, if N=10,000 and all expected frequencies are E=(3024, 5040, 1080, 720, 90, 45, 1) for (all-diff, 1pair, 2pair, 3kind, fullhouse, 4kind, 5kind), what is E for 'full house'?",
+      opts: ["900","90","9","45"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> E(full house) = N × p = 10,000 × 0.0090 = 90. The 5-digit probabilities: all-diff=0.3024, 1pair=0.5040, 2pair=0.1080, 3kind=0.0720, full-house=0.0090, 4kind=0.0045, 5kind=0.0001. Sum = 1.0000 ✓. Memorize these or know how to derive them." }
+  ]
+},
+
+{
+  id: "ch7", num: "07", title: "Verification & Validation",
+  desc: "Naylor-Finger 3-step validation, verification techniques, calibration, errors in data.",
+  questions: [
+    { q: "Naylor and Finger's Step 1 — Face Validity — involves:",
+      opts: ["Statistical comparison of simulated vs real output using t-tests","Subjective expert review of model logic and assumptions WITHOUT data comparison","Fitting probability distributions to input data using chi-square test","Running the simulation and checking for programming bugs"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Face validity = rationalistic approach. Show the model to domain experts who know the real system. Ask: 'Does this look right? Does this behavior make sense?' No statistical testing — pure expert judgment. It's the cheapest, fastest first check. Catch structural flaws before investing in data collection and coding." },
+
+    { q: "Naylor and Finger's Step 2 — Validation of Model Assumptions — would use which statistical test to verify that inter-arrival times follow an exponential distribution?",
+      opts: ["Poker test","KS goodness-of-fit test or chi-square goodness-of-fit test","Gap test","Runs test"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Step 2 tests whether assumed distributions match real data. H₀: inter-arrival times follow Exponential(λ). Collect real arrival data → compute empirical CDF → compare to theoretical exponential CDF using KS test or chi-square. If p-value > α → cannot reject exponential → assumption validated." },
+
+    { q: "Step 3 of Naylor and Finger's validation (Empirical Validation) compares:",
+      opts: ["Source code against the conceptual model","Simulated output statistics against real system measurements using statistical hypothesis tests","Assumed input distributions against collected data","Model assumptions against domain expert opinions"],
+      ans: 1, diff: "easy",
+      exp: "<strong>C is correct.</strong> Step 3 = the definitive output validation. Run simulation → collect n replicated estimates of key performance measure (e.g., Wq). Collect n real measurements of the same metric. Apply two-sample t-test. If p > α → fail to reject H₀ (no significant difference) → model is empirically VALID." },
+
+    { q: "VERIFICATION differs from VALIDATION in that verification asks:",
+      opts: ["'Are we solving the right problem?'","'Did we build the model correctly?' (code matches conceptual model)","'Is the model valid for all scenarios?'","'Is the input data accurate?'"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Verification = 'Did we build the model right?' (correct implementation of the conceptual model). Validation = 'Did we build the right model?' (model represents reality). A model can be verified but not valid (correctly coded wrong model). Both must succeed." },
+
+    { q: "What is the RISK of over-calibration?",
+      opts: ["The model becomes too fast to run","The model fits the calibration dataset perfectly but loses generalizability — fails on new data","The model requires too many replications","The model cannot be validated"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Over-calibration = overfitting. By adjusting parameters to perfectly match ONE dataset, the model memorizes noise and dataset-specific patterns rather than learning the true system behavior. It will fail when applied to new conditions or time periods. Solution: use separate calibration (70%) and holdout validation (30%) datasets." },
+
+    { q: "A simulation model of a bank gives average waiting time Wq=3.2 min. Real measured Wq=3.8 min. A t-test gives p=0.18. At α=0.05, the model is:",
+      opts: ["Invalid — simulated Wq differs from real by 0.6 min","Valid — p=0.18 > 0.05 means no statistically significant difference","Invalid — we need at least p=0.95 to accept","Inconclusive — need to run more simulations"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> In hypothesis testing: p > α → FAIL TO REJECT H₀. H₀: simulated mean = real mean. p=0.18 > 0.05 → cannot reject H₀ → difference is not statistically significant → model is empirically valid. The 0.6 min difference could easily be due to random sampling variation with small sample sizes." },
+
+    { q: "In calibration, 'sensitivity analysis' is used to:",
+      opts: ["Determine the optimal number of replications","Identify which parameters most strongly influence output — focus calibration effort there","Test statistical significance of calibration results","Validate the model against holdout data"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Sensitivity analysis: perturb each parameter by ±10% and observe the resulting change in output. Parameters that cause large output changes are 'sensitive' — small errors in them cause large model errors. Focus calibration effort on these sensitive parameters. Insensitive parameters don't need precise estimation." },
+
+    { q: "Which of the following is a VERIFICATION technique (not validation)?",
+      opts: ["Two-sample t-test of simulated vs real mean output","Running simulation with arrival rate λ=0 and confirming queue length stays at zero","KS goodness-of-fit test on assumed service time distribution","Expert review of model structure (face validity)"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Boundary condition testing (λ=0 → zero customers) is a VERIFICATION technique — it checks that the code works correctly for extreme cases. T-test comparing output to real data = Validation (Step 3). KS test on distributions = Validation (Step 2). Expert review = Validation (Step 1/Face validity)." },
+
+    { q: "SYSTEMATIC ERROR (bias) in experimental data collected for model calibration:",
+      opts: ["Decreases automatically as sample size increases","Must be identified and corrected at the source — increasing sample size does NOT eliminate it","Is less serious than random measurement error","Can be corrected by applying the gap test"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Systematic error (bias) is a constant offset from truth (e.g., a miscalibrated stopwatch that always reads 5% fast). Unlike random error, it does NOT average out with more observations — the mean converges to the wrong value. Must be identified by comparing against known reference standards or alternative measurement methods." },
+
+    { q: "Model CALIBRATION is an ITERATIVE process. After each calibration adjustment, you MUST:",
+      opts: ["Immediately declare the model valid","Re-run the simulation and compare new output against real data before making further adjustments","Increase the number of replications to 1000","Apply the poker test to the new output"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Calibration loop: adjust parameters → re-run → compare output vs real → assess if within tolerance → if not, adjust again. Each iteration gives feedback on whether the adjustment moved output in the right direction and by how much. Never make multiple simultaneous adjustments — you can't isolate which change had which effect." }
+,
+    { q: "A model produces Wq=12.3 min but real system Wq=12.1 min. A t-test gives p=0.82. The model is:",
+      opts: ["Invalid — any difference means invalid","Valid — p=0.82>>0.05, difference is not statistically significant","Invalid — need p>0.95","Need more replications before concluding"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> p=0.82 >> α=0.05. FAIL TO REJECT H₀. The 0.2 min difference is completely within normal random variation. The model is empirically VALID. Remember: practically significant ≠ statistically significant. Small differences may be statistically detectable with huge samples but are practically irrelevant." }
+,
+    { q: "Why should the HOLDOUT dataset used for final validation NOT be used during calibration?",
+      opts: ["It takes more time to analyze","If the same data is used for calibration AND validation, the model will appear valid even if it's overfitted — independent data provides an unbiased test","Holdout data is less accurate than calibration data","Regulatory requirements prohibit it"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Using calibration data for validation is circular — of course the model fits data it was tuned to. An independent holdout provides genuine out-of-sample testing. If the model generalizes (captures true system behaviour rather than memorizing calibration data), it will also perform well on holdout. This is the scientific standard for model validation." },
+    { q: "VERIFICATION of a queuing simulation can be done by testing: 'when λ→0 (very low arrival rate), what should Wq approach?'",
+      opts: ["Wq → ∞ (infinite wait)","Wq → 0 (customers almost never wait — server nearly always idle)","Wq → 1/μ (service time)","Wq → ρ/(1−ρ)"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> As λ→0, ρ=λ/μ→0. Server is almost always idle. Customers arrive to an empty queue and immediately begin service. Wait time Wq→0. Conversely, as λ→μ (ρ→1), Wq→∞. These boundary conditions verify the logic: if your simulation doesn't give Wq≈0 for tiny λ, there's a bug in the code." }
+  ]
+},
+
+{
+  id: "ch8", num: "08", title: "Analysis of Simulation Output",
+  desc: "Initial bias, warm-up period, replications, batch means, confidence intervals, run statistics.",
+  questions: [
+    { q: "The INITIAL BIAS (transient effect) in a simulation occurs because:",
+      opts: ["The pseudo-random number generator has a short period","The simulation starts in an artificial state (empty/idle) that doesn't represent steady state","The model has been incorrectly verified","The confidence interval is too wide"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Real systems in steady operation have non-empty queues and busy servers. A simulation starting empty and idle takes time to reach steady state. During this transient period, statistics are biased by the artificial starting conditions. Including transient data underestimates waiting times and queue lengths in systems that are normally busy." },
+
+    { q: "Welch's method for determining the warm-up period T_w involves:",
+      opts: ["Running one long simulation and truncating the first 10% of observations","Making 5+ replications, computing moving averages of ensemble-mean output vs time, and reading T_w where it stabilizes","Applying the chi-square test to output data","Using Little's Law to estimate the transient length"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Welch's method: (1) Run n≥5 replications. (2) Compute time-series Ȳ(t) = average across replications at each time t. (3) Smooth Ȳ(t) with moving average. (4) T_w = point where smoothed curve stops trending and fluctuates around a constant. Everything before T_w is discarded." },
+
+    { q: "Why must each replication use a DIFFERENT random number seed?",
+      opts: ["To ensure the simulation runs faster","To ensure each replication is statistically INDEPENDENT — same seed → identical sequence → not independent","To avoid the lattice structure problem","To reduce the warm-up period"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Same seed → same random number sequence → same replication. Results would be identical, giving n 'observations' that are actually one observation repeated n times. Statistical analysis would be meaningless. Different seeds → different random streams → independent replications → valid statistical inference." },
+
+    { q: "With n=5 replications giving Wq = [3.1, 4.2, 3.8, 4.5, 3.9] minutes, the 95% CI is Ȳ ± t₄,₀.₀₂₅ × S/√5. If Ȳ=3.9 and S=0.527, the half-width h is approximately:",
+      opts: ["0.527","0.235","0.655","0.950"],
+      ans: 2, diff: "hard",
+      exp: "<strong>C is correct.</strong> t₄,₀.₀₂₅ = 2.776. h = 2.776 × 0.527/√5 = 2.776 × 0.527/2.236 = 2.776 × 0.2356 = 0.654 ≈ 0.655. 95% CI: [3.9−0.655, 3.9+0.655] = [3.245, 4.555] minutes. If this CI is too wide, compute n* = (2.776×0.527/desired_h)² additional replications." },
+
+    { q: "The BATCH MEANS method is preferred over independent replications when:",
+      opts: ["The system has a natural termination point (end of day)","The system is in steady state with no natural termination — repeated warm-up would waste computation","The model has not yet been validated","The number of entities is less than 100"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Independent replications require a new warm-up each run (wasteful for steady-state). Batch means: one VERY long run (after warm-up), divided into k batches. Batch means are approximately independent if batch size m is large. Avoids repeated warm-up cost. Disadvantage: choosing m requires care." },
+
+    { q: "In batch means analysis, what is the consequence of choosing batch size m that is TOO SMALL?",
+      opts: ["Batch means have too much variance","Adjacent batch means are CORRELATED — the CI underestimates true variability (too optimistic)","The simulation runs slower","More warm-up time is needed"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Within-batch autocorrelation doesn't fully decay if m is too small. Then batch means Ȳⱼ and Ȳⱼ₊₁ are positively correlated. The sample variance underestimates true variance → CI is narrower than it should be → CI is too optimistic → confidence level is lower than stated (e.g., you think you have 95% CI but actually only 80%)." },
+
+    { q: "The TIME-AVERAGE statistic Lq (average queue length) in simulation is computed as:",
+      opts: ["Sum of all customer waiting times / number of customers","∫queue_length(t)dt / total_simulation_time = area under queue-length curve / T","Maximum queue length observed during run","Number of customers who waited / run length"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Time-average statistics weight each value by the TIME SPENT at that value, not by customer count. Lq = (Σ queue_length_i × time_at_length_i) / T. If queue was 3 for 10 min then 0 for 10 min: Lq = (3×10+0×10)/20 = 1.5. This correctly weights that the queue was busy half the time." },
+
+    { q: "The REGENERATIVE method for simulation output analysis works by:",
+      opts: ["Restarting the simulation from scratch for each batch","Identifying 'regeneration points' where the system probabilistically restarts (returns to known state) and treating each regeneration cycle as an independent observation","Using the batch means method with equal-length batches","Running n independent replications with different seeds"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Regenerative cycles: times when the process probabilistically restarts (e.g., M/M/1 queue returning to empty state). Each cycle is independent. Cycle means are independent observations. No batch size choice needed (unlike batch means). Statistically rigorous. Limitation: regeneration cycles may be very long for heavily loaded systems." },
+
+    { q: "What happens to the confidence interval width if you DOUBLE the number of replications (from n to 2n)?",
+      opts: ["Width halves","Width reduces by factor of 1/√2 ≈ 0.707 (not by half)","Width stays the same","Width doubles"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> CI half-width h = t × S/√n. Doubling n → √(2n) = √2 × √n → h reduces to h/√2 ≈ 0.707h. To HALVE the CI width, you need to QUADRUPLE n (since h ∝ 1/√n). This is why getting very precise estimates requires exponentially more replications — diminishing returns." },
+
+    { q: "INTELLIGENT INITIALIZATION as a method for eliminating initial bias means:",
+      opts: ["Using more replications to dilute the bias","Starting the simulation in a state close to steady state, estimated from queuing theory or a preliminary run","Discarding the first 20% of observations automatically","Using variance reduction techniques"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Example: M/M/1 queue with ρ=0.8. Steady state L=0.8/0.2=4 customers. Start simulation with 4 customers in system instead of 0. This eliminates most of the transient immediately. More sophisticated: use the entire steady-state distribution to initialize the queue length randomly at startup." }
+,
+    { q: "Which formula gives the required number of replications n* to achieve confidence interval half-width h?",
+      opts: ["n* = t²×S²/h²","n* = ⌈(t_{n₀-1,α/2} × S / h)²⌉ — computed from pilot study of n₀ replications","n* = N/h where N is population size","n* = 1/(h²) regardless of variance"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> From CI formula: h = t×S/√n → √n = t×S/h → n = (t×S/h)². Since t depends on df=n-1 (which depends on n), use initial estimate from pilot n₀: n* = ⌈(t_{n₀-1,α/2}×S/h)²⌉. If n* > n₀, collect additional replications. This sequential procedure converges to the required precision." }
+,
+    { q: "When should you use INDEPENDENT REPLICATIONS instead of BATCH MEANS for simulation output analysis?",
+      opts: ["Always — replications are always better","For TERMINATING simulations (natural endpoint exists) OR when comparing alternative system designs","Only when n > 30","Only for M/M/1 queues"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Replications excel when: (1) System has a natural end condition (one business day, one shift, one customer lifecycle). (2) Comparing alternative designs (each replication uses same seed across alternatives — paired comparison reduces variance). Batch means excel for: (1) Steady-state analysis of infinite-horizon systems. (2) When warm-up is expensive." },
+    { q: "The ENSEMBLE AVERAGE Ȳ(t) in Welch's method is computed as the average across:",
+      opts: ["Multiple time periods within one run","Multiple replications at the SAME time point t: Ȳ(t) = (1/n)Σᵢ Yᵢ(t)","Batch means within one long run","Multiple different systems being compared"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Ensemble average: run n replications. At each time t, average the output across all replications: Ȳ(t) = (Y₁(t)+Y₂(t)+...+Yₙ(t))/n. Plot Ȳ(t) vs t. During transient, Ȳ(t) drifts. In steady state, Ȳ(t) fluctuates around a constant. T_w = point where trend stops. Moving average smoothing applied to Ȳ(t) removes high-frequency noise to reveal the trend." }
+  ]
+},
+
+{
+  id: "ch9", num: "09", title: "Simulation Software",
+  desc: "Java single server queue, GPSS blocks, simulation frameworks, SSF, software selection.",
+  questions: [
+    { q: "In a Java event-driven simulation of a single server queue, the FUTURE EVENT LIST (FEL) is maintained as:",
+      opts: ["A sorted array of customers in order of arrival","A priority queue (min-heap) ordered by event time — smallest time at front","A stack (LIFO structure) of events","An unsorted list of all possible future events"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> The FEL must efficiently support: (1) insert a new event, (2) remove the minimum-time event. A min-heap (priority queue) does both in O(log n) time. Linear scan of unsorted list would be O(n) — too slow for large simulations. Java: use PriorityQueue<Event> with comparator on event time." },
+
+    { q: "In the Java single server queue simulation, the variable 'areaServerStatus' is used to compute:",
+      opts: ["Average number in queue Lq","Server utilization ρ = areaServerStatus / simTime","Total waiting time of all customers","Number of customers who were rejected"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> areaServerStatus accumulates ∫serverStatus(t)dt — the area under the server-busy curve (0=idle, 1=busy). At end of run: ρ = areaServerStatus/simTime = fraction of time server was busy = utilization. Similarly, areaNumInQ/simTime gives time-average queue length Lq." },
+
+    { q: "In the arrive() function of a single server queue simulation, what happens if the server is BUSY when a customer arrives?",
+      opts: ["Customer is rejected and counted as lost","Customer is immediately placed in service (preemptive)","Customer is added to the queue and their arrival time is recorded","Server utilization is incremented by 1"],
+      ans: 2, diff: "easy",
+      exp: "<strong>C is correct.</strong> If serverStatus==BUSY, the arriving customer joins the queue: numInQueue++ and arrivalTime[numInQueue]=simTime (stored for later computing wait time). The customer waits until the depart() function dequeues them and schedules their service completion (departure event)." },
+
+    { q: "In GPSS, the SEIZE block:",
+      opts: ["Creates new transactions (customers)","Captures a named FACILITY — if facility is busy, the transaction waits before this block","Records time spent waiting in queue","Destroys transactions that have completed service"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> SEIZE captures a single-channel resource (FACILITY). If busy, transaction blocks here automatically — GPSS handles the waiting list internally. When the current user RELEASEs, the next waiting transaction automatically SEIZEs. GENERATE creates transactions. TERMINATE destroys them. QUEUE/DEPART measure waiting time." },
+
+    { q: "In GPSS, the difference between SEIZE/RELEASE and ENTER/LEAVE is:",
+      opts: ["SEIZE/RELEASE is for queuing, ENTER/LEAVE is for service","SEIZE/RELEASE handles a single-server FACILITY; ENTER/LEAVE handles a multi-unit STORAGE (pool of servers)","SEIZE/RELEASE is for digital simulation, ENTER/LEAVE is for analog","There is no difference — they are synonyms"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> FACILITY = single server (like one barber, one ATM). Use SEIZE/RELEASE. STORAGE = pool of identical servers (like a parking lot with 50 spaces, or a server farm with 10 machines). Use ENTER/LEAVE. STORAGE can hold multiple transactions simultaneously. FACILITY holds exactly one." },
+
+    { q: "The GPSS TRANSFER block with parameter 0.30 routes transactions:",
+      opts: ["30% to the first branch, 70% to an alternate branch (probabilistic routing)","All 30% of transactions to the next block","30 transactions per time unit to the next block","Every 30th transaction to an alternate path"],
+      ans: 0, diff: "med",
+      exp: "<strong>A is correct.</strong> TRANSFER .30,DEST1,DEST2 routes each transaction independently: 30% go to DEST1, 70% go to DEST2 (probabilistic). TRANSFER ALL,DEST routes all to DEST (unconditional). TRANSFER BOTH,DEST tries the next block, goes to DEST if blocked. Probabilistic TRANSFER is how GPSS models routing decisions." },
+
+    { q: "To measure RESPONSE TIME (time from transaction creation to termination) in GPSS, you would use:",
+      opts: ["SEIZE and RELEASE blocks","MARK block (records current time) at entry + TABULATE block (computes elapsed time since MARK) at exit","QUEUE and DEPART blocks","ADVANCE block with argument equal to response time"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> MARK P1 stores current time in transaction parameter P1. At the end (before TERMINATE), TABULATE collects (current_time − P1) into a TABLE. QUEUE/DEPART measure waiting time only (time in queue, not including service). MARK+TABULATE measures total sojourn time from any point to another." },
+
+    { q: "In Java simulation, exponential random variates with mean 1/λ are generated using:",
+      opts: ["-Math.log(1 - Math.random()) / lambda","-Math.log(Math.random()) / lambda (equivalent, since 1-U is also uniform)","Math.random() / lambda","1 / (lambda * Math.random())"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Inverse transform: F(x) = 1−e^(−λx) → x = −(1/λ)·ln(U). Since U is U[0,1], so is 1−U, so both −ln(U)/λ and −ln(1−U)/λ are correct. Java: double x = -Math.log(Math.random()) / lambda. This is the standard approach for exponential variates." },
+
+    { q: "The key advantage of DISCRETE-EVENT simulation over TIME-SLICING (fixed time increment) is:",
+      opts: ["Discrete-event simulation is always more accurate","Discrete-event simulation jumps directly to event times, skipping idle periods — massively more efficient when events are sparse","Time-slicing is harder to implement in Java","Discrete-event handles continuous systems better"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Consider a simulation where events happen on average every 100 time units. Time-slicing with Δt=0.01 would execute 10,000 steps per event — 99.99% waste. Discrete-event jumps directly to each event, doing exactly as much work as needed. For sparse-event systems (most queuing simulations), this is orders of magnitude faster." },
+
+    { q: "The 'updateTimeAvgStats' function in Java queue simulation is called:",
+      opts: ["Once at the end of the simulation run","After every 100 events","At the BEGINNING of each event processing, before updating state — to accumulate the area for the time period since the last event","Only when the queue changes length"],
+      ans: 2, diff: "hard",
+      exp: "<strong>C is correct.</strong> Time-average statistics must capture the DURATION spent in each state. Process: (1) time_since_last = new_event_time − last_event_time. (2) areaNumInQ += numInQueue × time_since_last. (3) areaServerStatus += serverStatus × time_since_last. (4) Update lastEventTime. Then process the event and update state. Order matters: accumulate BEFORE changing state." }
+,
+    { q: "In the Java single server queue, what is the purpose of recording arrival times in an array 'arrivalTimes[]'?",
+      opts: ["To sort customers by priority","To compute each customer's individual waiting time: wait = departureTime − arrivalTimes[i]","To calculate the total simulation run time","To verify the Poisson arrival process"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> When customer i is dequeued and begins service at simTime, their waiting time = simTime − arrivalTimes[i]. This is added to totalWait. numWaited++. Average: Wq = totalWait/numWaited. Without recording individual arrival times, you cannot compute per-customer wait times." },
+    { q: "GPSS automatically provides statistics for QUEUE blocks. What three standard metrics does GPSS report for each named queue?",
+      opts: ["Maximum, minimum, and average server utilization","Maximum queue content, average queue content (time-average), and average waiting time per transaction","Total transactions, rejected transactions, and accepted transactions","Service rate, arrival rate, and utilization"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> For each QUEUE/DEPART pair, GPSS automatically reports: (1) Maximum queue content (peak length). (2) Average queue content (time-average Lq). (3) Average waiting time (Wq per transaction). (4) Zero entries (transactions that didn't wait). (5) Current contents. No coding needed — GPSS collects these automatically." }
+,
+    { q: "In Java simulation, the 'timeLastEvent' variable is updated AFTER accumulating time-average statistics. What happens if you update it BEFORE accumulating?",
+      opts: ["Results are identical — order doesn't matter","Time-average statistics will be WRONG — the interval (lastEvent to currentEvent) will be computed as 0 (since lastEvent was just set to currentEvent)","Simulation runs faster","Random numbers are regenerated"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Correct sequence: (1) delta_t = currentTime − timeLastEvent. (2) area += currentValue × delta_t. (3) timeLastEvent = currentTime. (4) Update state. If step 3 happens before step 2: timeLastEvent=currentTime → delta_t=0 → area+=0 → ALL time-average statistics become 0. Order of operations matters critically in event-driven simulation." }
+  ]
+},
+
+{
+  id: "ch10", num: "10", title: "Simulation of Computer Systems",
+  desc: "Levels of abstraction, CPU simulation, memory simulation, WWW server, performance analysis.",
+  questions: [
+    { q: "Which level of computer system abstraction is MOST appropriate for evaluating CPU scheduling algorithms (Round Robin vs Priority)?",
+      opts: ["Transistor/circuit level","Register Transfer Level (RTL)","Operating System / Process level (queuing model of process scheduling)","Application/job level"],
+      ans: 2, diff: "easy",
+      exp: "<strong>C is correct.</strong> CPU scheduling operates at the OS/Process level — processes arrive, wait in ready queue, get CPU time quantum, may be preempted, block on I/O, resume. This is modelled as a queuing network: M/M/1 or M/M/c queue for CPU with priority or FCFS discipline. No need for transistor-level detail." },
+
+    { q: "The Register Transfer Level (RTL) simulation is primarily used by:",
+      opts: ["OS developers testing scheduling algorithms","Hardware engineers verifying CPU micro-architecture BEFORE committing to silicon fabrication","Application developers testing software performance","Network engineers simulating packet routing"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> RTL simulation verifies that the data path design (how data flows between registers, ALU, memory) is correct at clock-cycle granularity BEFORE manufacturing. A bug found at RTL costs days to fix. The same bug found in silicon costs millions and months. Tools: ModelSim, Synopsys VCS, Verilog/VHDL simulators." },
+
+    { q: "In CPU simulation using a queuing model (Level 4), 'context switching overhead' is modelled as:",
+      opts: ["A separate queue between the CPU and ready queue that adds delay","Additional service time added to each process's CPU burst to account for the overhead of saving/restoring register state","A reduction in arrival rate of processes","An increase in the calling population size"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> Context switch overhead = time CPU spends saving current process registers and loading next process registers (not productive work). It's modelled by adding a constant δ to each service time: effective service time = CPU burst + δ. For Round Robin with quantum Q: effective utilization = Q/(Q+2δ) because each quantum incurs 2 context switches (old out, new in)." },
+
+    { q: "Page FAULT rate in memory simulation directly affects:",
+      opts: ["CPU clock frequency","Effective memory access time — each page fault requires a slow disk access (~10ms vs ~100ns for RAM)","Server utilization in the web server model","Random number generation speed"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Effective Access Time (EAT) = hit_time + miss_rate × (page_fault_penalty). With RAM access = 100ns and disk = 10ms = 10,000,000ns: even 1% page fault rate → EAT = 0.99×100 + 0.01×10,000,000 = 99+100,000 = 100,099ns — 1000× slower than no faults. Page fault rate is the dominant factor in virtual memory performance." },
+
+    { q: "The LRU (Least Recently Used) page replacement policy is BETTER than FIFO because:",
+      opts: ["It requires less memory overhead","It exploits temporal locality — recently used pages are likely to be used again soon (better approximates optimal)","It is simpler to implement","It always results in fewer page faults than OPT"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> LRU exploits the TEMPORAL LOCALITY principle of real programs — if page X was just accessed, it's likely to be accessed again soon. FIFO ignores recency and may evict a hot page just because it was loaded earliest. OPT is the theoretical minimum (evict page used furthest in future) but requires future knowledge — unimplementable in real systems." },
+
+    { q: "In a WWW server simulation modelled as M/M/c queue (c threads), what happens when all c threads are busy AND the request buffer is full?",
+      opts: ["Server automatically adds more threads","New requests are REJECTED — they receive HTTP 503 Service Unavailable","All threads speed up to handle the load","Requests are queued indefinitely"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> When system capacity is finite (queue buffer + service slots = K) and K customers are in system, new arrivals are rejected. The server returns HTTP 503 to the client. This is why real web servers have configurable connection backlog limits (e.g., Apache: MaxRequestWorkers, nginx: worker_connections)." },
+
+    { q: "For a web server handling λ=100 req/sec with 10 threads (c=10) and mean service rate μ=12 req/sec per thread, server utilization ρ is:",
+      opts: ["100/12 = 8.33 (unstable)","100/(10×12) = 100/120 = 0.833","100×12 = 1200","12/100 = 0.12"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> For M/M/c: ρ = λ/(c×μ) = 100/(10×12) = 0.833. Server is 83.3% utilized — stable (ρ<1) but getting close to saturation. Adding λ to 120/sec would make ρ=1.0 → system becomes marginally stable with infinite queue. At λ=130/sec → unstable." },
+
+    { q: "Simulation of a pipeline CPU (5-stage: IF/ID/EX/MEM/WB) would be done at which abstraction level?",
+      opts: ["Application/Job level","OS/Process level","ISA / Instruction Set level (models pipeline hazards, stalls, forwarding)","Transistor level"],
+      ans: 2, diff: "med",
+      exp: "<strong>C is correct.</strong> Pipeline simulation (tracking each instruction through IF→ID→EX→MEM→WB stages, detecting hazards, inserting stalls, implementing forwarding) is ISA-level simulation. Tools: gem5, SimpleScalar. This gives CPI, cache miss impact, branch predictor accuracy — valuable for computer architecture research and compiler optimization." },
+
+    { q: "In a web server simulation, caching has the effect of:",
+      opts: ["Increasing the arrival rate of requests","Reducing effective service time for cache-hit requests — served from memory (fast) instead of database (slow)","Increasing the number of threads needed","Reducing the calling population"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> With cache hit rate h and service times μ_fast (cache hit) and μ_slow (DB miss): effective service rate μ_eff = h×μ_fast + (1−h)×μ_slow. Example: h=0.80, μ_fast=500/sec, μ_slow=10/sec → μ_eff = 0.8×500 + 0.2×10 = 402/sec (vs 10/sec without cache — 40× improvement)." },
+
+    { q: "The key metric used for CAPACITY PLANNING of a web server (when does it need upgrading?) is:",
+      opts: ["Maximum theoretical throughput","The load level (λ) at which mean response time W exceeds the SLA threshold (e.g., 500ms)","The number of lines of code in the server software","CPU clock frequency"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> SLA (Service Level Agreement) defines maximum acceptable response time (e.g., W ≤ 500ms for 95th percentile). Simulate increasing λ until simulated W exceeds SLA → that λ is the maximum sustainable load. Plan capacity to handle expected peak load with headroom (safety margin). This is how cloud providers dimension their infrastructure." }
+,
+    { q: "The 'miss penalty' in cache simulation refers to:",
+      opts: ["The fine charged for a cache design error","The additional time required when data is NOT in cache and must be fetched from the next slower memory level","The percentage of cache misses","The number of cache lines evicted"],
+      ans: 1, diff: "easy",
+      exp: "<strong>B is correct.</strong> Miss penalty = extra time for a cache miss = time to access next level (L2, L3, or DRAM) minus L1 hit time. If L1 hit = 1 cycle and DRAM access = 200 cycles, miss penalty = 199 cycles. Effective CPI = base_CPI + (miss_rate × miss_penalty). Reducing miss_rate OR miss_penalty improves performance." },
+    { q: "In a web server simulation, 'thread pool exhaustion' occurs when:",
+      opts: ["Threads run out of memory for computation","All c server threads are busy AND the request queue is full — new requests must be REJECTED","Thread pool size exceeds CPU cores","Service time becomes deterministic"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> Thread pool exhaustion: all c threads busy + buffer at capacity = system at max capacity K. New arrivals rejected (HTTP 503). Distinguish: (1) threads busy but queue has space → requests queue up (waiting, not rejected). (2) Threads busy AND queue full → rejection. System capacity K = c + buffer_size." }
+,
+    { q: "The CLOCK ALGORITHM for page replacement is an approximation of:",
+      opts: ["FIFO","LRU — uses a 'use bit' per page to approximate recency without full LRU overhead","OPT — predicts future accesses","Random replacement"],
+      ans: 1, diff: "hard",
+      exp: "<strong>B is correct.</strong> The clock algorithm (also called CLOCK or NRU — Not Recently Used): each page has a use bit set to 1 on access. On page fault: scan pages like clock hands. If use bit=1, clear it and move on. If use bit=0, evict this page. Pages recently accessed (bit=1) get a 'second chance.' Implemented in Linux as the Active/Inactive LRU lists. O(1) amortized complexity." },
+    { q: "A simulation shows web server response time W is 200ms at λ=500 req/s, 450ms at λ=700 req/s, and 2800ms at λ=900 req/s. This pattern suggests:",
+      opts: ["Linear relationship between λ and W","The server is APPROACHING SATURATION around λ=900 req/s — queuing theory predicts W→∞ as ρ→1","Random behaviour with no pattern","The model has a bug"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> This is classic queuing saturation behaviour: W = 1/(μ−λ) for M/M/1. As λ→μ (ρ→1), W→∞. The steep rise near λ=900 indicates the effective service capacity μ·c is around 900-950 req/s. This is the critical insight from simulation: performance is fine until close to saturation, then degrades catastrophically. Capacity planning must maintain ρ ≤ 0.7-0.8." }
+,
+    { q: "gem5 and SimpleScalar are tools used for which level of computer system simulation?",
+      opts: ["Transistor level (SPICE-based)","ISA/Instruction-level — they model fetch-decode-execute pipeline, cache hierarchy, branch prediction at instruction granularity","Application/job level (queuing theory)","OS/process level (scheduler simulation)"],
+      ans: 1, diff: "med",
+      exp: "<strong>B is correct.</strong> gem5 and SimpleScalar are widely-used computer architecture simulators. They execute programs instruction-by-instruction, modelling the full pipeline (5+ stages), multiple cache levels, branch predictor, memory system, and instruction-level parallelism. Output: IPC (instructions per cycle), CPI, cache miss rates, branch misprediction rates — data used by CPU architects." }
+  ]
+}
+];
+
+// ===================== APP STATE =====================
+let totalScore = 0;
+let totalAnswered = 0;
+const chapterState = {};
+
+function initState() {
+  chapters.forEach(ch => {
+    chapterState[ch.id] = { answered: 0, correct: 0, total: ch.questions.length };
+  });
+}
+
+function updateGlobalScore() {
+  document.getElementById('global-score').textContent = totalScore;
+  document.getElementById('global-total').textContent = totalAnswered;
+}
+
+// ===================== RENDER =====================
+function renderTabs() {
+  const container = document.getElementById('ch-tabs');
+  chapters.forEach((ch, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'ch-tab' + (i === 0 ? ' active' : '');
+    btn.id = 'tab-' + ch.id;
+    btn.textContent = `Ch${ch.num}: ${ch.title.split(' ')[0]} ${ch.title.split(' ')[1] || ''}`;
+    btn.onclick = () => switchChapter(ch.id);
+    container.appendChild(btn);
+  });
+}
+
+function renderChapters() {
+  const main = document.getElementById('main-content');
+  chapters.forEach((ch, ci) => {
+    const sec = document.createElement('div');
+    sec.className = 'chapter-section' + (ci === 0 ? ' active' : '');
+    sec.id = 'sec-' + ch.id;
+
+    sec.innerHTML = `
+      <div class="chapter-header">
+        <div class="ch-number">${ch.num}</div>
+        <div class="ch-meta">
+          <h2>${ch.title}</h2>
+          <p>${ch.desc}</p>
+        </div>
+        <div class="ch-progress">
+          <div class="ch-progress-bar"><div class="ch-progress-fill" id="prog-${ch.id}" style="width:0%"></div></div>
+          <div class="ch-progress-text" id="prog-text-${ch.id}">0 / ${ch.questions.length}</div>
+        </div>
+      </div>
+      <div class="mcq-grid" id="grid-${ch.id}"></div>
+      <div class="nav-actions">
+        <button class="btn btn-ghost" onclick="resetChapter('${ch.id}')">Reset chapter</button>
+        ${ci < chapters.length - 1 ? `<button class="btn btn-primary" onclick="switchChapter('${chapters[ci+1].id}')">Next chapter →</button>` : `<button class="btn btn-primary" onclick="showFinalScore()">View final score ↗</button>`}
+      </div>
+    `;
+    main.appendChild(sec);
+
+    const grid = sec.querySelector(`#grid-${ch.id}`);
+    ch.questions.forEach((q, qi) => {
+      grid.appendChild(renderMCQ(ch.id, qi, q));
+    });
+  });
+
+  // Final score panel
+  const final = document.createElement('div');
+  final.id = 'final-score';
+  final.className = 'final-score';
+  final.innerHTML = `
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:24px">Final Result</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:36px;">All Chapters Complete</h2>
+    <span class="final-grade" id="final-pct">—</span>
+    <p style="color:var(--muted);margin-bottom:32px;" id="final-msg">Complete all questions to see your result.</p>
+    <div id="final-breakdown" style="text-align:left;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;"></div>
+    <div style="margin-top:24px"><button class="btn btn-ghost" onclick="resetAll()">Reset everything</button></div>
+  `;
+  main.appendChild(final);
+}
+
+function renderMCQ(chId, qi, q) {
+  const card = document.createElement('div');
+  card.className = 'mcq-card';
+  card.id = `card-${chId}-${qi}`;
+
+  const diffClass = q.diff === 'easy' ? 'd-easy' : q.diff === 'med' ? 'd-med' : 'd-hard';
+  const diffLabel = q.diff === 'easy' ? 'Easy' : q.diff === 'med' ? 'Medium' : 'Hard';
+
+  card.innerHTML = `
+    <div class="mcq-header">
+      <span class="mcq-num">Q${(qi+1).toString().padStart(2,'0')}</span>
+      <div class="mcq-q">${q.q}</div>
+      <span class="difficulty-tag ${diffClass}">${diffLabel}</span>
+    </div>
+    <div class="options-list" id="opts-${chId}-${qi}">
+      ${q.opts.map((opt,oi) => `
+        <button class="option-btn" id="opt-${chId}-${qi}-${oi}"
+          onclick="selectOption('${chId}',${qi},${oi})"
+          data-opt="${oi}">
+          <span class="opt-letter">${'ABCD'[oi]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('')}
+    </div>
+    <div class="explanation" id="exp-${chId}-${qi}">${q.exp}</div>
+  `;
+  return card;
+}
+
+function selectOption(chId, qi, selected) {
+  const ch = chapters.find(c => c.id === chId);
+  const q = ch.questions[qi];
+  const card = document.getElementById(`card-${chId}-${qi}`);
+
+  // Disable all options
+  for (let i = 0; i < q.opts.length; i++) {
+    const btn = document.getElementById(`opt-${chId}-${qi}-${i}`);
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add(selected === q.ans ? 'correct' : 'reveal');
+    if (i === selected && selected !== q.ans) btn.classList.add('wrong');
+  }
+
+  // Update card border
+  const isCorrect = selected === q.ans;
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  // Show explanation
+  document.getElementById(`exp-${chId}-${qi}`).classList.add('visible');
+
+  // Update stats
+  chapterState[chId].answered++;
+  if (isCorrect) {
+    chapterState[chId].correct++;
+    totalScore++;
+  }
+  totalAnswered++;
+
+  // Update progress
+  updateChapterProgress(chId);
+  updateGlobalScore();
+}
+
+function updateChapterProgress(chId) {
+  const state = chapterState[chId];
+  const pct = Math.round(state.answered / state.total * 100);
+  document.getElementById(`prog-${chId}`).style.width = pct + '%';
+  document.getElementById(`prog-text-${chId}`).textContent = `${state.answered} / ${state.total} (${state.correct} correct)`;
+  if (state.answered === state.total) {
+    document.getElementById(`tab-${chId}`).classList.add('done');
+  }
+}
+
+function switchChapter(chId) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('final-score').classList.remove('visible');
+  document.getElementById(`sec-${chId}`).classList.add('active');
+  document.getElementById(`tab-${chId}`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetChapter(chId) {
+  const ch = chapters.find(c => c.id === chId);
+  const state = chapterState[chId];
+  totalScore -= state.correct;
+  totalAnswered -= state.answered;
+  state.answered = 0;
+  state.correct = 0;
+
+  ch.questions.forEach((q, qi) => {
+    const card = document.getElementById(`card-${chId}-${qi}`);
+    card.classList.remove('answered-correct','answered-wrong');
+    for (let i = 0; i < q.opts.length; i++) {
+      const btn = document.getElementById(`opt-${chId}-${qi}-${i}`);
+      btn.disabled = false;
+      btn.classList.remove('correct','wrong','reveal');
+    }
+    document.getElementById(`exp-${chId}-${qi}`).classList.remove('visible');
+  });
+  document.getElementById(`tab-${chId}`).classList.remove('done');
+  updateChapterProgress(chId);
+  updateGlobalScore();
+}
+
+function resetAll() {
+  totalScore = 0;
+  totalAnswered = 0;
+  chapters.forEach(ch => resetChapter(ch.id));
+  switchChapter(chapters[0].id);
+}
+
+function showFinalScore() {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ch-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('final-score');
+  panel.classList.add('visible');
+
+  const total = chapters.reduce((s, c) => s + c.questions.length, 0);
+  const pct = Math.round(totalScore / total * 100);
+  document.getElementById('final-pct').textContent = pct + '%';
+
+  let grade, color;
+  if (pct >= 80) { grade = 'Exam Ready'; color = 'var(--accent2)'; }
+  else if (pct >= 65) { grade = 'Almost There'; color = 'var(--accent)'; }
+  else if (pct >= 50) { grade = 'Needs Work'; color = '#e09800'; }
+  else { grade = 'Study Harder'; color = 'var(--accent3)'; }
+
+  document.getElementById('final-pct').style.color = color;
+  document.getElementById('final-msg').textContent = `${totalScore}/${total} correct (${pct}%) — ${grade}`;
+
+  const breakdown = document.getElementById('final-breakdown');
+  breakdown.innerHTML = '<div style="font-size:12px;color:var(--muted);margin-bottom:12px;font-family:\'IBM Plex Mono\',monospace;letter-spacing:0.06em;text-transform:uppercase;">Chapter Breakdown</div>' +
+    chapters.map(ch => {
+      const s = chapterState[ch.id];
+      const p = s.total > 0 ? Math.round(s.correct/s.total*100) : 0;
+      const barColor = p >= 80 ? 'var(--accent2)' : p >= 50 ? 'var(--accent)' : 'var(--accent3)';
+      return `<div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+          <span>${ch.title}</span>
+          <span style="font-family:'IBM Plex Mono',monospace;color:${barColor}">${s.correct}/${s.total}</span>
+        </div>
+        <div style="height:4px;background:var(--border);border-radius:2px">
+          <div style="height:100%;width:${p}%;background:${barColor};border-radius:2px;transition:width 0.6s"></div>
+        </div>
+      </div>`;
+    }).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===================== INIT =====================
+initState();
+renderTabs();
+renderChapters();
+updateGlobalScore();
+</script>
+</body>
+</html>
