@@ -1146,6 +1146,48 @@ const DATA = {
               ]
             }
           ]
+        },
+        {
+          id: "Q5", marks: "[Mixed]", probability: "MEDIUM", appearances: 3, years: "2079 Jestha, 2076 Bhadra",
+          prompt: "6000-byte datagram IPv6 fragmentation (assume MTU) + relationship between TCP and IP.",
+          sections: [
+            {
+              title: "Part A — IPv6 Fragmentation: 6000-byte Datagram",
+              points: [
+                { q: "In IPv6, who performs fragmentation of a 6000-byte datagram?", options: ["Only the source host (never the routers)", "All routers along the path", "Destination host only", "Both routers and destination"], a: 0 },
+                { q: "Assuming link MTU = 1500 bytes, what is the overhead of the IPv6 header?", options: ["40 bytes (fixed IPv6 header)", "20 bytes (same as IPv4)", "60 bytes", "8 bytes"], a: 0 },
+                { q: "What extra overhead does the IPv6 Fragment Extension Header add?", options: ["8 bytes per fragment", "16 bytes", "40 bytes", "None"], a: 0 },
+                { q: "Max data payload per fragment (link MTU 1500, IPv6 header 40, Fragment header 8)?", options: ["1452 bytes — but must be rounded to a multiple of 8 → 1448 bytes", "1500 bytes", "1480 bytes", "1024 bytes"], a: 0 },
+                { q: "For a 6000-byte datagram, how many bytes of original payload are there (minus the 40-byte IPv6 header)?", options: ["5960 bytes", "6000 bytes", "5940 bytes", "3980 bytes"], a: 0 },
+                { q: "How many fragments are generated for this 6000-byte IPv6 datagram with MTU 1500?", options: ["5 fragments (4 × 1448 + 1 × 168 = 5960)", "3", "4", "6"], a: 0 },
+                { q: "What path-discovery mechanism does the IPv6 source use to learn the best MTU?", options: ["Path MTU Discovery (PMTUD)", "ARP", "DNS lookup", "DHCP"], a: 0 },
+                { q: "Where are the IPv6 fragments reassembled?", options: ["At the destination host", "At every router along the way", "At the first router", "At the source after sending"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Relationship Between TCP and IP",
+              points: [
+                { q: "At which layer does TCP operate?", options: ["Transport layer (Layer 4)", "Network layer (Layer 3)", "Data link (Layer 2)", "Application (Layer 7)"], a: 0 },
+                { q: "At which layer does IP operate?", options: ["Network layer (Layer 3)", "Transport layer (Layer 4)", "Data link (Layer 2)", "Application (Layer 7)"], a: 0 },
+                { q: "What service does TCP provide?", options: ["Reliable, connection-oriented, ordered delivery of a byte stream between endpoints", "Unreliable best-effort datagram service", "Physical signal transmission", "Address translation only"], a: 0 },
+                { q: "What service does IP provide?", options: ["Best-effort datagram delivery: addressing (source/dest IP) and routing between networks", "Reliable ordered bytes", "Encryption of payload", "Application-layer services"], a: 0 },
+                { q: "How do TCP and IP work together?", options: ["TCP segments the data and adds reliability; IP adds source/destination addresses and routes each segment across networks", "They are unrelated", "TCP replaces IP", "IP runs on top of TCP"], a: 0 },
+                { q: "Which is connection-oriented — TCP or IP?", options: ["TCP (sets up a session with 3-way handshake)", "IP (connection-oriented)", "Both", "Neither"], a: 0 },
+                { q: "Which handles flow control and congestion control?", options: ["TCP (via windowing, slow start, etc.)", "IP (no flow/congestion control)", "Both", "Neither"], a: 0 },
+                { q: "Which protocol handles fragmentation (when a segment is too large for the next link)?", options: ["IP — IPv4 by both routers+host, IPv6 by source only", "TCP", "UDP", "ARP"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 4 key responsibilities of TCP vs IP (mnemonic: 'Reliable · Ordered · Flow · Routing' — R·O·F·R):",
+                  items: [
+                    { hint: "TCP retransmits lost segments; provides acknowledged delivery (R)", answers: ["Reliability", "Reliable Delivery", "Reliable"] },
+                    { hint: "TCP reassembles segments in order using sequence numbers (O)", answers: ["Ordered Delivery", "Ordering", "Ordered"] },
+                    { hint: "TCP regulates sender speed using window + congestion control (F)", answers: ["Flow Control", "Flow"] },
+                    { hint: "IP adds addressing and routes packets across networks (R)", answers: ["Routing", "IP Routing"] }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1378,6 +1420,104 @@ const DATA = {
                 { q: "What is the 'Received:' header?", options: ["A trace header added by each MTA hop along the route", "Confirms the recipient has read the email", "Indicates the message arrived on time", "The user's signature"], a: 0 },
                 { q: "What does 'MIME-Version:' indicate?", options: ["MIME encoding for non-ASCII content (typically 1.0)", "The email client version", "The SMTP server version", "The user's mailbox quota"], a: 0 },
                 { q: "What does 'Content-Type:' specify?", options: ["The media type of the email body (e.g., text/html; charset=UTF-8)", "The sender's role", "The priority of the message", "The subject line"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[Mixed]", probability: "MEDIUM", appearances: 6, years: "2077, 2073, 2072, 2071",
+          prompt: "Explain MPLS. Compare POP vs SMTP vs IMAP and HTTP vs SMTP vs PGP. What are the features a web browser needs to incorporate?",
+          sections: [
+            {
+              title: "Part A — MPLS Operation",
+              points: [
+                { q: "What does MPLS stand for?", options: ["Multi-Protocol Label Switching", "Multi-Packet Label System", "Multi-Path Link Service", "Multi-Port Layer Switch"], a: 0 },
+                { q: "What is MPLS?", options: ["Networking technology that routes traffic using shortest path based on LABELS (not network addresses) over private WANs", "A new wireless standard", "A type of firewall", "A DNS resolver"], a: 0 },
+                { q: "Why does MPLS use labels instead of IP addresses for forwarding?", options: ["Faster — labels allow fast lookups vs slow IP route table lookups at each hop", "Labels are longer than IPs", "It's required by law", "Labels work without routers"], a: 0 },
+                { q: "What are the fields inside an MPLS label?", options: ["20-bit label value, 3-bit traffic class (QoS), 1-bit bottom-of-stack flag, 8-bit TTL", "Only a 32-bit address", "MAC + IP only", "Port + Protocol only"], a: 0 },
+                { q: "What does an MPLS router (LSR) do?", options: ["Switches packets after a LABEL lookup (not IP route lookup)", "Acts as a DNS server", "Filters packets by content only", "Broadcasts to everyone"], a: 0 },
+                { q: "What is a Label Switched Path (LSP)?", options: ["A predetermined path established through an MPLS network for a packet's forward equivalence class", "A type of fiber cable", "An IP route entry", "A DNS record"], a: 0 },
+                { q: "What is FEC in MPLS?", options: ["Forward Equivalence Class — group of packets that get the same forwarding treatment", "Fast Ethernet Channel", "Fibre Encoded Connection", "Forward Error Correction"], a: 0 },
+                {
+                  type: "sequence",
+                  q: "Arrange the MPLS packet handling steps in order.",
+                  sequence: [
+                    "Labeled switched path (LSP) is established BEFORE routing and delivery of packets",
+                    "QoS parameters are negotiated along the path",
+                    "Packet enters the MPLS domain through the edge Label Switching Router (LSR)",
+                    "Edge LSR assigns the packet to a Forward Equivalence Class (FEC) and maps it to the LSP",
+                    "A label is prepended to the packet and it is forwarded",
+                    "At each intermediate LSR: remove incoming label, attach outgoing label, forward to next LSR",
+                    "Final (egress) LSR strips the label, reads the IP, and forwards the packet"
+                  ]
+                },
+                {
+                  type: "components",
+                  q: "Name 4 key benefits of MPLS (mnemonic: 'Scale · Uptime · Bandwidth · QoS' — S·U·B·Q):",
+                  items: [
+                    { hint: "Add new remote connections without adding hardware at primary site (S)", answers: ["Scalability", "Scale"] },
+                    { hint: "Alternative network paths prevent downtime (U)", answers: ["Improved Uptime", "Uptime"] },
+                    { hint: "Multiple traffic types traverse the network efficiently (B)", answers: ["Improved Bandwidth Utilization", "Bandwidth"] },
+                    { hint: "Prioritize voice/video for crisp quality (Q)", answers: ["Quality of Service", "QoS"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part B — POP vs SMTP vs IMAP Comparison",
+              points: [
+                { q: "What is SMTP's role?", options: ["Sending (PUSH) — transfers email FROM a client or server TO a destination mail server", "Retrieving email from mailbox", "Accessing email remotely", "Compressing attachments"], a: 0 },
+                { q: "What is POP3's role?", options: ["Retrieving email — downloads messages from the server to the local computer (then typically deletes from server)", "Sending email", "Routing email", "Encrypting email"], a: 0 },
+                { q: "What is IMAP's role?", options: ["Retrieving email — keeps messages on the server; access from multiple devices simultaneously", "Sending email", "Routing between MTAs", "Compressing text"], a: 0 },
+                { q: "Default port for SMTP?", options: ["25 (and 587 for submission)", "110", "143", "80"], a: 0 },
+                { q: "Default port for POP3?", options: ["110 (995 with SSL)", "25", "143", "443"], a: 0 },
+                { q: "Default port for IMAP?", options: ["143 (993 with SSL)", "110", "25", "80"], a: 0 },
+                { q: "Which is a PUSH protocol (send)?", options: ["SMTP", "POP3", "IMAP", "Both POP3 and IMAP"], a: 0 },
+                { q: "Which protocol is best when using multiple devices for the same mailbox?", options: ["IMAP — keeps all mail on the server and syncs across devices", "POP3 — downloads and deletes from server", "SMTP — for sending only", "FTP"], a: 0 },
+                { q: "Which protocol downloads and (by default) deletes mail from the server?", options: ["POP3", "IMAP", "SMTP", "HTTP"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 3 core email protocols (mnemonic: 'Send · POP · IMAP' — SMTP·POP·IMAP):",
+                  items: [
+                    { hint: "Push protocol for SENDING mail between clients/servers (port 25)", answers: ["SMTP", "Simple Mail Transfer Protocol"] },
+                    { hint: "Pull protocol — download and remove from server (port 110)", answers: ["POP3", "POP", "Post Office Protocol"] },
+                    { hint: "Pull protocol — keep mail on server; multi-device access (port 143)", answers: ["IMAP", "Internet Message Access Protocol"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part C — Web Browser Features",
+              points: [
+                { q: "Key browser feature — Web Page Rendering?", options: ["Retrieves HTML/CSS/JS and interprets them to construct the visual page", "Routes IP packets", "Compresses video", "Manages DNS root servers"], a: 0 },
+                { q: "Key browser feature — Navigating?", options: ["Address bar + back/forward buttons let users move between pages", "Installs apps", "Encrypts traffic", "Assigns MAC addresses"], a: 0 },
+                { q: "Key browser feature — Tabbed Browsing?", options: ["Open multiple web pages in a single browser window", "Only one page at a time", "Auto-closes tabs after 10 seconds", "Only works offline"], a: 0 },
+                { q: "Key browser feature — Bookmarks and History?", options: ["Save favorite URLs; maintain a history of visited sites", "Delete cookies on close", "Scan viruses", "Assign IPs"], a: 0 },
+                { q: "Key browser feature — Integrated Search?", options: ["Search bar ties in with a search engine (Google, Bing) so users can search directly", "Runs a local database", "Compiles JS to C++", "Runs Python"], a: 0 }
+              ]
+            },
+            {
+              title: "Part D — HTTP vs SMTP vs PGP",
+              points: [
+                { q: "HTTP is stateless or stateful?", options: ["Stateless — no state kept between requests (cookies emulate state)", "Stateful by default", "Only stateful with HTTPS", "Neither"], a: 0 },
+                { q: "SMTP is stateless or stateful?", options: ["Stateful — session-based (HELO, MAIL, RCPT, DATA, QUIT)", "Stateless", "Only over TLS", "Only for web"], a: 0 },
+                { q: "What is PGP?", options: ["Pretty Good Privacy — encryption/authentication for email using hybrid cryptography", "Protocol for routing packets", "A kind of DNS", "An ISP"], a: 0 },
+                { q: "What is HTTP's primary use?", options: ["Web resource transfer between browser and web server", "Sending email", "Securing files at rest", "Dynamic routing"], a: 0 },
+                { q: "What is SMTP's primary use?", options: ["Sending email between clients and mail servers", "Retrieving web pages", "Encrypting disks", "Voice calls"], a: 0 },
+                { q: "What is PGP's primary use?", options: ["Providing authentication, confidentiality, integrity to messages (especially email)", "Serving web pages", "Routing BGP", "Caching DNS"], a: 0 },
+                { q: "Which of the three uses hybrid encryption (symmetric + asymmetric)?", options: ["PGP", "HTTP", "SMTP", "None"], a: 0 },
+                { q: "Which of the three is a transfer protocol for mail, not a security protocol?", options: ["SMTP", "PGP", "HTTPS only", "None"], a: 0 }
+              ]
+            },
+            {
+              title: "Part E — Universal Internet Browsing",
+              points: [
+                { q: "What is Universal Internet Browsing?", options: ["Browser capability to retrieve and render content from any Web server using standard protocols/formats regardless of platform or device", "Browsing the universe", "Only for Chrome", "A VPN service"], a: 0 },
+                { q: "Which protocol is fundamental to Universal Internet Browsing?", options: ["HTTP / HTTPS", "SMTP", "FTP only", "ICMP"], a: 0 },
+                { q: "Which markup standard makes content renderable across browsers?", options: ["HTML (with CSS for styling)", "Only plain text", "Binary images only", "Excel spreadsheets"], a: 0 },
+                { q: "Why is cross-platform compatibility important in Universal Browsing?", options: ["Users on Windows, macOS, Linux, iOS, Android should all see the same web content", "Only Windows should work", "Each OS has its own Internet", "It isn't important"], a: 0 },
+                { q: "What standards body maintains web browsing specifications?", options: ["W3C (World Wide Web Consortium) and IETF / WHATWG", "IEEE only", "IANA", "OPEC"], a: 0 },
+                { q: "How does Universal Browsing handle private / corporate networks?", options: ["Browsers can access intranet/file-system resources via HTTP, file://, or corporate SSO — same UI, different scope", "Needs a different browser for intranet", "Only one browser supports it", "Never possible"], a: 0 }
               ]
             }
           ]
@@ -1623,6 +1763,247 @@ const DATA = {
                 },
                 { q: "Which protocol fully solves HOL blocking at the transport layer?", options: ["QUIC", "HTTP 2.0", "HTTP 1.1", "None of them"], a: 0 },
                 { q: "Which protocol uses QPACK header compression?", options: ["QUIC (HTTP/3)", "HTTP 2.0", "HTTP 1.1", "HTTP 1.0"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[Mixed Extras]", probability: "HIGH", appearances: 10, years: "2080, 2079, 2077, 2076, 2075, 2073, 2072, 2071",
+          prompt: "Explain browser as a rendering engine, Conditional GET, HTTP status codes, DOM/Rendering tree, WYSIWYG, Laravel and helper applications used in web programming.",
+          sections: [
+            {
+              title: "Part A — Web Browser as Rendering Engine",
+              points: [
+                { q: "What is a web browser?", options: ["Software application for retrieving, presenting, and traversing information resources on the World Wide Web", "A type of web server", "A database system", "An email client"], a: 0 },
+                { q: "What does the rendering engine do?", options: ["Retrieves HTML/CSS/JS from the server, interprets and processes the code to construct the web page", "Routes packets between networks", "Manages DNS caching", "Assigns IP addresses"], a: 0 },
+                { q: "Which are popular web browsers?", options: ["Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, Opera", "Apache, IIS, Nginx, Tomcat", "Windows, Linux, macOS", "Word, Excel, PowerPoint"], a: 0 },
+                { q: "Besides rendering, what key features do browsers provide?", options: ["Navigation, tabbed browsing, bookmarks, history, search bar integration", "IP routing", "Firewall filtering", "Data center cooling"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 5 key features of a web browser (mnemonic: 'Render · Navigate · Tabs · Bookmarks · Search' — R·N·T·B·S):",
+                  items: [
+                    { hint: "Retrieve HTML/CSS/JS and construct the visual web page (R)", answers: ["Web Page Rendering", "Rendering", "Render"] },
+                    { hint: "URL bar / forward / back — go to and move between sites (N)", answers: ["Navigation", "Navigating", "Navigate"] },
+                    { hint: "Multiple web pages inside a single window (T)", answers: ["Tabbed Browsing", "Tabs"] },
+                    { hint: "Save favorite URLs; keep history of visited sites (B)", answers: ["Bookmarks", "Bookmarks and History"] },
+                    { hint: "Integrated search bar linking to Google/Bing (S)", answers: ["Search", "Search Functionality"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part B — Conditional GET (IMPORTANT: 3 year appearances)",
+              points: [
+                { q: "What is a Conditional GET?", options: ["An HTTP GET request with conditions (If-Modified-Since or If-None-Match) that asks the server to send the resource only if it has changed", "A POST with additional parameters", "A DNS query over HTTPS", "A cached web page"], a: 0 },
+                { q: "Which HTTP header is used for time-based Conditional GET?", options: ["If-Modified-Since", "Host", "User-Agent", "Content-Type"], a: 0 },
+                { q: "Which HTTP header is used for ETag-based Conditional GET?", options: ["If-None-Match (compares with the resource's ETag)", "Accept", "Authorization", "Connection"], a: 0 },
+                { q: "What HTTP response code is returned if the resource has NOT been modified?", options: ["304 Not Modified", "200 OK", "404 Not Found", "500 Server Error"], a: 0 },
+                { q: "What HTTP response code is returned if the resource HAS been modified?", options: ["200 OK with the new content", "304 Not Modified", "204 No Content", "202 Accepted"], a: 0 },
+                { q: "Why use Conditional GET in web browsing?", options: ["Saves bandwidth (server responds with headers only if unchanged); speeds up page loads via efficient cache revalidation", "Improves encryption strength", "Blocks malicious requests", "Compresses all resources"], a: 0 },
+                { q: "Who typically sends the Conditional GET?", options: ["The browser (client), using the cached copy's metadata to ask 'is my copy still fresh?'", "The server autonomously", "The DNS resolver", "The ISP"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — HTTP Status Codes",
+              points: [
+                { q: "What does a 1xx status code indicate?", options: ["Informational — the request was received, process continuing", "Success", "Redirection", "Client error"], a: 0 },
+                { q: "What does a 2xx status code indicate?", options: ["Success — the request was successfully received, understood, and accepted", "Informational", "Redirection", "Server error"], a: 0 },
+                { q: "What does a 3xx status code indicate?", options: ["Redirection — further action needed to complete the request", "Success", "Client error", "Server error"], a: 0 },
+                { q: "What does a 4xx status code indicate?", options: ["Client error — the request contains bad syntax or cannot be fulfilled", "Success", "Server error", "Informational"], a: 0 },
+                { q: "What does a 5xx status code indicate?", options: ["Server error — the server failed to fulfill a valid request", "Success", "Client error", "Redirection"], a: 0 },
+                { q: "What does HTTP 200 mean?", options: ["OK — request succeeded", "Not Found", "Forbidden", "Internal Server Error"], a: 0 },
+                { q: "What does HTTP 301 mean?", options: ["Moved Permanently — resource has a new permanent URL", "Found temporarily", "Not Modified", "Bad Request"], a: 0 },
+                { q: "What does HTTP 302 mean?", options: ["Found (Moved Temporarily) — resource temporarily under a different URL", "Moved Permanently", "Gone", "Partial Content"], a: 0 },
+                { q: "What does HTTP 304 mean?", options: ["Not Modified — cached copy is still valid (Conditional GET response)", "No Content", "Temporary Redirect", "Created"], a: 0 },
+                { q: "What does HTTP 400 mean?", options: ["Bad Request — malformed syntax or invalid request", "Unauthorized", "Forbidden", "Not Found"], a: 0 },
+                { q: "What does HTTP 401 mean?", options: ["Unauthorized — authentication required (not logged in)", "Forbidden (authenticated but no access)", "Bad Request", "Internal Server Error"], a: 0 },
+                { q: "What does HTTP 403 mean?", options: ["Forbidden — authenticated but not authorized to access the resource", "Not Authenticated", "Not Found", "Server Error"], a: 0 },
+                { q: "What does HTTP 404 mean?", options: ["Not Found — resource doesn't exist at the given URL", "Server Error", "Unauthorized", "Bad Gateway"], a: 0 },
+                { q: "What does HTTP 500 mean?", options: ["Internal Server Error — unexpected server condition prevented fulfilling the request", "Service Unavailable", "Gateway Timeout", "Bad Gateway"], a: 0 },
+                { q: "What does HTTP 503 mean?", options: ["Service Unavailable — server temporarily overloaded or down for maintenance", "Gateway Timeout", "Bad Request", "Internal Server Error"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 5 categories of HTTP status codes (mnemonic: '1xx · 2xx · 3xx · 4xx · 5xx'):",
+                  items: [
+                    { hint: "100-199 — request received, process continuing", answers: ["Informational", "1xx", "100"] },
+                    { hint: "200-299 — request was successful", answers: ["Success", "Successful", "2xx", "200"] },
+                    { hint: "300-399 — further action needed (redirection)", answers: ["Redirection", "Redirect", "3xx", "300"] },
+                    { hint: "400-499 — bad request from the client", answers: ["Client Error", "Client Errors", "4xx", "400"] },
+                    { hint: "500-599 — server failed to fulfill a valid request", answers: ["Server Error", "Server Errors", "5xx", "500"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part D — DOM Tree and Rendering Tree",
+              points: [
+                { q: "What does DOM stand for?", options: ["Document Object Model", "Data Object Manager", "Digital Output Module", "Distributed Object Mesh"], a: 0 },
+                { q: "What is the DOM tree?", options: ["Hierarchical tree representation of the HTML document — every element, attribute, and text becomes a node", "A binary tree for database indexing", "A DNS lookup tree", "A file system tree"], a: 0 },
+                { q: "What does JavaScript use the DOM for?", options: ["To access, modify, add, or remove HTML elements dynamically", "To compile server-side code", "To encrypt packets", "To resolve domain names"], a: 0 },
+                { q: "What is the Rendering Tree (Render Tree)?", options: ["Visual-only tree built from DOM + CSSOM — contains ONLY visible elements that will be painted", "Another name for the DOM tree", "A database indexing structure", "The browser's cache"], a: 0 },
+                { q: "Which elements are EXCLUDED from the Rendering Tree?", options: ["<head>, <script>, <meta>, and elements with display:none (they don't render visually)", "All <div> tags", "All <a> tags", "Nothing — everything renders"], a: 0 },
+                { q: "What is CSSOM?", options: ["CSS Object Model — tree representation of all CSS rules applied to the page", "Cascading Style Output Module", "CSS Operating Method", "Centralized Style Object Manager"], a: 0 },
+                { q: "How is the Rendering Tree constructed?", options: ["DOM + CSSOM combine — each visible DOM node gets its computed styles applied to form render tree nodes", "Rendering tree is a copy of the DOM", "Rendering tree comes from JavaScript only", "It's downloaded from the server"], a: 0 },
+                { q: "What is the difference between DOM and Rendering Tree?", options: ["DOM has ALL nodes (structure); Rendering Tree has only VISIBLE nodes with computed styles (for painting)", "They are identical", "DOM is for mobile, Render Tree is for desktop", "DOM has only text, Render Tree has images"], a: 0 },
+                {
+                  type: "sequence",
+                  q: "Arrange the browser's page rendering pipeline in order.",
+                  sequence: [
+                    "Parse HTML → build DOM tree",
+                    "Parse CSS → build CSSOM tree",
+                    "Combine DOM + CSSOM → Render Tree (only visible elements)",
+                    "Layout — calculate each node's geometry (size, position)",
+                    "Paint — fill in pixels for text, colors, images",
+                    "Composite — layer the painted elements onto the screen"
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part E — WYSIWYG Authoring",
+              points: [
+                { q: "What does WYSIWYG stand for?", options: ["What You See Is What You Get", "Web You See Is What You Get", "What You Style Is What You Generate", "Web Yielding System In What Yields Graphics"], a: 0 },
+                { q: "What is a WYSIWYG editor?", options: ["Interface/editor that shows content exactly as it will appear when published/printed — no code needed", "A command-line compiler", "A text-only editor", "A PDF viewer"], a: 0 },
+                { q: "Common Web Authoring WYSIWYG tools?", options: ["NetObjects Fusion, Microsoft FrontPage, Macromedia/Adobe Dreamweaver", "Bash, Vim, Emacs", "GCC, Clang, Rustc", "Windows XP, Linux, macOS"], a: 0 },
+                { q: "Why is WYSIWYG popular in web publishing?", options: ["Non-technical users can design pages visually without writing HTML/CSS", "It makes web pages slower", "It uses less memory", "Mandated by W3C"], a: 0 },
+                { q: "Applications that commonly use WYSIWYG interfaces?", options: ["Word processors (MS Word), website builders (WordPress, Wix), email editors, graphics/design tools (Photoshop, InDesign)", "Only C compilers", "Only databases", "Only web browsers"], a: 0 }
+              ]
+            },
+            {
+              title: "Part F — Laravel Framework",
+              points: [
+                { q: "What is Laravel?", options: ["A PHP web application framework with expressive syntax and MVC architecture", "A JavaScript framework like React", "A Python ORM", "A database server"], a: 0 },
+                { q: "What architecture does Laravel follow?", options: ["MVC (Model-View-Controller)", "Monolithic only", "Peer-to-peer", "Client-server only"], a: 0 },
+                { q: "What is Artisan in Laravel?", options: ["The command-line interface (CLI) shipped with Laravel for scaffolding, migrations, and common tasks", "A CSS framework", "A database engine", "An IDE"], a: 0 },
+                { q: "What is Blade in Laravel?", options: ["Laravel's lightweight templating engine (views with @if, @foreach, template inheritance)", "A testing library", "An ORM", "A router"], a: 0 },
+                { q: "What is Eloquent in Laravel?", options: ["Laravel's ORM (Object-Relational Mapper) — each database table has a corresponding Model class", "A routing engine", "A queue worker", "A cache driver"], a: 0 },
+                { q: "Superior features of Laravel?", options: ["Routing, Middleware, Authentication, Queues, Events, Eloquent ORM, Artisan CLI, Blade templates, built-in security (CSRF, XSS)", "Only handles HTML", "Has no database support", "No authentication available"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 5 key Laravel features (mnemonic: 'Routing · Middleware · Blade · Eloquent · Artisan' — R·M·B·E·A):",
+                  items: [
+                    { hint: "URL → controller mapping with parameters, groups, and middleware (R)", answers: ["Routing"] },
+                    { hint: "Request filters (auth, CSRF, logging) between request and controller (M)", answers: ["Middleware"] },
+                    { hint: "Templating engine with @if, @foreach, template inheritance (B)", answers: ["Blade", "Blade Templating", "Blade Templates"] },
+                    { hint: "ORM — each DB table has a Model class; fluent query builder (E)", answers: ["Eloquent", "Eloquent ORM"] },
+                    { hint: "CLI tool for migrations, scaffolding, running queues (A)", answers: ["Artisan", "Artisan CLI"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part G — Helper Applications (CGI · Perl · PHP · JS · ASP)",
+              points: [
+                { q: "What is CGI's role as a helper application?", options: ["Standard protocol for web servers to execute external programs (in any language) and return dynamic content", "Client-side only", "A database engine", "A web browser"], a: 0 },
+                { q: "What is Perl used for in web programming?", options: ["High-level scripting — text processing, CGI scripts, system administration, database interaction", "Only binary compilation", "Only games", "Only mobile apps"], a: 0 },
+                { q: "What is PHP?", options: ["Hypertext Preprocessor — server-side scripting language for dynamic web pages (output plain HTML to the browser)", "A client-side JS framework", "A database server", "A CSS preprocessor"], a: 0 },
+                { q: "What is JavaScript's role as a helper application?", options: ["Client-side scripting — runs in the browser to add interactivity, manipulate DOM, validate forms, make AJAX calls", "Server-side only", "A compiled language", "A database query language"], a: 0 },
+                { q: "What is ASP?", options: ["Active Server Pages — Microsoft's server-side scripting to generate dynamic content before sending to the client", "Application Scripting Package", "A CSS framework", "A text editor"], a: 0 },
+                { q: "What is Java's role in this context?", options: ["General-purpose OOP language — 'Write Once, Run Anywhere' via JVM; used for servlets, enterprise apps, Android", "Same as JavaScript", "Only for hardware design", "Only for graphics"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 5 helper applications / languages used in web programming (mnemonic: 'CGI · Perl · PHP · JS · ASP'):",
+                  items: [
+                    { hint: "Protocol connecting web server to external programs of any language", answers: ["CGI", "Common Gateway Interface"] },
+                    { hint: "Text-processing scripting language; used for CGI scripts", answers: ["Perl"] },
+                    { hint: "Server-side 'Hypertext Preprocessor' that outputs HTML to the browser", answers: ["PHP"] },
+                    { hint: "Client-side scripting for DOM manipulation, interactivity, AJAX", answers: ["JavaScript", "JS"] },
+                    { hint: "Microsoft's Active Server Pages — server-side scripting for IIS", answers: ["ASP", "Active Server Pages"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q6", marks: "[Mixed Extras 2]", probability: "MEDIUM", appearances: 7, years: "2078, 2075, 2073, 2072, 2071",
+          prompt: "Explain web server vs website, persistent vs non-persistent connections (including why HTTPS isn't used for all traffic), HTTP request methods, XML, WWW + HTTP header connection types, and XML + JavaScript together.",
+          sections: [
+            {
+              title: "Part A — Web Server vs Website",
+              points: [
+                { q: "What is a Web Server?", options: ["Software (or hardware) that uses HTTP to serve files making up web pages in response to HTTP requests", "A physical building only", "An email system", "A DNS cache"], a: 0 },
+                { q: "What is a Website?", options: ["A collection of related web pages identified by a common domain name and hosted on one or more web servers", "Software that hosts other sites", "A database engine", "A router interface"], a: 0 },
+                { q: "Key difference — web server vs website?", options: ["Server is the INFRASTRUCTURE (serves content); website is the CONTENT (pages)", "They are identical", "Web server is user-facing, website is admin-facing", "Neither exists without the other"], a: 0 },
+                { q: "Can a single web server host multiple websites?", options: ["Yes — via Virtual Hosting (Name-based, IP-based, Port-based)", "No — strictly one site per server", "Only if they use the same IP", "Only on weekends"], a: 0 },
+                { q: "Popular web server software?", options: ["Apache, Microsoft IIS, Nginx, LiteSpeed", "Chrome, Firefox, Safari", "MySQL, PostgreSQL", "Word, Excel"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Persistent vs Non-Persistent Connections (HTTP) + why not HTTPS for all",
+              points: [
+                { q: "What is a Non-Persistent HTTP Connection?", options: ["New TCP connection is opened for EACH request, then closed after the response — default in HTTP/1.0", "Same TCP connection reused for multiple requests", "UDP-based", "No connection at all"], a: 0 },
+                { q: "What is a Persistent HTTP Connection?", options: ["Single TCP connection reused for multiple HTTP requests/responses — default in HTTP/1.1", "New TCP per request", "No TCP used", "Only for HTTPS"], a: 0 },
+                { q: "RTT (Round Trip Time) for non-persistent per object?", options: ["2 RTT — 1 RTT to open TCP + 1 RTT to send/receive data", "0 RTT", "Infinite", "1 RTT only"], a: 0 },
+                { q: "RTT for persistent after initial connection?", options: ["1 RTT per object after the connection is already open", "2 RTT always", "0.5 RTT", "None"], a: 0 },
+                { q: "Advantage of persistent?", options: ["Lower latency, less overhead, saves CPU/time from opening new TCP each time", "Uses more bandwidth", "Less reliable", "Harder to debug"], a: 0 },
+                { q: "Disadvantage of persistent?", options: ["Idle connection keeps resources open (wasteful if not reused); slightly more vulnerable to hijacking than short-lived", "Too fast", "No disadvantages", "Not supported anywhere"], a: 0 },
+                { q: "Why ISN'T HTTPS used for ALL web traffic (historical reasons)?", options: ["Computational overhead (slower than HTTP), certificate costs/complexity, legacy support, caching constraints on intermediaries", "HTTPS is always used", "HTTPS doesn't work on mobile", "HTTP is more secure"], a: 0 },
+                { q: "Is HTTPS becoming the default on the modern web?", options: ["Yes — with Let's Encrypt (free certs), HTTP/2, modern browsers flagging HTTP as 'Not Secure' — most sites now run HTTPS", "No — HTTPS is being deprecated", "Only for banking", "Only in EU"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — HTTP Request Methods",
+              points: [
+                { q: "GET method?", options: ["Retrieve data from the server — safe and idempotent", "Modify server state", "Delete a resource", "Authenticate"], a: 0 },
+                { q: "POST method?", options: ["Submit data to be processed — often used to create new resources or submit forms", "Retrieve data only", "Delete a resource", "Check server status"], a: 0 },
+                { q: "PUT method?", options: ["Update a resource (or create if it doesn't exist) — idempotent", "Retrieve only", "Delete only", "Nothing"], a: 0 },
+                { q: "DELETE method?", options: ["Request the removal of a resource — idempotent", "Create a resource", "Duplicate a resource", "Read a resource"], a: 0 },
+                { q: "PATCH method?", options: ["Apply PARTIAL modifications to a resource (unlike PUT which typically replaces)", "Fully replace the resource", "Delete the resource", "Serve a file"], a: 0 },
+                { q: "HEAD method?", options: ["Same as GET but returns only the response HEADERS (no body) — checks status without downloading", "Same as POST", "Only for cookies", "Installs a header file"], a: 0 },
+                { q: "OPTIONS method?", options: ["Describe the communication options / allowed methods for the target resource (used in CORS preflight)", "Deletes options", "Same as GET", "Runs JS code"], a: 0 },
+                { q: "TRACE method?", options: ["Perform a message loop-back test along the path to the target — mainly diagnostic", "Traces a cookie", "Opens a terminal", "Runs a query"], a: 0 },
+                { q: "CONNECT method?", options: ["Establish a network tunnel to the target resource — typically for SSL/TLS tunneling through an HTTP proxy", "Connects to a database", "Opens a socket only", "Authenticates the user"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 9 HTTP request methods (mnemonic: 'GET · POST · PUT · DELETE · PATCH · HEAD · OPTIONS · TRACE · CONNECT'):",
+                  items: [
+                    { hint: "Retrieve a resource (safe, idempotent)", answers: ["GET"] },
+                    { hint: "Submit data — often creates a new resource", answers: ["POST"] },
+                    { hint: "Replace/update a resource (idempotent)", answers: ["PUT"] },
+                    { hint: "Remove a resource (idempotent)", answers: ["DELETE"] },
+                    { hint: "Partial modification of a resource", answers: ["PATCH"] },
+                    { hint: "Like GET but returns headers only", answers: ["HEAD"] },
+                    { hint: "Describe allowed methods / CORS preflight", answers: ["OPTIONS"] },
+                    { hint: "Loop-back diagnostic test along the request path", answers: ["TRACE"] },
+                    { hint: "Establish a tunnel for SSL/TLS via HTTP proxy", answers: ["CONNECT"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part D — XML Essentials",
+              points: [
+                { q: "What does XML stand for?", options: ["eXtensible Markup Language", "eXtended Media Loader", "eXecutable Markup Link", "eXternal Meta-Language"], a: 0 },
+                { q: "What is XML's main purpose?", options: ["Store and transport structured data in a format that is BOTH human-readable AND machine-readable", "Compile programs", "Render images", "Route packets"], a: 0 },
+                { q: "Who can define XML tags?", options: ["The USER — XML is user-definable (unlike HTML's fixed set of tags)", "Only W3C predefines them", "Only Microsoft", "No one — tags are all numeric"], a: 0 },
+                { q: "Key design goals of XML?", options: ["Simplicity, generality, Unicode support, usability across the Internet", "Speed above all else", "Binary-only format", "Compressed only"], a: 0 },
+                { q: "Main difference between XML and HTML?", options: ["XML describes DATA (user-defined tags, strict syntax); HTML describes PRESENTATION (fixed tags, lenient syntax)", "They are identical", "HTML is newer", "XML is only for images"], a: 0 },
+                { q: "Is XML case-sensitive?", options: ["Yes — <Book> and <book> are different elements", "No — same as HTML", "Only in Chrome", "Only for attributes"], a: 0 },
+                { q: "What are common uses of XML?", options: ["Web services (SOAP), configuration files, document formats (DOCX, SVG, RSS), data interchange", "Only for games", "Only for video", "Only for images"], a: 0 }
+              ]
+            },
+            {
+              title: "Part E — WWW + HTTP Header Connection Types",
+              points: [
+                { q: "What is WWW?", options: ["World Wide Web — system of interconnected hypertext documents accessed via the Internet using HTTP and HTML", "Wireless Web Worm", "World Wide Wait", "Wide Windows Web"], a: 0 },
+                { q: "Which HTTP header controls the connection behavior?", options: ["Connection:", "Content-Type:", "Host:", "Cookie:"], a: 0 },
+                { q: "What does 'Connection: keep-alive' mean?", options: ["Keep the TCP connection open for subsequent requests (persistent) — default in HTTP/1.1", "Close after this response", "Reopen next request", "Encrypt connection"], a: 0 },
+                { q: "What does 'Connection: close' mean?", options: ["Close the TCP connection after this response (non-persistent)", "Keep open forever", "Upgrade to HTTPS", "Open a new tab"], a: 0 },
+                { q: "What is the default Connection header in HTTP/1.0?", options: ["close (non-persistent by default)", "keep-alive", "upgrade", "none"], a: 0 },
+                { q: "What is the default Connection header in HTTP/1.1?", options: ["keep-alive (persistent by default)", "close", "none", "upgrade"], a: 0 },
+                { q: "What header starts the WebSocket / HTTP/2 upgrade process?", options: ["Connection: Upgrade (with Upgrade: websocket or h2c)", "Content-Type: websocket", "Protocol: 2.0", "Accept: ws"], a: 0 }
+              ]
+            },
+            {
+              title: "Part F — XML + JavaScript Together (AJAX / XHR)",
+              points: [
+                { q: "How do XML and JavaScript work together on the client?", options: ["JavaScript uses the XMLHttpRequest (XHR) object to fetch data (originally XML, now often JSON) from the server without a full page reload — i.e., AJAX", "They can't work together", "XML is compiled by JS to C", "JS sends XML via SMTP"], a: 0 },
+                { q: "What does AJAX stand for?", options: ["Asynchronous JavaScript And XML", "Automated Java And X-ray", "Active JS And XAML", "All-purpose JS And XML"], a: 0 },
+                { q: "What JS object is central to XML + JS integration?", options: ["XMLHttpRequest (XHR) — also newer fetch() API uses the same principle", "Document", "Window", "Console"], a: 0 },
+                { q: "What are typical steps of an AJAX call?", options: ["Create XHR → open(method, URL) → send() → onreadystatechange handler parses the returned XML/JSON → update DOM", "Compile → link → run → done", "No steps — just magic", "Send email with data"], a: 0 },
+                { q: "Why is XML (or JSON) useful as the DATA FORMAT in AJAX?", options: ["Structured, parseable by JS without a full page reload — efficient for partial page updates", "Binary format that's obscure", "Only compiled code", "No reason"], a: 0 },
+                { q: "Is JSON or XML more common today in AJAX apps?", options: ["JSON — simpler, lighter, native to JavaScript (no parser needed)", "XML is more common now", "Neither is used", "Both are deprecated"], a: 0 }
               ]
             }
           ]
@@ -1990,6 +2371,73 @@ const DATA = {
                 { q: "What is a DHCP Relay Agent?", options: ["Allows multiple LANs to share a single DHCP server by forwarding broadcasts", "A backup DNS server", "A firewall appliance", "A cache"], a: 0 },
                 { q: "Key advantage of DHCP?", options: ["Centralized IP management and ease of adding new clients", "Slower IP assignment", "Requires manual configuration", "Uses only IPv6"], a: 0 },
                 { q: "Main disadvantage of DHCP?", options: ["IP conflicts can occur if the DHCP server misbehaves or multiple servers exist", "No disadvantages", "Only works with fiber", "Requires 4K monitors"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q6", marks: "[Short Notes Extras]", probability: "MEDIUM", appearances: 6, years: "2076, 2072, 2071",
+          prompt: "Explain Fair Use Policy with RADIUS-CHAP, DMZ, Content vs Packet Filtering, and Spanning Tree Protocol (STP).",
+          sections: [
+            {
+              title: "Part A — Fair Use Policy (FUP) + RADIUS-CHAP",
+              points: [
+                { q: "What is Fair Use Policy (FUP) in ISPs?", options: ["A policy capping bandwidth per user after a threshold to prevent a few heavy users from degrading others' experience", "Unlimited bandwidth for all", "Free Internet on public holidays", "Bandwidth only for VIP users"], a: 0 },
+                { q: "How is FUP typically enforced?", options: ["Track each user's monthly usage via RADIUS accounting; throttle speed after limit is crossed", "Physically unplug users", "Email the user to stop", "Block the ISP entirely"], a: 0 },
+                { q: "What role does RADIUS accounting play in FUP?", options: ["Records time online, bytes sent/received, services accessed — used to decide when FUP cap is hit", "Only authenticates users", "Only runs DNS", "Only does encryption"], a: 0 },
+                { q: "What does CHAP stand for?", options: ["Challenge-Handshake Authentication Protocol", "Cipher Hash Access Protocol", "Channel Handshake Access Policy", "Client Hash Auth Procedure"], a: 0 },
+                { q: "How does CHAP work (vs PAP)?", options: ["Server sends a random challenge; client returns a hash of (challenge + password); password is never sent over the wire — stronger than plaintext PAP", "Sends plaintext password always", "Uses MD5 for encryption", "Same as basic auth"], a: 0 },
+                { q: "How is CHAP integrated with RADIUS for authentication?", options: ["NAS relays CHAP challenge/response to the RADIUS server, which verifies the hash against the stored password", "RADIUS cannot use CHAP", "Only works with PAP", "CHAP bypasses RADIUS entirely"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — DMZ (Demilitarized Zone)",
+              points: [
+                { q: "What is a DMZ in network security?", options: ["Perimeter subnet between the untrusted Internet and the trusted internal network — hosts public-facing servers (Web, mail, DNS)", "A classified war zone", "A backup server room", "A type of VLAN on switches only"], a: 0 },
+                { q: "Why put public servers in a DMZ rather than directly on the LAN?", options: ["If a public server is compromised, the attacker doesn't get direct access to the internal network", "To make them faster", "Because they don't fit in the office", "It's legally required"], a: 0 },
+                { q: "A typical DMZ uses how many firewalls?", options: ["Two firewalls (outer between Internet-DMZ, inner between DMZ-LAN) — 'sandwich' design", "None", "Ten", "Only switches"], a: 0 },
+                { q: "Which servers commonly live in a DMZ?", options: ["Web server, mail server (MTA), DNS server, FTP server, reverse proxy", "Active Directory controllers", "Internal HR database", "Employee workstations"], a: 0 },
+                { q: "Is the DMZ more trusted than the Internet?", options: ["Yes — more trusted than the Internet but LESS trusted than the internal LAN", "Equally trusted as LAN", "Less trusted than the Internet", "Not trusted at all"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Content Filtering vs Packet Filtering",
+              points: [
+                { q: "What is Packet Filtering?", options: ["Firewall inspects packet headers (source/destination IP, port, protocol) and allows/blocks based on ACLs — fast, layer 3/4", "Inspects the packet's body content", "Only blocks DNS", "Only works for HTTPS"], a: 0 },
+                { q: "What is Content Filtering?", options: ["Inspects the actual payload/content (URL strings, keywords, file types, MIME) to allow or block — slower, application-layer", "Looks only at TCP flags", "Filters only by IP", "Blocks random packets"], a: 0 },
+                { q: "Key difference — layer?", options: ["Packet filtering = L3/L4 (headers); Content filtering = L7 (payload/application)", "Both at L2", "Both at L1", "Content filtering is L2"], a: 0 },
+                { q: "Key difference — speed?", options: ["Packet filtering is FAST (headers only); Content filtering is SLOWER (has to parse payload)", "Both identical", "Content filtering is faster", "Neither works in real time"], a: 0 },
+                { q: "Key difference — use case?", options: ["Packet filtering: basic firewalling by IP/port; Content filtering: block inappropriate sites, malware, specific keywords", "Both block all traffic", "Neither is used", "Content filtering is for routers only"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 3 comparison axes between Packet vs Content Filtering (mnemonic: 'Layer · Speed · Use-case' — L·S·U):",
+                  items: [
+                    { hint: "OSI layer at which the decision is made (L3/L4 vs L7) (L)", answers: ["Layer"] },
+                    { hint: "Header-only inspection is fast; payload parsing is slower (S)", answers: ["Speed"] },
+                    { hint: "Basic IP/port allow-list vs blocking inappropriate content / keywords (U)", answers: ["Use Case", "Use-case", "Purpose"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part D — Spanning Tree Protocol (STP)",
+              points: [
+                { q: "What does STP stand for?", options: ["Spanning Tree Protocol", "Secure Tunnel Protocol", "Simple Transport Protocol", "Session Transit Protocol"], a: 0 },
+                { q: "What problem does STP solve?", options: ["Prevents LOOPS in L2 switched networks while allowing redundant physical links", "Encrypts Ethernet frames", "Assigns IP addresses", "Compresses Ethernet headers"], a: 0 },
+                { q: "Why are loops bad in a switched network?", options: ["Cause broadcast storms, MAC table instability, and multiple frame delivery — can crash the network", "They improve speed", "They're required for redundancy to work", "They don't cause any problem"], a: 0 },
+                { q: "What does STP do to physical links?", options: ["Logically BLOCKS redundant paths, leaving only one active path; unblocks them if the primary fails", "Physically unplugs them", "Encrypts them", "Duplicates all packets on them"], a: 0 },
+                { q: "What is the Root Bridge in STP?", options: ["The switch with the lowest Bridge ID — center of the spanning tree; all paths are calculated relative to it", "The backup switch only", "The Internet router", "The DHCP server"], a: 0 },
+                { q: "What is RSTP?", options: ["Rapid Spanning Tree Protocol — faster convergence than classic STP (seconds vs ~30-50 sec)", "Reverse STP", "Router STP", "Random STP"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 4 key STP features/states (mnemonic: 'Loop-prevention · Root-bridge · Blocked-ports · Fast-RSTP' — L·R·B·F):",
+                  items: [
+                    { hint: "Prevents broadcast storms and multiple frame delivery in L2 loops (L)", answers: ["Loop Prevention", "Loop-prevention"] },
+                    { hint: "Elected switch at the center of the spanning tree (R)", answers: ["Root Bridge", "Root-bridge"] },
+                    { hint: "Redundant paths are logically disabled until needed (B)", answers: ["Blocked Ports", "Blocked-ports"] },
+                    { hint: "Rapid Spanning Tree Protocol — faster convergence (F)", answers: ["RSTP", "Rapid STP", "Fast-RSTP"] }
+                  ]
+                }
               ]
             }
           ]
@@ -2552,6 +3000,147 @@ const DATA = {
                 { q: "What is UMS?", options: ["Integration of different messaging and communications media (email, SMS, fax, voicemail, video) into a single interface", "Only email", "Only SMS", "Just a voicemail box"], a: 0 },
                 { q: "Why use UMS?", options: ["Reduces travel/admin cost, lowers IT cost, improves workforce collaboration, secure communication", "To increase costs", "To block communication", "Mandated by PSTN"], a: 0 },
                 { q: "How does VoIP relate to UMS?", options: ["VoIP is a key part of UMS — voice becomes just another data stream unified with email/SMS/fax", "VoIP is incompatible with UMS", "They are identical", "UMS replaces VoIP"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[Short Notes Extras]", probability: "MEDIUM", appearances: 8, years: "2080, 2078, 2077, 2071",
+          prompt: "Short notes on Group Communication, VoIP Call Bypass, IXPS, Digital Business vs Internet Commerce, and Legal/Economic issues of VoIP in Nepal.",
+          sections: [
+            {
+              title: "Part A — Group Communication",
+              points: [
+                { q: "What is group communication on the Internet?", options: ["One-to-many or many-to-many communication — e.g., email lists, IRC channels, video conferences, multicast streaming", "One-to-one chat only", "Only voice calls", "Only data transfer"], a: 0 },
+                { q: "Which protocol supports IP-level group communication?", options: ["IP Multicast (IGMP for membership)", "ARP", "DNS", "DHCP"], a: 0 },
+                { q: "What is the difference between Unicast, Broadcast, and Multicast?", options: ["Unicast = 1-to-1, Broadcast = 1-to-all in segment, Multicast = 1-to-group (members subscribe)", "All identical", "Broadcast = private", "Multicast = encrypted"], a: 0 },
+                { q: "Common group-communication applications?", options: ["Mailing lists, IRC, Slack channels, video conferencing (Zoom, Teams), IPTV, online multiplayer games", "Only Gmail", "Only Skype", "Only SSH"], a: 0 },
+                { q: "What does IGMP do?", options: ["Internet Group Management Protocol — hosts tell their router 'I want to join / leave' a multicast group", "Encrypts traffic", "Sends emails", "Resolves DNS"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — VoIP Call Bypass",
+              points: [
+                { q: "What is VoIP Call Bypass (gray-market VoIP)?", options: ["Illegal practice of routing international calls as local calls by terminating them via VoIP-to-PSTN gateways — bypasses licensed international gateway fees", "A legitimate VoIP setup", "A type of DNS routing", "Same as Skype"], a: 0 },
+                { q: "Why is VoIP Call Bypass a problem for regulators?", options: ["Causes revenue loss to legitimate telecom operators and the government (ITU termination fees)", "It improves call quality", "It's faster than PSTN", "No regulatory impact"], a: 0 },
+                { q: "How is VoIP Call Bypass typically done?", options: ["Illegal SIM banks / SIM boxes terminate VoIP traffic into mobile networks as if they were local calls", "Satellite phones only", "Through licensed telcos", "Using Morse code"], a: 0 },
+                { q: "Regulatory response to VoIP Call Bypass?", options: ["Detect SIM-box patterns, penalties, licensing, and international agreements", "Allow it freely", "Encourage it", "Ignore it"], a: 0 },
+                { q: "In Nepal, is VoIP call bypass legal?", options: ["No — unauthorized VoIP termination is prohibited by Nepal Telecommunications Authority (NTA)", "Yes for anyone", "Only on weekends", "Only for tourists"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — IXPS / IP Interconnection",
+              points: [
+                { q: "What does IXP (also written IXPS) stand for?", options: ["Internet Exchange Point — physical location where multiple networks (ISPs, CDNs, content providers) interconnect to exchange traffic", "Internet eXchange Processor", "IP eXtension Platform Service", "Internal Express Packet Service"], a: 0 },
+                { q: "Why do IXPs exist?", options: ["Keep local traffic local — peers exchange traffic directly instead of paying transit through expensive international links", "Block international traffic", "Only for government use", "Charge per packet"], a: 0 },
+                { q: "How does IP interconnection work at an IXP?", options: ["Participants connect a router to a shared Layer-2 fabric (switch); peer via BGP; exchange traffic at low or no cost", "Direct fiber to each participant separately", "Through satellites only", "Over the dark web"], a: 0 },
+                { q: "Benefits of IXPs?", options: ["Lower latency, reduced transit costs, improved resilience, better user experience", "Slower speeds", "Higher cost always", "No benefit"], a: 0 },
+                { q: "Example IXP in Nepal?", options: ["NIXI (Nepal Internet Exchange)", "APNIC only", "There is none", "Nepal Telecom HQ"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 4 key benefits of an IXP (mnemonic: 'Local · Latency · Cost · Resilience' — L·L·C·R):",
+                  items: [
+                    { hint: "Domestic traffic stays inside the country (L)", answers: ["Local Traffic", "Local"] },
+                    { hint: "Fewer hops → faster user experience (L)", answers: ["Low Latency", "Latency"] },
+                    { hint: "Peering is free or cheap; avoids expensive international transit (C)", answers: ["Reduced Cost", "Cost", "Low Cost", "Reduced Transit Cost"] },
+                    { hint: "Backup path if an upstream link fails (R)", answers: ["Resilience", "Redundancy"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part D — Digital Business vs Internet Commerce",
+              points: [
+                { q: "What is Digital Business?", options: ["Broader concept — uses digital technologies (AI, IoT, analytics, cloud) to transform business models, processes, and customer experiences across the entire enterprise", "Only online shopping", "Only B2B transactions", "A synonym for email"], a: 0 },
+                { q: "What is Internet Commerce (e-commerce)?", options: ["NARROWER subset — buying and selling goods/services over the Internet; focused on transactions", "The entire digital transformation", "Only social media", "Blockchain only"], a: 0 },
+                { q: "Key difference — scope?", options: ["Digital Business = entire organization transformation; Internet Commerce = online buying/selling only", "Identical scope", "Internet Commerce is broader", "Neither has a scope"], a: 0 },
+                { q: "Key difference — focus?", options: ["Digital Business focuses on VALUE CREATION via tech; Internet Commerce focuses on TRANSACTIONS", "Both focus on cats", "Both focus only on marketing", "Neither has focus"], a: 0 },
+                { q: "Example of Digital Business?", options: ["Netflix's AI-driven recommendations + streaming + data analytics to personalize the whole experience", "A single static website", "An offline store only", "Printed newspaper"], a: 0 },
+                { q: "Example of Internet Commerce?", options: ["Amazon online store checkout — browse, add to cart, pay, ship", "A physical retail chain with no online presence", "Door-to-door sales only", "A TV advertisement"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 3 main axes comparing Digital Business vs Internet Commerce (mnemonic: 'Scope · Focus · Example' — S·F·E):",
+                  items: [
+                    { hint: "Entire enterprise transformation vs online transactions only (S)", answers: ["Scope"] },
+                    { hint: "Value creation via tech vs completing transactions (F)", answers: ["Focus"] },
+                    { hint: "Netflix-type experience vs Amazon-checkout-type (E)", answers: ["Example", "Examples"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part E — Legal / Economic Issues of VoIP & IP Interconnection in Nepal",
+              points: [
+                { q: "Which authority regulates VoIP in Nepal?", options: ["Nepal Telecommunications Authority (NTA)", "Nepal Rastra Bank", "Supreme Court only", "The Kathmandu Metropolitan city"], a: 0 },
+                { q: "Main economic issue of VoIP in Nepal?", options: ["Revenue loss to licensed international gateway operators and the government (from unlicensed bypass)", "VoIP is too expensive", "No one uses VoIP", "Only Ncell supports VoIP"], a: 0 },
+                { q: "Main administrative issue of VoIP in Nepal?", options: ["Difficulty in detecting and blocking unlicensed VoIP termination (SIM-boxes, VPN-based bypass)", "Too many licensed operators", "No administrative issues exist", "Needs monthly renewal on paper only"], a: 0 },
+                { q: "Main legal issue of VoIP in Nepal?", options: ["Unauthorized VoIP termination is prohibited; enforcement requires coordination between NTA, police, and telcos; privacy vs lawful interception balance", "VoIP is completely banned", "VoIP is mandatory", "No law applies"], a: 0 },
+                { q: "Why does Nepal care about IP interconnection regulations?", options: ["To ensure fair revenue share, maintain network security, and prevent illegal call bypass via international transit", "Because it's trendy", "Only for tourists", "No reason"], a: 0 },
+                { q: "Consumer benefit of licensed VoIP services in Nepal?", options: ["Much cheaper international calls vs traditional ISD, with quality guarantees and customer support", "More expensive than ISD", "Poor quality only", "Only for businesses"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 3 main issue categories of VoIP / IP interconnection in Nepal (mnemonic: 'Economic · Administrative · Legal' — E·A·L):",
+                  items: [
+                    { hint: "Revenue loss to licensed operators and the government (E)", answers: ["Economic", "Economic Issues"] },
+                    { hint: "Difficulty detecting and blocking unlicensed bypass (A)", answers: ["Administrative", "Administrative Issues"] },
+                    { hint: "Unauthorized VoIP termination is prohibited; enforcement complexity (L)", answers: ["Legal", "Legal Issues"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q6", marks: "[Short Notes Extras 2]", probability: "MEDIUM", appearances: 4, years: "2080",
+          prompt: "Explain cloud computing with requirements for data center operation/management. Short notes on challenges on e-commerce.",
+          sections: [
+            {
+              title: "Part A — Cloud + Data Center Requirements",
+              points: [
+                { q: "What is cloud computing (recap)?", options: ["On-demand delivery of compute, storage, networking, databases, and software over the Internet (pay-as-you-go)", "Only Google Drive", "Any app with blue color", "Only for banks"], a: 0 },
+                { q: "Power requirement for a data center?", options: ["High-capacity utility feed + UPS + standby generators for continuous operation", "Just a single 15 A socket", "Solar only with no backup", "Batteries for 1 hour max"], a: 0 },
+                { q: "Cooling requirement for a data center?", options: ["HVAC / CRAC units maintaining temperature and humidity — servers overheat without it", "Open windows", "Electric fans only", "No cooling needed"], a: 0 },
+                { q: "Physical security requirement for a data center?", options: ["Access control (biometrics, cards), CCTV, 24x7 guards, mantraps", "Unlocked doors", "Keys hidden under a plant", "Honor system"], a: 0 },
+                { q: "Network requirement for a data center?", options: ["Redundant multi-homed Internet connectivity + internal fiber backbone + core/distribution/access switches", "Single residential broadband", "Wi-Fi only", "Only coaxial cable"], a: 0 },
+                { q: "Fire protection requirement for a data center?", options: ["Smoke/heat detection + clean-agent suppression (FM200, inert gas) that doesn't damage electronics", "Water sprinklers only (damages servers)", "Nothing — too expensive", "Hand fire extinguishers only"], a: 0 },
+                { q: "Management/monitoring requirement for a data center?", options: ["NOC (Network Operations Center), SNMP/Zabbix monitoring, alerting, SLA reporting, change management", "Nobody watches, it runs itself", "Weekly checks only", "Phone calls when something breaks"], a: 0 },
+                { q: "Redundancy requirement (Tier certification) for a data center?", options: ["N+1 or 2N redundancy for power, cooling, connectivity — Tier III/IV for enterprise-grade uptime (99.982%-99.995%)", "No redundancy", "Single path for everything", "Only at Tier I"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 6 core requirements for data center operation and management (mnemonic: 'Power · Cooling · Security · Network · Fire · Monitor' — P·C·S·N·F·M):",
+                  items: [
+                    { hint: "Utility + UPS + generators for continuous operation (P)", answers: ["Power", "Standby Power"] },
+                    { hint: "HVAC / CRAC to prevent server overheating (C)", answers: ["Cooling"] },
+                    { hint: "Access control, CCTV, 24x7 guards (S)", answers: ["Security", "Physical Security"] },
+                    { hint: "Redundant multi-homed connectivity + internal fabric (N)", answers: ["Network", "Networking"] },
+                    { hint: "Clean-agent fire suppression (doesn't damage electronics) (F)", answers: ["Fire Suppression", "Fire"] },
+                    { hint: "NOC + SNMP + alerting + SLA reporting (M)", answers: ["Monitoring", "Management", "Monitor"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part B — Challenges on E-Commerce",
+              points: [
+                { q: "Key e-commerce challenge — Security?", options: ["Protecting customer data (credit cards, addresses) from breaches; SSL/TLS, PCI-DSS compliance", "Security is not a concern", "Solved automatically", "Only physical stores have security"], a: 0 },
+                { q: "Key e-commerce challenge — Trust?", options: ["Gaining customer trust without face-to-face interaction — reviews, return policies, secure payment badges", "Customers trust all sites equally", "No such challenge", "Only for unknown brands"], a: 0 },
+                { q: "Key e-commerce challenge — Digital Divide?", options: ["Not all customers have reliable Internet / payment infrastructure (especially in developing countries like Nepal)", "All customers are equal online", "No digital divide exists", "Only affects Europe"], a: 0 },
+                { q: "Key e-commerce challenge — Logistics / Delivery?", options: ["Reliable last-mile delivery, especially in areas with poor postal/courier infrastructure; returns handling", "Amazon handles everything", "No logistics needed", "Customers collect themselves always"], a: 0 },
+                { q: "Key e-commerce challenge — Payment systems?", options: ["Varied payment methods (cards, wallets, COD), fraud prevention, chargebacks, cross-border currency conversion", "Only cash on delivery works", "No payment challenges", "Only bank transfer"], a: 0 },
+                { q: "Key e-commerce challenge — Legal / Regulatory?", options: ["Compliance with tax laws, consumer protection, GDPR/data privacy, cross-border restrictions", "No laws apply online", "Only one global law", "Ignored by regulators"], a: 0 },
+                { q: "Key e-commerce challenge — Personalization privacy trade-off?", options: ["Balancing personalized recommendations (which need user data) with user privacy expectations", "Never a concern", "Privacy doesn't matter online", "Personalization is banned"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 6 main challenges of e-commerce (mnemonic: 'Security · Trust · Digital-divide · Logistics · Payment · Legal' — S·T·D·L·P·L):",
+                  items: [
+                    { hint: "Protecting customer data and payment info from breaches (S)", answers: ["Security"] },
+                    { hint: "Building customer confidence without face-to-face (T)", answers: ["Trust"] },
+                    { hint: "Not everyone has reliable Internet / payment access (D)", answers: ["Digital Divide", "Digital-divide"] },
+                    { hint: "Last-mile delivery and returns handling (L)", answers: ["Logistics", "Delivery"] },
+                    { hint: "Fraud prevention, chargebacks, cross-border currency (P)", answers: ["Payment", "Payment Systems"] },
+                    { hint: "Tax laws, consumer protection, data privacy (L)", answers: ["Legal", "Regulatory", "Legal/Regulatory"] }
+                  ]
+                }
               ]
             }
           ]
