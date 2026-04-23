@@ -54,6 +54,9 @@ h1 { font-size: 26px; color: #2d3748; margin-bottom: 6px; }
 .feedback.revealed { background: #ebf8ff; color: #2c5282; border: 1px solid #90cdf4; }
 .feedback.show { display: block; }
 
+.why-box { margin-top: 10px; padding: 12px 14px; border-radius: 8px; background: #fffbeb; border: 1px solid #fbd38d; color: #744210; font-size: 13px; line-height: 1.55; }
+.why-box .why-label { display: inline-block; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: #975a16; margin-right: 6px; }
+
 .reveal-row { margin-top: 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
 .flag-btn { position: absolute; top: 14px; right: 14px; background: transparent; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #a0aec0; cursor: pointer; transition: all 0.15s; -webkit-user-select: none; user-select: none; z-index: 2; }
@@ -205,32 +208,45 @@ const DATA = {
                   "A single database that stores > 1 GB of rows",
                   "Datasets so large, fast, or varied that traditional tools cannot capture, store, or analyze them in a tolerable time",
                   "Any data stored in the cloud",
-                  "Only unstructured data like video and audio"], a: 1 },
+                  "Only unstructured data like video and audio"], a: 1,
+                  why: "Big Data is defined by what traditional tools *cannot* handle — scale (volume), speed (velocity), and mix of formats (variety). A fixed size threshold, cloud location, or a single data type alone does not make data 'big'." },
                 { q: "Which was the original set of V's associated with Big Data?", options: [
                   "Volume, Velocity, Value",
                   "Volume, Variety, Velocity",
                   "Volume, Veracity, Value",
-                  "Variety, Veracity, Value"], a: 1 },
+                  "Variety, Veracity, Value"], a: 1,
+                  why: "Doug Laney's 2001 Gartner report introduced the original 3 V's — Volume, Variety, Velocity. Veracity and Value were added later by IBM and others." },
                 { q: "Which two V's were added later to complete the 5 V's?", options: [
                   "Veracity and Value",
                   "Validity and Volatility",
                   "Virality and Vision",
-                  "Visibility and Virtualization"], a: 0 }
+                  "Visibility and Virtualization"], a: 0,
+                  why: "After the original 3 V's, IBM added Veracity (trustworthiness / noise in the data) and practitioners added Value (actionable insight) to form the modern 5 V's." }
               ]
             },
             {
               title: "Part B — Identify each V",
               points: [
-                { q: "Which V describes the sheer amount of generated and stored data (TB → PB → EB)?", options: ["Velocity", "Volume", "Veracity", "Value"], a: 1 },
-                { q: "Which V describes the speed at which data is generated and processed (batch / real-time / streaming)?", options: ["Velocity", "Variety", "Value", "Volume"], a: 0 },
-                { q: "Which V covers structured, semi-structured and unstructured data types?", options: ["Veracity", "Value", "Variety", "Velocity"], a: 2 },
-                { q: "Which V relates to trustworthiness, noise and quality of data?", options: ["Veracity", "Volume", "Value", "Variety"], a: 0 },
-                { q: "Which V represents the ultimate goal — turning raw data into actionable insight?", options: ["Velocity", "Variety", "Volume", "Value"], a: 3 },
-                { q: "Facebook ingesting ~4 PB/day best illustrates which V?", options: ["Volume", "Velocity", "Veracity", "Value"], a: 0 },
-                { q: "Twitter firehose / stock-tick streams best illustrate which V?", options: ["Volume", "Velocity", "Variety", "Value"], a: 1 },
-                { q: "A healthcare dataset mixing tabular records, MRI images, and doctor notes illustrates which V?", options: ["Value", "Variety", "Volume", "Veracity"], a: 1 },
-                { q: "Social-media text full of sarcasm, spam, and duplicates illustrates which V?", options: ["Volume", "Velocity", "Veracity", "Value"], a: 2 },
-                { q: "Amazon's recommendation engine driving ~35 % of sales illustrates which V?", options: ["Value", "Volume", "Variety", "Velocity"], a: 0 }
+                { q: "Which V describes the sheer amount of generated and stored data (TB → PB → EB)?", options: ["Velocity", "Volume", "Veracity", "Value"], a: 1,
+                  why: "Volume refers to size — the raw quantity of data at rest (terabytes, petabytes, exabytes). Velocity is about speed of arrival, not size." },
+                { q: "Which V describes the speed at which data is generated and processed (batch / real-time / streaming)?", options: ["Velocity", "Variety", "Value", "Volume"], a: 0,
+                  why: "Velocity = rate of data creation and the required processing speed (batch, near-real-time, or streaming). Volume is about total size, not rate." },
+                { q: "Which V covers structured, semi-structured and unstructured data types?", options: ["Veracity", "Value", "Variety", "Velocity"], a: 2,
+                  why: "Variety captures the mix of data shapes — tables, JSON/XML, text, images, video. Veracity is about quality, not shape." },
+                { q: "Which V relates to trustworthiness, noise and quality of data?", options: ["Veracity", "Volume", "Value", "Variety"], a: 0,
+                  why: "Veracity measures how much you can trust the data — bias, duplicates, missing values, sarcasm, spam. The other V's are about scale, shape, speed, or outcome." },
+                { q: "Which V represents the ultimate goal — turning raw data into actionable insight?", options: ["Velocity", "Variety", "Volume", "Value"], a: 3,
+                  why: "Value is the business payoff — without it, the other V's are just cost. Volume, Velocity, and Variety describe raw characteristics; Value is the extracted insight." },
+                { q: "Facebook ingesting ~4 PB/day best illustrates which V?", options: ["Volume", "Velocity", "Veracity", "Value"], a: 0,
+                  why: "Petabytes per day is about raw size — classic Volume. The rate clue (per day) matters less than the sheer amount being stored." },
+                { q: "Twitter firehose / stock-tick streams best illustrate which V?", options: ["Volume", "Velocity", "Variety", "Value"], a: 1,
+                  why: "Streaming data that must be processed as it arrives is the textbook definition of Velocity — speed of generation and required processing rate." },
+                { q: "A healthcare dataset mixing tabular records, MRI images, and doctor notes illustrates which V?", options: ["Value", "Variety", "Volume", "Veracity"], a: 1,
+                  why: "Three different formats (structured records, image, free text) in one dataset is Variety — heterogeneity of data types." },
+                { q: "Social-media text full of sarcasm, spam, and duplicates illustrates which V?", options: ["Volume", "Velocity", "Veracity", "Value"], a: 2,
+                  why: "Noise and untrustworthy content is Veracity — the question is whether the data reflects reality, not how much of it there is." },
+                { q: "Amazon's recommendation engine driving ~35 % of sales illustrates which V?", options: ["Value", "Volume", "Variety", "Velocity"], a: 0,
+                  why: "Converting data into revenue = Value. Amazon's data is also Volume/Variety, but the example highlights the business outcome." }
               ]
             },
             {
@@ -240,15 +256,20 @@ const DATA = {
                   "A collection of autonomous computers connected by a network, appearing to users as a single coherent system",
                   "A supercomputer with many CPUs in one box",
                   "A single database replicated on one server",
-                  "A cloud storage bucket"], a: 0 },
-                { q: "Which architecture is used by HDFS, GFS, and HBase?", options: ["Peer-to-peer", "Client-server only", "Master–Slave", "Mesh"], a: 2 },
+                  "A cloud storage bucket"], a: 0,
+                  why: "Tanenbaum's classic definition: independent machines cooperating over a network but looking like one system to the user. A single multi-CPU box is parallel computing, not distributed." },
+                { q: "Which architecture is used by HDFS, GFS, and HBase?", options: ["Peer-to-peer", "Client-server only", "Master–Slave", "Mesh"], a: 2,
+                  why: "All three use a single coordinator (NameNode / GFS Master / HMaster) plus worker nodes — the textbook Master–Slave pattern for centralizing metadata while distributing storage." },
                 { q: "Why do Big-Data workloads need distributed systems (choose the best)?", options: [
                   "Only to share printers",
                   "Scalability + fault tolerance + parallel processing + data locality + cost efficiency",
                   "Because a single computer is faster",
-                  "Only for data backup"], a: 1 },
-                { q: "Moving computation to where the data already lives is called…", options: ["Data gravity", "Data locality", "Data sharding", "Data warehousing"], a: 1 },
-                { q: "Replicating data across many nodes primarily provides…", options: ["Faster CPUs", "Fault tolerance and high availability", "Smaller storage usage", "Faster compilation"], a: 1 },
+                  "Only for data backup"], a: 1,
+                  why: "Distributed systems give five benefits at once — you scale out, survive node loss, process in parallel, move compute to data, and use cheap commodity boxes instead of a giant single server." },
+                { q: "Moving computation to where the data already lives is called…", options: ["Data gravity", "Data locality", "Data sharding", "Data warehousing"], a: 1,
+                  why: "Data locality — MapReduce's key optimization. Shipping a few MB of code to a node is vastly cheaper than shipping a TB of data across the network." },
+                { q: "Replicating data across many nodes primarily provides…", options: ["Faster CPUs", "Fault tolerance and high availability", "Smaller storage usage", "Faster compilation"], a: 1,
+                  why: "Replication costs MORE storage (3x in HDFS), but a node can die without losing data and reads can be served from any replica — that's fault tolerance + availability." },
                 {
                   type: "components",
                   q: "Name the 5 V's of Big Data (one word each, in any order):",
@@ -275,27 +296,35 @@ const DATA = {
                   "A professional who combines statistics, programming and domain knowledge to extract insight from large messy data",
                   "A database administrator",
                   "A network engineer",
-                  "A UI designer"], a: 0 },
+                  "A UI designer"], a: 0,
+                  why: "Data scientist = stats + coding + domain knowledge. DBAs manage databases, network engineers run networks — they touch data but don't build models from it." },
                 { q: "Which of these is NOT a typical role of a data scientist?", options: [
                   "Data acquisition and cleaning",
                   "Exploration and modelling",
                   "Manually racking servers in a data center",
-                  "Data visualisation and storytelling"], a: 2 },
+                  "Data visualisation and storytelling"], a: 2,
+                  why: "Physical hardware installation is a data-center / ops job. The other three (ETL, EDA + modelling, storytelling) are the core data-science workflow." },
                 { q: "Which is a data-scientist activity?", options: [
                   "Running A/B tests / hypothesis testing",
                   "Fabricating silicon chips",
                   "Writing compilers",
-                  "Designing printer drivers"], a: 0 },
-                { q: "Data scientists are often described as members of a 'community of …'", options: ["Gaming", "Science", "Celebrities", "Politics"], a: 1 }
+                  "Designing printer drivers"], a: 0,
+                  why: "A/B testing and hypothesis testing are statistical inference — the bread and butter of data science. The rest belong to chip design, compiler engineering, or driver development." },
+                { q: "Data scientists are often described as members of a 'community of …'", options: ["Gaming", "Science", "Celebrities", "Politics"], a: 1,
+                  why: "The phrase 'community of science' emphasizes that data scientists follow the scientific method — hypothesis, experiment, peer review — applied to data problems." }
               ]
             },
             {
               title: "Part B — Skills",
               points: [
-                { q: "Which programming languages are most commonly used by data scientists?", options: ["Python and R", "Fortran and COBOL", "Pascal and Delphi", "Assembly and VB6"], a: 0 },
-                { q: "Which skill area is essential for a data scientist?", options: ["Statistics and mathematics", "Physical cabling", "Soldering", "Industrial design"], a: 0 },
-                { q: "Which Big-Data technologies are a data scientist expected to know?", options: ["Hadoop, Spark, HDFS, SQL", "Only Microsoft Word", "Only Excel", "Only Photoshop"], a: 0 },
-                { q: "Which non-technical skill is critical for a data scientist?", options: ["Business communication / storytelling", "Welding", "Gardening", "Cooking"], a: 0 },
+                { q: "Which programming languages are most commonly used by data scientists?", options: ["Python and R", "Fortran and COBOL", "Pascal and Delphi", "Assembly and VB6"], a: 0,
+                  why: "Python (pandas, scikit-learn, PyTorch) and R dominate because of their statistical / ML ecosystems. The other options are legacy or unrelated to data work." },
+                { q: "Which skill area is essential for a data scientist?", options: ["Statistics and mathematics", "Physical cabling", "Soldering", "Industrial design"], a: 0,
+                  why: "Without statistics you cannot distinguish signal from noise, fit a model, or justify a decision — it is the mathematical foundation of data science." },
+                { q: "Which Big-Data technologies are a data scientist expected to know?", options: ["Hadoop, Spark, HDFS, SQL", "Only Microsoft Word", "Only Excel", "Only Photoshop"], a: 0,
+                  why: "A data scientist works with data too big for Excel — hence Hadoop/Spark for distributed compute, HDFS for storage, and SQL to query warehouses." },
+                { q: "Which non-technical skill is critical for a data scientist?", options: ["Business communication / storytelling", "Welding", "Gardening", "Cooking"], a: 0,
+                  why: "A model no one understands is useless — data scientists must translate technical findings into decisions stakeholders act on. Storytelling turns insight into Value (the 5th V)." },
                 {
                   type: "components",
                   q: "Name 5 core skills a data scientist typically needs:",
@@ -322,17 +351,20 @@ const DATA = {
                   "Identifying relevant data among massive, heterogeneous volumes",
                   "Integrating structured, semi-structured and unstructured sources",
                   "Talent gap for combined tech + analytics skills",
-                  "Lack of any real-world applications"], a: 3 },
+                  "Lack of any real-world applications"], a: 3,
+                  why: "Big Data has endless real-world applications (ads, fraud, recommendations, healthcare) — that's not a challenge. The other three (discovery, integration, talent) are well-documented industry pain points." },
                 { q: "Why is data integration a challenge?", options: [
                   "Different types, formats and sources must be linked together for a single insight",
                   "All data is already in one table",
                   "Integration is trivial with MS Excel",
-                  "Integration is forbidden by law"], a: 0 },
+                  "Integration is forbidden by law"], a: 0,
+                  why: "A single business question often needs data from SQL tables, JSON logs, PDFs, and streams — each with its own schema. Unifying them for joint analysis is the integration problem." },
                 { q: "Which is commonly cited as a Big-Data problem?", options: [
                   "Customer churn prediction",
                   "Modelling true risk",
                   "Recommendation engines, ad targeting, fraud detection",
-                  "All of the above"], a: 3 }
+                  "All of the above"], a: 3,
+                  why: "All four appear repeatedly in Big Data case studies — churn (telecom), risk (banks), recommendations (Amazon/Netflix), and fraud detection share the same 'extract patterns from massive history' structure." }
               ]
             },
             {
@@ -349,10 +381,14 @@ const DATA = {
                     "Visualisation & Decision-Making"
                   ]
                 },
-                { q: "Which tool is commonly used for streaming ingestion?", options: ["Kafka", "Microsoft Paint", "Notepad", "VLC"], a: 0 },
-                { q: "Which is a typical Big-Data storage layer?", options: ["HDFS / S3 / HBase / Cassandra", "FAT32 only", "ZIP files only", "CD-ROM"], a: 0 },
-                { q: "Which engine is used for in-memory processing of big data?", options: ["Apache Spark", "Microsoft Word", "Bluetooth stack", "Internet Explorer"], a: 0 },
-                { q: "Which tool is commonly used for dashboards / visualisation?", options: ["Tableau / Power BI / Kibana / Zeppelin", "FTP", "Telnet", "Ping"], a: 0 }
+                { q: "Which tool is commonly used for streaming ingestion?", options: ["Kafka", "Microsoft Paint", "Notepad", "VLC"], a: 0,
+                  why: "Apache Kafka is the industry standard for high-throughput, low-latency event streams — billions of messages per day with durable storage and partitioning." },
+                { q: "Which is a typical Big-Data storage layer?", options: ["HDFS / S3 / HBase / Cassandra", "FAT32 only", "ZIP files only", "CD-ROM"], a: 0,
+                  why: "Big Data storage must scale horizontally across commodity nodes — HDFS, S3, HBase, and Cassandra all do this. FAT32 / ZIP / CD-ROM are single-machine formats." },
+                { q: "Which engine is used for in-memory processing of big data?", options: ["Apache Spark", "Microsoft Word", "Bluetooth stack", "Internet Explorer"], a: 0,
+                  why: "Spark caches RDDs/DataFrames in RAM, making iterative algorithms (ML, graph) 10–100× faster than disk-based MapReduce." },
+                { q: "Which tool is commonly used for dashboards / visualisation?", options: ["Tableau / Power BI / Kibana / Zeppelin", "FTP", "Telnet", "Ping"], a: 0,
+                  why: "Tableau/Power BI for BI dashboards, Kibana for Elasticsearch log analytics, Zeppelin for notebook-style exploration — all purpose-built for visualising analytical data." }
               ]
             }
           ]
@@ -368,16 +404,22 @@ const DATA = {
                   "Adding more machines / nodes (scale-out)",
                   "Adding more CPU/RAM to one box (scale-up)",
                   "Replacing hardware with older hardware",
-                  "Reducing the cluster size"], a: 0 },
+                  "Reducing the cluster size"], a: 0,
+                  why: "Horizontal = wider (more nodes side by side). Scale-up (more CPU/RAM in one box) is vertical scaling." },
                 { q: "Vertical scalability means…", options: [
                   "Adding more machines",
                   "Upgrading CPU/RAM/disk on a single machine (scale-up)",
                   "Distributing data across many racks",
-                  "Turning servers off"], a: 1 },
-                { q: "Which scaling approach is limited by hardware ceilings?", options: ["Horizontal", "Vertical", "Both equally", "Neither"], a: 1 },
-                { q: "Which scaling approach naturally provides high availability?", options: ["Horizontal (cluster survives a node loss)", "Vertical", "Neither", "Only physical security"], a: 0 },
-                { q: "Big-Data frameworks (Hadoop, Cassandra, MongoDB sharding) are designed for which kind of scaling?", options: ["Horizontal", "Vertical", "Diagonal", "Temporal"], a: 0 },
-                { q: "Which typically uses commodity hardware?", options: ["Horizontal", "Vertical", "Neither", "Both"], a: 0 }
+                  "Turning servers off"], a: 1,
+                  why: "Vertical = taller (a bigger single machine). It is simple but hits a hardware ceiling — you cannot buy a server with infinite CPU." },
+                { q: "Which scaling approach is limited by hardware ceilings?", options: ["Horizontal", "Vertical", "Both equally", "Neither"], a: 1,
+                  why: "A single machine has maximum possible RAM, CPU cores, and disk. Horizontal scaling sidesteps this — you just add another commodity box." },
+                { q: "Which scaling approach naturally provides high availability?", options: ["Horizontal (cluster survives a node loss)", "Vertical", "Neither", "Only physical security"], a: 0,
+                  why: "With many nodes, losing one doesn't bring the system down. A single beefy vertical server is a single point of failure." },
+                { q: "Big-Data frameworks (Hadoop, Cassandra, MongoDB sharding) are designed for which kind of scaling?", options: ["Horizontal", "Vertical", "Diagonal", "Temporal"], a: 0,
+                  why: "Hadoop/HDFS/Cassandra/Mongo sharding all spread data+compute across many commodity nodes — that's horizontal scale-out by design." },
+                { q: "Which typically uses commodity hardware?", options: ["Horizontal", "Vertical", "Neither", "Both"], a: 0,
+                  why: "Horizontal scaling uses many cheap boxes — if one dies, replace it. Vertical scaling requires expensive high-end servers with premium CPUs/RAM." }
               ]
             }
           ]
@@ -393,32 +435,41 @@ const DATA = {
                   "Organised rows/columns with a fixed schema (relational tables)",
                   "Tweets, images and videos",
                   "Free-text emails",
-                  "HTML-only documents"], a: 0 },
+                  "HTML-only documents"], a: 0,
+                  why: "Structured = schema-on-write — every row has the same typed columns. Tweets/images are unstructured, emails are free text (unstructured), HTML is semi-structured." },
                 { q: "Semi-structured data is best described by…", options: [
                   "JSON / XML / BSON — flexible, self-describing tags",
                   "Rigid fixed-schema tables",
                   "Only raw binary images",
-                  "Only UTF-8 plain text"], a: 0 },
+                  "Only UTF-8 plain text"], a: 0,
+                  why: "Semi-structured has self-describing tags (keys in JSON, elements in XML) but no fixed schema — fields can vary per record. Rigid tables are structured; binaries are unstructured." },
                 { q: "Unstructured data includes…", options: [
                   "Images, videos, audio, PDFs, emails, tweets",
                   "Only numeric columns",
                   "Only SQL rows",
-                  "Only primary keys"], a: 0 },
-                { q: "Approximately what share of enterprise data is unstructured?", options: ["~5 %", "~20 %", "~50 %", "~80 %"], a: 3 },
-                { q: "Which requires NLP / ML / indexing for effective search?", options: ["Structured", "Semi-structured", "Unstructured", "Relational"], a: 2 }
+                  "Only primary keys"], a: 0,
+                  why: "Unstructured = no schema, no tags — raw content whose meaning can only be extracted by ML/NLP/CV. The other options are all structured forms." },
+                { q: "Approximately what share of enterprise data is unstructured?", options: ["~5 %", "~20 %", "~50 %", "~80 %"], a: 3,
+                  why: "Industry reports (IDC, Gartner) consistently cite ~80 % unstructured — emails, documents, images, video, logs dwarf the relational tables." },
+                { q: "Which requires NLP / ML / indexing for effective search?", options: ["Structured", "Semi-structured", "Unstructured", "Relational"], a: 2,
+                  why: "You cannot write a SQL WHERE clause over raw text/images — they need tokenisation, embeddings, or inverted indexes (Lucene/Elasticsearch) to make them searchable." }
               ]
             },
             {
               title: "Part B — Real-world sources (match to category)",
               points: [
-                { q: "Source of STRUCTURED data?", options: ["MySQL customer table / ERP system", "CCTV footage", "WhatsApp voice notes", "Scanned PDFs"], a: 0 },
-                { q: "Source of SEMI-STRUCTURED data?", options: ["Web-server JSON logs / IoT config files / REST API responses", "Photographs", "Radio audio", "Oil-painting archives"], a: 0 },
-                { q: "Source of UNSTRUCTURED data?", options: ["Social media posts, CCTV, call recordings, medical images", "SQL primary-key tables", "B-tree indexes", "Stored procedures"], a: 0 },
+                { q: "Source of STRUCTURED data?", options: ["MySQL customer table / ERP system", "CCTV footage", "WhatsApp voice notes", "Scanned PDFs"], a: 0,
+                  why: "Transactional systems (MySQL, ERP) enforce a schema at write time — fixed columns and types. The others are raw media or free-form content." },
+                { q: "Source of SEMI-STRUCTURED data?", options: ["Web-server JSON logs / IoT config files / REST API responses", "Photographs", "Radio audio", "Oil-painting archives"], a: 0,
+                  why: "JSON, XML, and YAML carry self-describing keys but allow optional/nested fields — the textbook semi-structured sources. Photos and audio are unstructured." },
+                { q: "Source of UNSTRUCTURED data?", options: ["Social media posts, CCTV, call recordings, medical images", "SQL primary-key tables", "B-tree indexes", "Stored procedures"], a: 0,
+                  why: "Social media, video, audio, and images have no schema — you must run NLP / speech-to-text / computer vision to extract meaning. The others are all RDBMS artefacts." },
                 { q: "'Hybrid data' in a Big-Data warehouse refers to…", options: [
                   "A mix of structured + semi + unstructured unified via schema-on-read (e.g., Hive)",
                   "Only encrypted data",
                   "Only compressed data",
-                  "Only streaming data"], a: 0 }
+                  "Only streaming data"], a: 0,
+                  why: "Modern lakehouses (Hive, Delta, Iceberg) store heterogeneous formats and apply schema-on-read so one query can join tables, JSON, and parsed text together." }
               ]
             }
           ]
@@ -441,11 +492,16 @@ const DATA = {
                   "Client, Master, Chunkservers",
                   "Client, Server, Router",
                   "NameNode, DataNode, SecondaryNode",
-                  "Producer, Broker, Consumer"], a: 0 },
-                { q: "GFS splits files into fixed-size chunks of…", options: ["4 KB", "64 KB", "64 MB", "1 GB"], a: 2 },
-                { q: "Default replication factor for GFS chunks?", options: ["1", "2", "3", "10"], a: 2 },
-                { q: "Metadata in GFS is stored by…", options: ["Every chunkserver", "The single Master", "The client", "A dedicated RDBMS"], a: 1 },
-                { q: "Actual file data in GFS is stored on…", options: ["The master", "Chunkservers", "Clients", "Zookeeper nodes"], a: 1 },
+                  "Producer, Broker, Consumer"], a: 0,
+                  why: "GFS paper names exactly three roles: a library Client, a single Master holding metadata, and many Chunkservers storing the data. The NameNode/DataNode names are HDFS (the Hadoop clone), and Producer/Broker/Consumer is Kafka." },
+                { q: "GFS splits files into fixed-size chunks of…", options: ["4 KB", "64 KB", "64 MB", "1 GB"], a: 2,
+                  why: "GFS uses 64 MB chunks — large enough to amortise metadata and TCP overheads across big sequential scans, small enough to keep hot-spotting manageable." },
+                { q: "Default replication factor for GFS chunks?", options: ["1", "2", "3", "10"], a: 2,
+                  why: "Replication factor 3 is the GFS default — one replica can fail during reading while another fails during rebuild, and data still survives." },
+                { q: "Metadata in GFS is stored by…", options: ["Every chunkserver", "The single Master", "The client", "A dedicated RDBMS"], a: 1,
+                  why: "The Master holds all namespace + chunk-location metadata in RAM. Chunkservers only know about the chunks they physically hold; the client only caches recent lookups." },
+                { q: "Actual file data in GFS is stored on…", options: ["The master", "Chunkservers", "Clients", "Zookeeper nodes"], a: 1,
+                  why: "Bytes of user files live only on chunkservers — the master never touches file data, which is precisely why it doesn't become a bottleneck." },
                 {
                   type: "components",
                   q: "Name the 3 GFS architecture components:",
@@ -475,12 +531,14 @@ const DATA = {
                   "To keep the master lightly loaded — only metadata flows through it",
                   "Because the master has no network card",
                   "For security reasons only",
-                  "Because chunkservers cannot talk to clients"], a: 0 },
+                  "Because chunkservers cannot talk to clients"], a: 0,
+                  why: "Bytes flow client ↔ chunkserver directly so a single master can serve thousands of clients. The master only sees small control/metadata messages." },
                 { q: "What does the client cache after the first metadata lookup?", options: [
                   "Chunk locations for the file",
                   "The entire file",
                   "The master's source code",
-                  "Nothing — cache is disabled"], a: 0 }
+                  "Nothing — cache is disabled"], a: 0,
+                  why: "Caching the (chunk-handle → chunkserver list) map means subsequent reads on the same chunk skip the master entirely — massive load reduction." }
               ]
             },
             {
@@ -503,13 +561,16 @@ const DATA = {
                   "Control flow vs data flow",
                   "Read vs delete",
                   "Open vs close",
-                  "Flush vs fsync"], a: 0 },
-                { q: "Typical duration of a chunk lease is approximately…", options: ["0.5 s", "60 s", "30 min", "24 hours"], a: 1 },
+                  "Flush vs fsync"], a: 0,
+                  why: "GFS pushes data along the nearest topological chain (pipelined) while control messages go separately via the primary — this fully utilises each machine's outbound bandwidth." },
+                { q: "Typical duration of a chunk lease is approximately…", options: ["0.5 s", "60 s", "30 min", "24 hours"], a: 1,
+                  why: "A 60-second lease is long enough to avoid constant renewals during a burst of writes, short enough to reassign the primary quickly if it dies." },
                 { q: "Who assigns the serial order of concurrent writes to a chunk?", options: [
                   "The Master",
                   "The client",
                   "The PRIMARY chunkserver that holds the lease",
-                  "Any secondary chosen randomly"], a: 2 }
+                  "Any secondary chosen randomly"], a: 2,
+                  why: "The primary (the replica currently holding the lease) chooses the order and forwards it to secondaries — so all replicas apply writes in identical sequence without involving the master." }
               ]
             }
           ]
@@ -525,27 +586,32 @@ const DATA = {
                   "Clients never read/write actual file data through the master — only metadata",
                   "The master is the fastest server",
                   "The master is replicated on every chunkserver",
-                  "The master uses SSDs"], a: 0 },
+                  "The master uses SSDs"], a: 0,
+                  why: "The master sits off the data path. Terabytes of bytes never touch it — only small metadata messages do, which is why a single master can serve thousands of clients." },
                 { q: "Why can the master's metadata fit entirely in RAM?", options: [
                   "Metadata per file is tiny — with large 64 MB chunks there are relatively few entries",
                   "Because GFS forbids large files",
                   "Because metadata is compressed to zero bytes",
-                  "It cannot — metadata is stored on tape"], a: 0 },
+                  "It cannot — metadata is stored on tape"], a: 0,
+                  why: "A 1 TB file has only ~16k 64 MB chunks; each metadata entry is ~64 bytes. The 64 MB chunk size intentionally keeps the metadata footprint small enough for RAM." },
                 { q: "What does the client CACHE to avoid repeated master lookups?", options: [
                   "Chunk locations",
                   "The whole filesystem",
                   "User passwords",
-                  "Kernel source"], a: 0 },
+                  "Kernel source"], a: 0,
+                  why: "Caching chunk → chunkserver mappings means subsequent reads go straight to a chunkserver without bothering the master." },
                 { q: "Who coordinates ordering of concurrent chunk mutations — offloading the master?", options: [
                   "Primary chunkserver (via lease)",
                   "Master itself for every write",
                   "Client directly",
-                  "Random secondary"], a: 0 },
+                  "Random secondary"], a: 0,
+                  why: "The lease lets the primary chunkserver serialise writes locally for 60 s, so the master doesn't have to mediate each mutation." },
                 { q: "Shadow masters provide…", options: [
                   "Read-only metadata access and quick fail-over",
                   "Extra disk capacity for chunks",
                   "GPU acceleration",
-                  "Nothing — they are disabled"], a: 0 },
+                  "Nothing — they are disabled"], a: 0,
+                  why: "Shadow masters tail the operation log to serve stale reads and stand by for fail-over — improving availability without burdening the primary master." },
                 {
                   type: "components",
                   q: "Name 4 reasons the GFS single master is not a bottleneck:",
@@ -571,17 +637,20 @@ const DATA = {
                   "Fewer chunks per TB → fewer metadata entries + fewer client-master round-trips",
                   "The master becomes faster when sleeping",
                   "Chunks compress automatically",
-                  "Master runs less code"], a: 0 },
+                  "Master runs less code"], a: 0,
+                  why: "A 64 MB chunk replaces 16,000 4 KB blocks — the master tracks 16,000× less metadata and clients ask for locations 16,000× less often." },
                 { q: "Large chunks are optimised for which access pattern?", options: [
                   "Sequential / streaming reads (MapReduce scans)",
                   "Tiny random reads",
                   "Random overwrites",
-                  "Timestamp-only queries"], a: 0 },
+                  "Timestamp-only queries"], a: 0,
+                  why: "Big chunks minimise per-request overhead for large streaming scans (MapReduce, crawler indexing) — exactly Google's dominant workload when GFS was designed." },
                 { q: "Why can a client amortise a persistent TCP connection?", options: [
                   "Many operations happen on the same 64 MB chunk before the client moves on",
                   "TCP never closes in GFS",
                   "The master forces persistent connections",
-                  "TCP uses UDP underneath"], a: 0 }
+                  "TCP uses UDP underneath"], a: 0,
+                  why: "Since each chunk is 64 MB, a client can run many reads/writes over a single open TCP connection to one chunkserver before moving to the next chunk — huge savings on handshakes." }
               ]
             },
             {
@@ -591,17 +660,20 @@ const DATA = {
                   "Internal fragmentation — wasted space inside the chunk",
                   "The file cannot be stored",
                   "Replication fails",
-                  "It is duplicated 1000 times"], a: 0 },
+                  "It is duplicated 1000 times"], a: 0,
+                  why: "A 1 KB file still consumes a full chunk slot on each of 3 replicas — lots of unused bytes inside the allocated 64 MB. GFS was not built with small files in mind." },
                 { q: "What is 'hot spotting' in GFS?", options: [
                   "A tiny but popular file lives on only 3 chunkservers — mitigated by raising replicas",
                   "The master overheats",
                   "Chunks catch fire",
-                  "Data races"], a: 0 },
+                  "Data races"], a: 0,
+                  why: "When a hot small file has only 3 replicas, those 3 chunkservers are flooded with traffic. Fix: increase the replication factor so reads spread across more servers." },
                 { q: "Large chunks are NOT ideal for which workload?", options: [
                   "Many tiny random reads/writes",
                   "Streaming reads",
                   "Sequential appends",
-                  "MapReduce"], a: 0 }
+                  "MapReduce"], a: 0,
+                  why: "Small random I/O is exactly what 64 MB chunks are bad at — you pay chunk-level overhead for a few bytes of payload. OLTP-style workloads should use a different system." }
               ]
             }
           ]
@@ -617,18 +689,22 @@ const DATA = {
                   "Chunk replication across racks (default 3×)",
                   "Daily human backups",
                   "RAID5 only",
-                  "Nothing — GFS is not fault tolerant"], a: 0 },
+                  "Nothing — GFS is not fault tolerant"], a: 0,
+                  why: "3× replication across racks means data survives machine, disk, and even full rack failures. RAID protects a single machine; rack-aware replication protects the cluster." },
                 { q: "How does GFS detect a chunkserver failure?", options: [
                   "Heartbeat messages to the master",
                   "SMS alerts",
                   "Manual daily checks",
-                  "It doesn't"], a: 0 },
-                { q: "Which guards each 64 KB block against silent corruption?", options: ["A 32-bit checksum", "RSA signature", "HMAC-SHA256", "Parity"], a: 0 },
+                  "It doesn't"], a: 0,
+                  why: "Chunkservers heartbeat the master periodically. Missed heartbeats → master assumes the server is down and triggers re-replication of its chunks." },
+                { q: "Which guards each 64 KB block against silent corruption?", options: ["A 32-bit checksum", "RSA signature", "HMAC-SHA256", "Parity"], a: 0,
+                  why: "Every 64 KB block has a 32-bit checksum verified on every read. Cheap to compute, catches bit-rot, and corrupted replicas are rebuilt from a healthy copy." },
                 { q: "What replays the operation log to recover the master?", options: [
                   "Newly-started master reads checkpoints + log",
                   "The client",
                   "A chunkserver",
-                  "Nothing — master is stateless"], a: 0 }
+                  "Nothing — master is stateless"], a: 0,
+                  why: "The master persists its namespace changes to an operation log + periodic checkpoints. On restart it loads the latest checkpoint and replays the tail of the log." }
               ]
             },
             {
@@ -649,7 +725,8 @@ const DATA = {
                   "Amortises cost with other master work, allows recovery window, avoids bursty I/O",
                   "Eager deletion is impossible",
                   "Chunks are immortal",
-                  "The master has no disk"], a: 0 }
+                  "The master has no disk"], a: 0,
+                  why: "Batching deletes into the regular heartbeat cycle smooths I/O, and the delay gives admins a window to undelete a mistakenly removed file by renaming it back." }
               ]
             },
             {
@@ -659,12 +736,14 @@ const DATA = {
                   "Version numbers — chunks with older versions reported in heartbeats are marked stale",
                   "By reading each byte",
                   "By user complaints",
-                  "It cannot detect staleness"], a: 0 },
+                  "It cannot detect staleness"], a: 0,
+                  why: "Each chunk carries a monotonically-increasing version. A replica that was offline during a write still reports its old version on heartbeat; the master compares and marks it stale for garbage collection." },
                 { q: "When is a chunk's version number incremented?", options: [
                   "Every time the master grants a new lease",
                   "Every minute",
                   "Only at cluster restart",
-                  "Never"], a: 0 }
+                  "Never"], a: 0,
+                  why: "The version bumps with each lease grant because a new lease signals a new mutation epoch — any replica that missed this grant is by definition stale." }
               ]
             }
           ]
@@ -680,12 +759,14 @@ const DATA = {
                   "Google's petabyte workloads (crawling, indexing, MapReduce) on commodity hardware",
                   "Video games",
                   "Desktop backups",
-                  "Personal email"], a: 0 },
+                  "Personal email"], a: 0,
+                  why: "GFS was purpose-built around Google's actual 2003 workload: streaming multi-GB files through crawlers, inverted-index builders, and MapReduce over cheap, unreliable hardware." },
                 { q: "GFS optimises for which pattern?", options: [
                   "Large sequential reads + large sequential appends",
                   "Tiny random reads/writes",
                   "Transactional ACID updates",
-                  "Point-of-sale queries"], a: 0 }
+                  "Point-of-sale queries"], a: 0,
+                  why: "Web-scale analytics scan huge files front-to-back and append more of them; GFS sacrifices random-write and POSIX compliance in exchange for peak throughput on this pattern." }
               ]
             },
             {
@@ -695,17 +776,20 @@ const DATA = {
                   "Component failures are the norm",
                   "Files are huge (multi-GB)",
                   "Workload is dominated by tiny random point lookups",
-                  "Workload is dominated by large sequential access"], a: 2 },
+                  "Workload is dominated by large sequential access"], a: 2,
+                  why: "The paper explicitly lists failures-as-norm, huge files, and big sequential scans as assumptions. Small random lookups are the exact workload GFS does NOT target — that's what Bigtable/Spanner exist for." },
                 { q: "GFS assumes high sustained bandwidth is preferred over…", options: [
                   "Low latency",
                   "Low energy use",
                   "Small file count",
-                  "Strong consistency"], a: 0 },
+                  "Strong consistency"], a: 0,
+                  why: "Batch analytics cares about throughput (GB/s sustained), not millisecond latency per request. GFS trades tail latency for raw aggregate bandwidth." },
                 { q: "GFS expects applications to be…", options: [
                   "POSIX-compliant only",
                   "Cooperative with the FS via a custom (non-POSIX) API",
                   "Unable to see the FS",
-                  "Oracle-only"], a: 1 }
+                  "Oracle-only"], a: 1,
+                  why: "GFS deliberately abandons POSIX semantics (no strict consistency, relaxed concurrent appends). Applications are expected to tolerate duplicates/gaps and use GFS-specific primitives like record-append." }
               ]
             }
           ]
@@ -728,13 +812,16 @@ const DATA = {
                   "map(k1,v1)→list(k2,v2) and reduce(k2,list(v2))→list(v3)",
                   "select() and update()",
                   "push() and pop()",
-                  "encrypt() and decrypt()"], a: 0 },
+                  "encrypt() and decrypt()"], a: 0,
+                  why: "The paper's canonical signatures: map transforms each input (k1,v1) into zero-or-more intermediate (k2,v2) pairs; reduce collapses all values for one k2 into the final output." },
                 { q: "Why do we need a MapReduce framework (best choice)?", options: [
                   "Scalability + fault tolerance + parallelism + data locality + simple abstraction",
                   "To speed up Excel",
                   "To compile Java",
-                  "To render 3D graphics"], a: 0 },
-                { q: "MapReduce typically reads input from…", options: ["HDFS / GFS", "A single laptop disk", "A CD-ROM", "Paper tape"], a: 0 }
+                  "To render 3D graphics"], a: 0,
+                  why: "MR handles partitioning, shuffle, failure recovery, and locality-aware scheduling automatically, so the user writes two small functions and gets cluster-scale throughput for free." },
+                { q: "MapReduce typically reads input from…", options: ["HDFS / GFS", "A single laptop disk", "A CD-ROM", "Paper tape"], a: 0,
+                  why: "MR expects a distributed filesystem so each mapper can read a local split. HDFS (or GFS) pairs naturally with MR for data locality." }
               ]
             },
             {
@@ -756,12 +843,14 @@ const DATA = {
                   "On the mapper's LOCAL disk — NOT HDFS",
                   "In HDFS with replication 3",
                   "On the master only",
-                  "In the client's browser"], a: 0 },
+                  "In the client's browser"], a: 0,
+                  why: "Intermediate data is transient — replicating it 3× in HDFS would be wasteful. It sits on local disk, and if the mapper dies it's simply re-run (which is why failed map tasks must be re-executed)." },
                 { q: "How is a key routed to a reducer by default?", options: [
                   "hash(key) mod numReducers",
                   "Round-robin ignoring the key",
                   "Alphabetical",
-                  "Random"], a: 0 }
+                  "Random"], a: 0,
+                  why: "Hash partitioning ensures all occurrences of the same key land at the same reducer (correctness) while spreading keys uniformly across reducers (load balance)." }
               ]
             },
             {
@@ -771,14 +860,18 @@ const DATA = {
                   "(word, 1) for each token",
                   "(lineNumber, lineText)",
                   "(1, word)",
-                  "(word, lineNumber)"], a: 0 },
+                  "(word, lineNumber)"], a: 0,
+                  why: "Each map call emits (word, 1) per token — a trivial mapper; the real work (summing) happens at the reducer after shuffle groups all 1s for the same word." },
                 { q: "In WordCount, the reducer emits…", options: [
                   "(word, sum(counts))",
                   "(word, random)",
                   "(1, word)",
-                  "(count, word)"], a: 0 },
-                { q: "For the line 'How is your family': reducer output for 'is' given entire text has 'is' appearing 6 times is…", options: ["(is, 6)", "(is, 1)", "(is, 0)", "(family, 6)"], a: 0 },
-                { q: "For the 2072 Ashwin input — how many times does the word 'big' appear?", options: ["2", "3", "4", "5"], a: 2 }
+                  "(count, word)"], a: 0,
+                  why: "The reducer receives (word, [1,1,1,...]) from the shuffle and emits (word, total) — the final frequency." },
+                { q: "For the line 'How is your family': reducer output for 'is' given entire text has 'is' appearing 6 times is…", options: ["(is, 6)", "(is, 1)", "(is, 0)", "(family, 6)"], a: 0,
+                  why: "The reducer aggregates counts across the WHOLE input, not just one line. 'is' appears 6 times in the full text → output (is, 6)." },
+                { q: "For the 2072 Ashwin input — how many times does the word 'big' appear?", options: ["2", "3", "4", "5"], a: 2,
+                  why: "Counting 'big' in the two lines: 'big users big volume data cloud contributes bid data' (2) + 'facebook has big users facebook operates big data' (2) = 4." }
               ]
             }
           ]
@@ -794,17 +887,20 @@ const DATA = {
                   "Evaluation of mathematical functions; avoids mutable state and side effects",
                   "Hand-written assembly only",
                   "Mutable shared state everywhere",
-                  "GUI click handlers"], a: 0 },
+                  "GUI click handlers"], a: 0,
+                  why: "FP models programs as pure function composition (like math), which makes them easier to reason about, test, and parallelise than imperative code with mutable state." },
                 { q: "Which is an ADVANTAGE of FP?", options: [
                   "Natural concurrency (no shared state)",
                   "Lots of hidden side effects",
                   "Tight coupling to hardware",
-                  "Forces global variables"], a: 0 },
+                  "Forces global variables"], a: 0,
+                  why: "Without shared mutable state there are no data races — pure functions can be evaluated in parallel on thousands of nodes safely. This is exactly what MapReduce exploits." },
                 { q: "Which foundational operations did FP contribute to distributed computing?", options: [
                   "map() and reduce() — basis of MapReduce",
                   "goto and jump",
                   "malloc and free",
-                  "lock and unlock"], a: 0 }
+                  "lock and unlock"], a: 0,
+                  why: "Google's MapReduce paper cites Lisp's map and reduce primitives by name — the distributed framework is a scaled-out version of those two higher-order FP operations." }
               ]
             },
             {
@@ -814,9 +910,12 @@ const DATA = {
                   "Takes another function as argument OR returns a function",
                   "Runs at a higher CPU clock",
                   "Uses only integers",
-                  "Is compiled last"], a: 0 },
-                { q: "Which is a classic higher-order function?", options: ["map / filter / reduce", "printf", "sleep", "exit"], a: 0 },
-                { q: "In Python, list(map(lambda x: x*x, [1,2,3,4])) returns…", options: ["[1,4,9,16]", "[2,4,6,8]", "[1,2,3,4]", "10"], a: 0 }
+                  "Is compiled last"], a: 0,
+                  why: "By definition, HOFs treat functions as first-class values. This is what lets you pass a custom map() or reduce() logic into a framework." },
+                { q: "Which is a classic higher-order function?", options: ["map / filter / reduce", "printf", "sleep", "exit"], a: 0,
+                  why: "map/filter/reduce all take a function as their first argument — the canonical HOF triad in every FP language and the ancestors of distributed MapReduce." },
+                { q: "In Python, list(map(lambda x: x*x, [1,2,3,4])) returns…", options: ["[1,4,9,16]", "[2,4,6,8]", "[1,2,3,4]", "10"], a: 0,
+                  why: "The lambda squares each element: 1²=1, 2²=4, 3²=9, 4²=16 → [1,4,9,16]." }
               ]
             },
             {
@@ -826,17 +925,20 @@ const DATA = {
                   "Anonymous, one-line function — e.g., lambda x,y: x+y",
                   "A heavyweight class",
                   "A virus",
-                  "A database trigger"], a: 0 },
+                  "A database trigger"], a: 0,
+                  why: "Lambdas are unnamed functions used inline — ideal for one-off transformations passed to higher-order functions like map or filter." },
                 { q: "A PURE function…", options: [
                   "Output depends only on input; no side effects; referentially transparent",
                   "Writes to disk each call",
                   "Relies on global mutable state",
-                  "Randomises without a seed each call"], a: 0 },
+                  "Randomises without a seed each call"], a: 0,
+                  why: "Pure = deterministic + side-effect free. You can cache, parallelise, and reorder pure function calls without changing behaviour — the exact properties MapReduce needs." },
                 { q: "Which of these is IMPURE?", options: [
                   "def inc(): global count; count += 1",
                   "def add(a,b): return a+b",
                   "def square(x): return x*x",
-                  "def neg(x): return -x"], a: 0 },
+                  "def neg(x): return -x"], a: 0,
+                  why: "inc() mutates a global — its effect depends on external state and persists across calls. The other three depend only on their inputs." },
                 {
                   type: "components",
                   q: "Name 3 properties of a pure function:",
@@ -861,27 +963,32 @@ const DATA = {
                   "Re-executes in-progress AND completed map tasks on other nodes; in-progress reduce tasks too",
                   "Ignores the failure",
                   "Shuts the job down",
-                  "Asks the client to restart"], a: 0 },
+                  "Asks the client to restart"], a: 0,
+                  why: "Map outputs live on that worker's local disk — inaccessible once the node is gone. So even COMPLETED maps must be re-run. Completed reduces are safe because their output is already in HDFS." },
                 { q: "Why must COMPLETED map tasks be re-executed on another node on failure?", options: [
                   "Intermediate map output lived on that node's LOCAL disk — it is lost",
                   "For security reasons",
                   "To waste time",
-                  "Map output is always in HDFS"], a: 0 },
+                  "Map output is always in HDFS"], a: 0,
+                  why: "Intermediate data is deliberately not replicated — re-execution is cheaper than 3× replication. Lose the node, lose the data, re-run the map." },
                 { q: "What is SPECULATIVE execution?", options: [
                   "Launching duplicate copies of slow stragglers; the first to finish wins",
                   "Running tasks on one node at a time",
                   "Running tasks in the future",
-                  "Guessing the output"], a: 0 },
+                  "Guessing the output"], a: 0,
+                  why: "A slow machine (bad disk, noisy neighbour) can stall the whole job. Speculative execution launches a backup of the straggler; whichever finishes first wins, the other is killed." },
                 { q: "How does the framework detect worker failure?", options: [
                   "Master pings / heartbeats; no response → mark failed",
                   "User phone calls",
                   "Email notifications",
-                  "Chunkserver UDP broadcasts"], a: 0 },
+                  "Chunkserver UDP broadcasts"], a: 0,
+                  why: "Workers heartbeat the master every few seconds. Miss N heartbeats → master declares the worker dead and reschedules its tasks elsewhere." },
                 { q: "Atomic commit of reduce output means…", options: [
                   "Output written to a temp file, then renamed — partial outputs never pollute results",
                   "Every byte is encrypted",
                   "Output is never written",
-                  "Output is sent to Kafka"], a: 0 }
+                  "Output is sent to Kafka"], a: 0,
+                  why: "The reducer writes to a private temp file and only renames it to the final path on success. A crashed reducer never leaves half-baked output visible to the next job." }
               ]
             }
           ]
@@ -897,22 +1004,26 @@ const DATA = {
                   "InputFormat / InputSplit / RecordReader",
                   "Mapper",
                   "Combiner (optional)",
-                  "SQL Parser"], a: 3 },
+                  "SQL Parser"], a: 3,
+                  why: "MR has no SQL parser — it's a low-level framework. SQL-on-Hadoop is layered on top via Hive/Impala, which translates SQL into MR (or Tez/Spark) jobs." },
                 { q: "RecordReader's job is to…", options: [
                   "Convert byte-oriented input splits into key-value records for the mapper",
                   "Write output to HDFS",
                   "Merge reducers",
-                  "Schedule tasks"], a: 0 },
+                  "Schedule tasks"], a: 0,
+                  why: "RecordReader sits between raw bytes and the mapper, yielding logical records (e.g., one line per record for text). This decouples the mapper from file format details." },
                 { q: "Partitioner default formula?", options: [
                   "key.hashCode() % numReducers",
                   "random()",
                   "round-robin ignoring key",
-                  "lineNumber / 10"], a: 0 },
+                  "lineNumber / 10"], a: 0,
+                  why: "Hashing the key modulo R reducers is deterministic (same key → same reducer) and typically uniform — the two properties the shuffle needs." },
                 { q: "RecordWriter's job is to…", options: [
                   "Write the reducer's key-value output to final files",
                   "Read splits for the mapper",
                   "Launch JVMs",
-                  "Monitor HDFS"], a: 0 }
+                  "Monitor HDFS"], a: 0,
+                  why: "Symmetric to RecordReader: it serialises reducer output pairs into the chosen OutputFormat (text, SequenceFile, Parquet, etc.)." }
               ]
             },
             {
@@ -922,22 +1033,26 @@ const DATA = {
                   "Local mini-reducer that runs on each mapper before shuffle, to cut network traffic",
                   "Global coordinator",
                   "Backup of reduce output",
-                  "Error logger"], a: 0 },
+                  "Error logger"], a: 0,
+                  why: "A combiner pre-aggregates the mapper's output locally — drastically reducing the bytes that cross the network during shuffle, which is usually the MR bottleneck." },
                 { q: "Which property must a combiner satisfy?", options: [
                   "Associative and commutative (may be called 0, 1 or many times)",
                   "Thread-unsafe",
                   "Blocking I/O",
-                  "Recursive"], a: 0 },
+                  "Recursive"], a: 0,
+                  why: "The framework may skip the combiner, run it once, or run it many times. Results must be identical regardless, which requires associativity + commutativity." },
                 { q: "Which operation is SAFE with a combiner without modification?", options: [
                   "Sum / count / max / min",
                   "Plain average (needs extra state)",
                   "Random sampling",
-                  "Password hashing"], a: 0 },
+                  "Password hashing"], a: 0,
+                  why: "Sum/count/max/min are associative and commutative. Average is NOT — avg(avg(a,b), c) ≠ avg(a,b,c). You must emit (sum,count) pairs and compute the average only at the reducer." },
                 { q: "In WordCount, the combiner converts 1000× (the,1) into…", options: [
                   "(the, 1000) — 1 record across the network",
                   "(the, 1) — still 1000 records",
                   "(the, -1)",
-                  "(the, error)"], a: 0 }
+                  "(the, error)"], a: 0,
+                  why: "The combiner sums 1000 local (the,1) pairs into one (the,1000) before shuffle — a ~1000× reduction in network bytes for that key." }
               ]
             },
             {
@@ -947,7 +1062,8 @@ const DATA = {
                   "On the mapper's LOCAL disk",
                   "In HDFS with replication 3",
                   "Only in RAM",
-                  "In S3 only"], a: 0 },
+                  "In S3 only"], a: 0,
+                  why: "Intermediate data is transient and huge — replicating it to HDFS would cost 3× the storage and network. Local disk is cheap; re-execution handles failures." },
                 {
                   type: "sequence",
                   q: "Arrange what happens when a DataNode fails DURING an HDFS write pipeline:",
@@ -971,19 +1087,24 @@ const DATA = {
             {
               title: "Part A — Options",
               points: [
-                { q: "Which protocol offers COARSE physical-clock sync?", options: ["NTP", "FTP", "SMTP", "RPC"], a: 0 },
+                { q: "Which protocol offers COARSE physical-clock sync?", options: ["NTP", "FTP", "SMTP", "RPC"], a: 0,
+                  why: "NTP (Network Time Protocol) keeps machines within ~ms of a reference clock. Good enough for logging/timestamps but not for strict ordering." },
                 { q: "Which gives happened-before ordering WITHOUT physical clocks?", options: [
                   "Lamport logical clocks",
                   "NTP",
                   "GPS only",
-                  "DNS"], a: 0 },
-                { q: "Which clock captures causality across concurrent events (used by Cassandra / Dynamo)?", options: ["Vector clocks", "Atomic clocks", "Wall clocks", "Cuckoo clocks"], a: 0 },
-                { q: "Which system is the common centralised ordering authority in Big-Data stacks?", options: ["ZooKeeper", "Cron", "Syslog", "SSH"], a: 0 },
+                  "DNS"], a: 0,
+                  why: "Lamport's logical clock is a simple counter incremented on each event and on message receipt — it preserves causal order without needing synchronised wall clocks." },
+                { q: "Which clock captures causality across concurrent events (used by Cassandra / Dynamo)?", options: ["Vector clocks", "Atomic clocks", "Wall clocks", "Cuckoo clocks"], a: 0,
+                  why: "A vector clock carries one counter per node, so you can tell whether events are causally ordered or truly concurrent — essential for Dynamo/Cassandra conflict resolution." },
+                { q: "Which system is the common centralised ordering authority in Big-Data stacks?", options: ["ZooKeeper", "Cron", "Syslog", "SSH"], a: 0,
+                  why: "ZooKeeper issues globally-ordered sequence numbers via ZAB (its consensus protocol), making it the de-facto coordinator for HBase, Kafka, and Hadoop HA." },
                 { q: "In MapReduce, ordering is typically achieved via…", options: [
                   "Master-assigned task IDs, lease sequence numbers, monotonic job counters",
                   "Wall-clock timestamps on every worker",
                   "GPS hardware on every node",
-                  "Human operators"], a: 0 }
+                  "Human operators"], a: 0,
+                  why: "The master is the single source of truth for task identity and ordering — workers never trust each other's clocks, they trust the master's assignments." }
               ]
             }
           ]
@@ -1002,20 +1123,26 @@ const DATA = {
             {
               title: "Part A — Classic 5 daemons",
               points: [
-                { q: "Which daemon is the HDFS master?", options: ["NameNode", "DataNode", "JobTracker", "TaskTracker"], a: 0 },
-                { q: "Which daemon stores actual HDFS blocks?", options: ["DataNode", "NameNode", "JobTracker", "Secondary NameNode"], a: 0 },
+                { q: "Which daemon is the HDFS master?", options: ["NameNode", "DataNode", "JobTracker", "TaskTracker"], a: 0,
+                  why: "NameNode holds the filesystem namespace and the block-to-DataNode mapping — the HDFS analogue of the GFS Master." },
+                { q: "Which daemon stores actual HDFS blocks?", options: ["DataNode", "NameNode", "JobTracker", "Secondary NameNode"], a: 0,
+                  why: "DataNodes are the slaves that physically hold 128 MB blocks on their local disks; they report block lists to the NameNode via heartbeats." },
                 { q: "Which daemon merges NameNode's edit log into a new fsimage?", options: [
                   "Secondary NameNode (housekeeping — NOT a stand-by)",
                   "JobTracker",
                   "TaskTracker",
-                  "DataNode"], a: 0 },
-                { q: "Which was the MapReduce master in Hadoop 1?", options: ["JobTracker", "TaskTracker", "NameNode", "Zookeeper"], a: 0 },
-                { q: "Which was the per-node worker running map/reduce tasks in Hadoop 1?", options: ["TaskTracker", "JobTracker", "NodeManager", "ResourceManager"], a: 0 },
+                  "DataNode"], a: 0,
+                  why: "The Secondary NameNode periodically checkpoints fsimage + edits, preventing the edits log from growing unbounded. It is NOT a hot standby — that role belongs to the HA NameNode." },
+                { q: "Which was the MapReduce master in Hadoop 1?", options: ["JobTracker", "TaskTracker", "NameNode", "Zookeeper"], a: 0,
+                  why: "JobTracker handled both scheduling and resource management in Hadoop 1 — it was a bottleneck, which is why Hadoop 2 split these responsibilities via YARN." },
+                { q: "Which was the per-node worker running map/reduce tasks in Hadoop 1?", options: ["TaskTracker", "JobTracker", "NodeManager", "ResourceManager"], a: 0,
+                  why: "Each slave ran a TaskTracker that executed the tasks assigned by the JobTracker and heartbeated back with progress/status." },
                 { q: "In Hadoop 2+, what REPLACED JobTracker and TaskTracker?", options: [
                   "ResourceManager + NodeManager + ApplicationMaster",
                   "Nothing — same names",
                   "Zookeeper alone",
-                  "A single daemon called SuperNode"], a: 0 },
+                  "A single daemon called SuperNode"], a: 0,
+                  why: "YARN splits JobTracker's dual role: ResourceManager handles cluster-wide scheduling, NodeManager runs containers on each node, and ApplicationMaster is per-job (so MR is no longer the only workload)." },
                 {
                   type: "components",
                   q: "Name the 5 classic Hadoop daemons:",
@@ -1038,13 +1165,16 @@ const DATA = {
             {
               title: "Part A — Basics",
               points: [
-                { q: "Default HDFS block size?", options: ["4 KB", "64 MB (Hadoop 1 era)", "128 MB (modern default)", "1 GB"], a: 2 },
-                { q: "Default HDFS replication factor?", options: ["1", "2", "3", "10"], a: 2 },
+                { q: "Default HDFS block size?", options: ["4 KB", "64 MB (Hadoop 1 era)", "128 MB (modern default)", "1 GB"], a: 2,
+                  why: "Hadoop 1 defaulted to 64 MB; Hadoop 2+ raised the default to 128 MB as disk/network speeds improved. Larger blocks = less NameNode metadata and more data per TCP connection." },
+                { q: "Default HDFS replication factor?", options: ["1", "2", "3", "10"], a: 2,
+                  why: "Matches GFS: 3 replicas across racks, enough to survive simultaneous failures during rebuilds." },
                 { q: "HDFS follows which write model?", options: [
                   "Write-Once-Read-Many (WORM) — cannot modify, only append",
                   "Random-access updates",
                   "Read-Only",
-                  "Copy-On-Write with snapshots only"], a: 0 }
+                  "Copy-On-Write with snapshots only"], a: 0,
+                  why: "WORM matches analytical workloads (logs, scans, MapReduce) and vastly simplifies replication + consistency. You can append, but not edit the middle of a file." }
               ]
             },
             {
@@ -1086,7 +1216,8 @@ const DATA = {
                   "Pipeline closes, bad DN removed, new pipeline continues; NameNode later re-replicates",
                   "Entire write aborts",
                   "Client must re-upload from scratch",
-                  "File is lost"], a: 0 }
+                  "File is lost"], a: 0,
+                  why: "HDFS degrades gracefully: as long as ≥1 DN in the pipeline is alive, the write continues. The NameNode notices under-replication on the next block report and schedules a copy elsewhere." }
               ]
             }
           ]
@@ -1098,24 +1229,37 @@ const DATA = {
             {
               title: "Part A — Core",
               points: [
-                { q: "Which is HDFS's role in Hadoop?", options: ["Distributed storage layer", "Resource scheduler", "Stream engine", "UI dashboard"], a: 0 },
-                { q: "Which is the resource manager introduced in Hadoop 2?", options: ["YARN", "HDFS", "Oozie", "Zookeeper"], a: 0 },
-                { q: "Which is the in-memory engine up to 100× faster than MR?", options: ["Apache Spark", "Apache Flume", "Apache Pig", "Apache Mahout"], a: 0 }
+                { q: "Which is HDFS's role in Hadoop?", options: ["Distributed storage layer", "Resource scheduler", "Stream engine", "UI dashboard"], a: 0,
+                  why: "HDFS is the storage substrate of the Hadoop stack — compute engines (MR, Spark, Hive) all read/write through it." },
+                { q: "Which is the resource manager introduced in Hadoop 2?", options: ["YARN", "HDFS", "Oozie", "Zookeeper"], a: 0,
+                  why: "YARN (Yet Another Resource Negotiator) decoupled resource scheduling from MapReduce, letting Spark, Flink, and Tez share the same Hadoop cluster." },
+                { q: "Which is the in-memory engine up to 100× faster than MR?", options: ["Apache Spark", "Apache Flume", "Apache Pig", "Apache Mahout"], a: 0,
+                  why: "Spark keeps intermediate RDDs in RAM across iterations, avoiding MR's repeated HDFS round-trips — a game-changer for iterative ML and graph workloads." }
               ]
             },
             {
               title: "Part B — Ecosystem tools",
               points: [
-                { q: "SQL-on-Hadoop tool using HiveQL?", options: ["Hive", "Pig", "Flume", "Sqoop"], a: 0 },
-                { q: "Scripting tool using Pig Latin?", options: ["Pig", "Hive", "Spark", "Storm"], a: 0 },
-                { q: "Columnar NoSQL DB on top of HDFS?", options: ["HBase", "MongoDB", "MySQL", "Redis"], a: 0 },
-                { q: "Tool for bulk-transfer between RDBMS and HDFS/Hive?", options: ["Sqoop", "Flume", "Kafka", "Pig"], a: 0 },
-                { q: "Tool for streaming log-data ingestion into HDFS?", options: ["Flume", "Sqoop", "Spark", "Hive"], a: 0 },
-                { q: "Distributed event-streaming platform?", options: ["Kafka", "Hive", "Pig", "Oozie"], a: 0 },
-                { q: "Workflow scheduler for Hadoop jobs?", options: ["Oozie", "Pig", "Hive", "Flume"], a: 0 },
-                { q: "Distributed coordination service used by HBase / Kafka?", options: ["ZooKeeper", "Flume", "Sqoop", "Oozie"], a: 0 },
-                { q: "ML library on Hadoop?", options: ["Mahout", "Oozie", "Sqoop", "Flume"], a: 0 },
-                { q: "Notebook UI for interactive Big-Data analysis?", options: ["Zeppelin", "Oozie", "HBase", "Flume"], a: 0 },
+                { q: "SQL-on-Hadoop tool using HiveQL?", options: ["Hive", "Pig", "Flume", "Sqoop"], a: 0,
+                  why: "Hive compiles HiveQL (a SQL dialect) into MR/Tez/Spark jobs — lets analysts query HDFS data without writing Java." },
+                { q: "Scripting tool using Pig Latin?", options: ["Pig", "Hive", "Spark", "Storm"], a: 0,
+                  why: "Pig Latin is a dataflow scripting language that compiles into MR jobs — a middle ground between raw MR (too verbose) and SQL (too rigid for ETL)." },
+                { q: "Columnar NoSQL DB on top of HDFS?", options: ["HBase", "MongoDB", "MySQL", "Redis"], a: 0,
+                  why: "HBase is the open-source Bigtable: a sparse, column-family store backed by HDFS, offering low-latency random reads/writes on top of sequential-only HDFS." },
+                { q: "Tool for bulk-transfer between RDBMS and HDFS/Hive?", options: ["Sqoop", "Flume", "Kafka", "Pig"], a: 0,
+                  why: "Sqoop (SQL-to-Hadoop) runs parallel MR jobs to import/export between relational databases and HDFS/Hive/HBase — the workhorse for data-lake ingestion." },
+                { q: "Tool for streaming log-data ingestion into HDFS?", options: ["Flume", "Sqoop", "Spark", "Hive"], a: 0,
+                  why: "Flume is purpose-built for reliable streaming of log/event data (sources → channels → sinks) into HDFS. Sqoop is for batch DB transfers, not streams." },
+                { q: "Distributed event-streaming platform?", options: ["Kafka", "Hive", "Pig", "Oozie"], a: 0,
+                  why: "Kafka stores ordered, partitioned event streams durably — the backbone of most modern real-time Big Data pipelines." },
+                { q: "Workflow scheduler for Hadoop jobs?", options: ["Oozie", "Pig", "Hive", "Flume"], a: 0,
+                  why: "Oozie chains MR/Hive/Pig/Sqoop jobs into DAG workflows with time and data-availability triggers — like cron, but cluster-aware." },
+                { q: "Distributed coordination service used by HBase / Kafka?", options: ["ZooKeeper", "Flume", "Sqoop", "Oozie"], a: 0,
+                  why: "ZooKeeper provides leader election, distributed locks, and configuration — HBase uses it to elect the active HMaster, Kafka uses it (pre-KRaft) for broker coordination." },
+                { q: "ML library on Hadoop?", options: ["Mahout", "Oozie", "Sqoop", "Flume"], a: 0,
+                  why: "Mahout ships scalable ML algorithms (k-means, recommenders, classifiers) implemented on MapReduce/Spark — one of the original distributed ML libraries." },
+                { q: "Notebook UI for interactive Big-Data analysis?", options: ["Zeppelin", "Oozie", "HBase", "Flume"], a: 0,
+                  why: "Zeppelin offers a Jupyter-style web notebook with built-in interpreters for Spark, Hive, SQL, and more — ideal for exploratory analysis." },
                 {
                   type: "components",
                   q: "Name 5 Hadoop ecosystem tools and their role (any 5):",
@@ -1142,18 +1286,22 @@ const DATA = {
                   "Single JVM, no daemons, local FS — dev / debugging",
                   "A full production cluster",
                   "Pseudo-distributed with multiple JVMs",
-                  "Only YARN"], a: 0 },
+                  "Only YARN"], a: 0,
+                  why: "Standalone mode has zero daemons — everything runs inline in one JVM with local FS. Perfect for unit tests and stepping through mapper/reducer code in a debugger." },
                 { q: "'Pseudo-distributed' mode runs…", options: [
                   "Each daemon in its own JVM on ONE machine, uses HDFS — for integration testing",
                   "Fully-distributed production",
                   "Only Spark",
-                  "Windows file shares"], a: 0 },
-                { q: "'Fully-distributed' mode is used for…", options: ["Production on a real multi-machine cluster", "Laptops only", "Browsers", "Mobile devices"], a: 0 },
+                  "Windows file shares"], a: 0,
+                  why: "Pseudo-distributed simulates a cluster on a laptop — real daemons, real HDFS, real YARN, all on localhost. Great for practising before touching production." },
+                { q: "'Fully-distributed' mode is used for…", options: ["Production on a real multi-machine cluster", "Laptops only", "Browsers", "Mobile devices"], a: 0,
+                  why: "Fully-distributed = daemons spread across many physical/virtual machines. This is the real deployment mode that exploits Hadoop's scale-out design." },
                 { q: "Can Hadoop run in the cloud?", options: [
                   "Yes — EC2/Azure/GCP VMs or managed services like Amazon EMR, Google Dataproc, Azure HDInsight, Databricks",
                   "No — Hadoop is on-prem only",
                   "Only on mainframes",
-                  "Only on macOS"], a: 0 }
+                  "Only on macOS"], a: 0,
+                  why: "Every major cloud offers managed Hadoop-as-a-service (EMR, Dataproc, HDInsight) — transient clusters sized to the job, with data on S3/GCS instead of HDFS." }
               ]
             },
             {
@@ -1163,27 +1311,32 @@ const DATA = {
                   "hdfs dfs -put localfile.txt /user/hadoop/",
                   "hdfs dfs -cat localfile.txt",
                   "hdfs dfs -rm localfile.txt",
-                  "hdfs dfs -ls localfile.txt"], a: 0 },
+                  "hdfs dfs -ls localfile.txt"], a: 0,
+                  why: "-put copies local files into HDFS (alias: -copyFromLocal). -cat prints, -rm deletes, -ls lists — none of them upload." },
                 { q: "Download a file from HDFS to local:", options: [
                   "hdfs dfs -get /user/hadoop/file.txt ./",
                   "hdfs dfs -put /user/hadoop/file.txt ./",
                   "hdfs dfs -mkdir /user/hadoop/file.txt",
-                  "hdfs dfs -rm /user/hadoop/file.txt"], a: 0 },
+                  "hdfs dfs -rm /user/hadoop/file.txt"], a: 0,
+                  why: "-get is the mirror of -put — copies from HDFS to local (alias: -copyToLocal)." },
                 { q: "List files in an HDFS directory:", options: [
                   "hdfs dfs -ls /user/hadoop/",
                   "hdfs dfs -cat /user/hadoop/",
                   "hdfs dfs -rm /user/hadoop/",
-                  "hdfs dfs -put /user/hadoop/"], a: 0 },
+                  "hdfs dfs -put /user/hadoop/"], a: 0,
+                  why: "-ls is identical in spirit to UNIX ls — it lists names, permissions, sizes, replication, and timestamps." },
                 { q: "View content of an HDFS file:", options: [
                   "hdfs dfs -cat /user/hadoop/file.txt",
                   "hdfs dfs -ls /user/hadoop/file.txt",
                   "hdfs dfs -mkdir /user/hadoop/file.txt",
-                  "hdfs dfs -get /user/hadoop/file.txt"], a: 0 },
+                  "hdfs dfs -get /user/hadoop/file.txt"], a: 0,
+                  why: "-cat streams the file's bytes to stdout — same mental model as UNIX cat." },
                 { q: "View MapReduce job output (typical)?", options: [
                   "hdfs dfs -cat /output/part-r-00000",
                   "hdfs dfs -rm /output",
                   "hdfs dfs -ls /input",
-                  "hadoop jar"], a: 0 }
+                  "hadoop jar"], a: 0,
+                  why: "MR reducers write files named part-r-NNNNN in the output directory. Cat the part file(s) to see the results." }
               ]
             }
           ]
@@ -1195,38 +1348,48 @@ const DATA = {
             {
               title: "Part A — YARN components",
               points: [
-                { q: "Global scheduler + ApplicationsManager daemon is…", options: ["ResourceManager", "NodeManager", "ApplicationMaster", "Container"], a: 0 },
-                { q: "Per-node agent that launches/monitors containers is…", options: ["NodeManager", "ResourceManager", "DataNode", "TaskTracker"], a: 0 },
-                { q: "One per application — negotiates containers + tracks tasks…", options: ["ApplicationMaster", "ResourceManager", "NodeManager", "NameNode"], a: 0 },
-                { q: "Encapsulation of CPU + memory running ONE task is a…", options: ["Container", "Block", "Chunk", "Shard"], a: 0 }
+                { q: "Global scheduler + ApplicationsManager daemon is…", options: ["ResourceManager", "NodeManager", "ApplicationMaster", "Container"], a: 0,
+                  why: "The ResourceManager is YARN's single cluster-wide brain: it arbitrates resources among applications and bootstraps new ApplicationMasters." },
+                { q: "Per-node agent that launches/monitors containers is…", options: ["NodeManager", "ResourceManager", "DataNode", "TaskTracker"], a: 0,
+                  why: "NodeManager is the YARN agent on each slave — starts containers, enforces their resource limits, and reports back to the ResourceManager." },
+                { q: "One per application — negotiates containers + tracks tasks…", options: ["ApplicationMaster", "ResourceManager", "NodeManager", "NameNode"], a: 0,
+                  why: "Each job gets its own ApplicationMaster that asks the RM for containers and drives its tasks — isolating per-job logic from the global scheduler." },
+                { q: "Encapsulation of CPU + memory running ONE task is a…", options: ["Container", "Block", "Chunk", "Shard"], a: 0,
+                  why: "A YARN Container is a slice of CPU+RAM on a specific node where a task actually runs. Block/Chunk/Shard are storage partitioning terms." }
               ]
             },
             {
               title: "Part B — Fault tolerance & scalability",
               points: [
-                { q: "Main mechanism for HDFS fault tolerance?", options: ["Block replication (default 3)", "Daily human backups", "RAID only", "Tape backup"], a: 0 },
+                { q: "Main mechanism for HDFS fault tolerance?", options: ["Block replication (default 3)", "Daily human backups", "RAID only", "Tape backup"], a: 0,
+                  why: "HDFS survives disk and machine failures by keeping 3 copies of each block on different DataNodes (rack-aware). NameNode re-replicates missing blocks automatically." },
                 { q: "What eliminates NameNode single-point-of-failure?", options: [
                   "HA NameNode (active + standby + ZK + QJM shared edits)",
                   "Secondary NameNode (it is NOT a stand-by)",
                   "RAID",
-                  "Tape backup"], a: 0 },
+                  "Tape backup"], a: 0,
+                  why: "HA NameNode keeps a hot standby in sync via QJM (Quorum Journal Manager) and elects the active via ZooKeeper. Secondary NN only checkpoints — it cannot take over." },
                 { q: "Hadoop scales by…", options: [
                   "Adding more commodity DataNodes/NodeManagers (horizontal scale-out)",
                   "Buying bigger mainframes",
                   "Upgrading to quantum CPUs",
-                  "Reducing replica count"], a: 0 }
+                  "Reducing replica count"], a: 0,
+                  why: "Add cheap boxes → the cluster gets more storage + more compute. That's the whole point of a scale-out architecture." }
               ]
             },
             {
               title: "Part C — Mapper count calculation",
               points: [
-                { q: "For 1 GB of data with 128 MB block size, how many mappers does Hadoop launch?", options: ["4", "6", "8", "16"], a: 2 },
+                { q: "For 1 GB of data with 128 MB block size, how many mappers does Hadoop launch?", options: ["4", "6", "8", "16"], a: 2,
+                  why: "1024 MB / 128 MB = 8 input splits. Hadoop launches one mapper per split (by default)." },
                 { q: "Why exactly 8?", options: [
                   "1 GB = 1024 MB; splits = ⌈1024/128⌉ = 8 — one mapper per input split",
                   "Because the NameNode chooses randomly",
                   "Hadoop always uses 8 mappers",
-                  "Replication factor = 8"], a: 0 },
-                { q: "If block size were 64 MB instead, how many mappers for 1 GB?", options: ["4", "8", "16", "32"], a: 2 }
+                  "Replication factor = 8"], a: 0,
+                  why: "The default InputFormat aligns splits to HDFS block boundaries, so 8 blocks produce 8 splits and therefore 8 mappers (one per split)." },
+                { q: "If block size were 64 MB instead, how many mappers for 1 GB?", options: ["4", "8", "16", "32"], a: 2,
+                  why: "1024 MB / 64 MB = 16 splits → 16 mappers. Smaller blocks = more parallelism but also more metadata + task-start overhead." }
               ]
             }
           ]
@@ -1245,32 +1408,41 @@ const DATA = {
             {
               title: "Part A — CAP basics",
               points: [
-                { q: "CAP theorem states a distributed store can guarantee at most how many of {Consistency, Availability, Partition-tolerance}?", options: ["1", "2", "3", "4"], a: 1 },
-                { q: "Who originally proposed the CAP theorem (2000)?", options: ["Brewer", "Codd", "Turing", "Knuth"], a: 0 },
-                { q: "Because network partitions are unavoidable at scale, the real choice is…", options: ["CP or AP", "CA or PA", "CC or AA", "PP or CC"], a: 0 },
+                { q: "CAP theorem states a distributed store can guarantee at most how many of {Consistency, Availability, Partition-tolerance}?", options: ["1", "2", "3", "4"], a: 1,
+                  why: "Brewer's theorem says you can pick at most 2 of the 3 in the presence of partitions. You can't have a distributed system that's simultaneously strictly consistent, always available, AND partition-tolerant." },
+                { q: "Who originally proposed the CAP theorem (2000)?", options: ["Brewer", "Codd", "Turing", "Knuth"], a: 0,
+                  why: "Eric Brewer conjectured it at PODC 2000; Gilbert and Lynch formally proved it in 2002." },
+                { q: "Because network partitions are unavoidable at scale, the real choice is…", options: ["CP or AP", "CA or PA", "CC or AA", "PP or CC"], a: 0,
+                  why: "Once partitions are accepted as inevitable, the remaining choice is whether to sacrifice Consistency (stay available → AP) or Availability (stay consistent → CP) when one occurs." },
                 { q: "'Consistency' in CAP means…", options: [
                   "Every read sees the most recent write",
                   "The system never returns errors",
                   "The system runs through network partitions",
-                  "Data is encrypted"], a: 0 },
+                  "Data is encrypted"], a: 0,
+                  why: "CAP's C is linearisability — after a write acknowledges, every subsequent read globally sees that value. (This is stricter than ACID's C.)" },
                 { q: "'Availability' in CAP means…", options: [
                   "Every request gets a response (not an error) — may be stale",
                   "Every read sees the latest write",
                   "Partitions are tolerated",
-                  "Strong schema enforcement"], a: 0 },
+                  "Strong schema enforcement"], a: 0,
+                  why: "Availability = every non-failing node answers every request. Stale responses are still 'available'; timeouts/errors are not." },
                 { q: "'Partition tolerance' in CAP means…", options: [
                   "System keeps running despite arbitrary network partitions",
                   "System is shut down on network failure",
                   "Replicas are split by hash",
-                  "SQL JOINs are avoided"], a: 0 }
+                  "SQL JOINs are avoided"], a: 0,
+                  why: "Partition tolerance = the system continues operating when nodes cannot talk to each other. Any real distributed system must choose this — packets get lost." }
               ]
             },
             {
               title: "Part B — Classifications",
               points: [
-                { q: "A single-node RDBMS is classified as…", options: ["CA", "CP", "AP", "None"], a: 0 },
-                { q: "HBase and MongoDB (default) are classified as…", options: ["CP", "AP", "CA", "None"], a: 0 },
-                { q: "Cassandra and DynamoDB are classified as…", options: ["AP", "CP", "CA", "None"], a: 0 }
+                { q: "A single-node RDBMS is classified as…", options: ["CA", "CP", "AP", "None"], a: 0,
+                  why: "One node has no network to partition — so it 'trivially' offers C and A. The trade-off only appears once you replicate across nodes." },
+                { q: "HBase and MongoDB (default) are classified as…", options: ["CP", "AP", "CA", "None"], a: 0,
+                  why: "Both prefer consistency: HBase has a single RegionServer per region; MongoDB's primary stops accepting writes when it loses quorum. Reads return errors during partitions rather than stale data." },
+                { q: "Cassandra and DynamoDB are classified as…", options: ["AP", "CP", "CA", "None"], a: 0,
+                  why: "Dynamo-style systems always accept writes (any replica will take them) and resolve conflicts later via vector clocks / last-write-wins — availability wins, consistency is eventual." }
               ]
             },
             {
@@ -1280,17 +1452,20 @@ const DATA = {
                   "If writes stop, all replicas eventually converge to the same value; reads may return stale data in between",
                   "All replicas are always identical at every instant",
                   "Data is never replicated",
-                  "Consistency is guaranteed by hardware"], a: 0 },
+                  "Consistency is guaranteed by hardware"], a: 0,
+                  why: "Eventual consistency sacrifices immediate-read-your-writes for availability. Given enough quiet time, replicas will agree — but during updates, readers may see old values." },
                 { q: "Which mechanism helps an AP system converge?", options: [
                   "Read-repair, hinted handoff, anti-entropy repair",
                   "RAID 5",
                   "WORM policy",
-                  "TCP retransmits"], a: 0 },
+                  "TCP retransmits"], a: 0,
+                  why: "Read-repair fixes stale replicas on the read path; hinted handoff stashes writes for offline nodes; anti-entropy (Merkle-tree diff) reconciles replicas periodically. All three drive convergence." },
                 { q: "Why do systems like Cassandra sacrifice absolute C for A?", options: [
                   "Modern apps need 24/7 responsiveness; strict C across regions is too slow; tunable consistency gives flexibility",
                   "They can't implement consensus",
                   "To save electricity",
-                  "To simplify schema"], a: 0 }
+                  "To simplify schema"], a: 0,
+                  why: "A global e-commerce site can't afford to block writes when a transatlantic link flaps. Cassandra lets each query pick its own C level (ONE/QUORUM/ALL) — consistency becomes a knob, not a constant." }
               ]
             }
           ]
@@ -1302,14 +1477,22 @@ const DATA = {
             {
               title: "Part A — NoSQL types",
               points: [
-                { q: "Which store uses (key → opaque value)?", options: ["Key-Value", "Document", "Column-family", "Graph"], a: 0 },
-                { q: "Which uses JSON / BSON / XML documents?", options: ["Document", "Key-Value", "Graph", "Column-family"], a: 0 },
-                { q: "Which uses rows with columns grouped into families (wide-column)?", options: ["Column-family", "Document", "Key-Value", "Graph"], a: 0 },
-                { q: "Which uses nodes + edges + properties?", options: ["Graph", "Document", "Column-family", "Key-Value"], a: 0 },
-                { q: "Redis / DynamoDB / Riak are…", options: ["Key-Value", "Document", "Column-family", "Graph"], a: 0 },
-                { q: "MongoDB / CouchDB are…", options: ["Document", "Key-Value", "Column-family", "Graph"], a: 0 },
-                { q: "HBase / Cassandra / Bigtable are…", options: ["Column-family", "Document", "Key-Value", "Graph"], a: 0 },
-                { q: "Neo4j / JanusGraph / Neptune are…", options: ["Graph", "Document", "Column-family", "Key-Value"], a: 0 },
+                { q: "Which store uses (key → opaque value)?", options: ["Key-Value", "Document", "Column-family", "Graph"], a: 0,
+                  why: "Key-Value is the simplest NoSQL model — just a hash map at cluster scale. The store doesn't interpret the value; the app does." },
+                { q: "Which uses JSON / BSON / XML documents?", options: ["Document", "Key-Value", "Graph", "Column-family"], a: 0,
+                  why: "Document stores let the DB parse JSON fields, so you can index, filter, and project inside the document without pulling the whole thing." },
+                { q: "Which uses rows with columns grouped into families (wide-column)?", options: ["Column-family", "Document", "Key-Value", "Graph"], a: 0,
+                  why: "Column-family = Bigtable's model: (row-key, column-family, column-qualifier, timestamp) → value. Sparse, wide, compressible — ideal for time-series and OLAP." },
+                { q: "Which uses nodes + edges + properties?", options: ["Graph", "Document", "Column-family", "Key-Value"], a: 0,
+                  why: "Graph DBs optimize for traversals (friend-of-friend, shortest path) where RDBMS JOINs would blow up. Native graph storage makes hop-queries O(1) per edge." },
+                { q: "Redis / DynamoDB / Riak are…", options: ["Key-Value", "Document", "Column-family", "Graph"], a: 0,
+                  why: "These are the canonical key-value stores. Redis = in-memory; Dynamo/Riak = distributed eventually-consistent key-value." },
+                { q: "MongoDB / CouchDB are…", options: ["Document", "Key-Value", "Column-family", "Graph"], a: 0,
+                  why: "Both store JSON/BSON documents and let you query inside them. MongoDB dominates this category in practice." },
+                { q: "HBase / Cassandra / Bigtable are…", options: ["Column-family", "Document", "Key-Value", "Graph"], a: 0,
+                  why: "All three are wide-column Bigtable descendants. HBase on HDFS, Cassandra as Dynamo-style P2P, Bigtable as Google's original." },
+                { q: "Neo4j / JanusGraph / Neptune are…", options: ["Graph", "Document", "Column-family", "Key-Value"], a: 0,
+                  why: "These are native graph databases — Neo4j is the pioneer, Neptune is AWS's managed offering, JanusGraph is open-source on top of Cassandra/HBase." },
                 {
                   type: "components",
                   q: "Name the 4 NoSQL categories:",
@@ -1325,17 +1508,24 @@ const DATA = {
             {
               title: "Part B — NoSQL vs RDBMS",
               points: [
-                { q: "RDBMS uses which data model?", options: ["Tables (rows/cols)", "JSON documents", "Key-value pairs", "Graphs"], a: 0 },
-                { q: "NoSQL schema is typically…", options: ["Flexible / schemaless", "Fixed", "Impossible", "Only XML"], a: 0 },
-                { q: "RDBMS typically scales how?", options: ["Vertical (scale-up)", "Horizontal (scale-out)", "Diagonal", "Not at all"], a: 0 },
-                { q: "NoSQL typically scales how?", options: ["Horizontal", "Vertical", "Neither", "Diagonal"], a: 0 },
-                { q: "RDBMS transactions follow which property set?", options: ["ACID", "BASE", "CAP", "BRASS"], a: 0 },
-                { q: "NoSQL transactions typically follow…", options: ["BASE (Basically Available, Soft state, Eventually consistent)", "ACID", "SOAP", "REST"], a: 0 },
+                { q: "RDBMS uses which data model?", options: ["Tables (rows/cols)", "JSON documents", "Key-value pairs", "Graphs"], a: 0,
+                  why: "RDBMS = relational = rows and columns with enforced types, constraints, and schema (Codd's model)." },
+                { q: "NoSQL schema is typically…", options: ["Flexible / schemaless", "Fixed", "Impossible", "Only XML"], a: 0,
+                  why: "NoSQL embraces schema-on-read: different documents can have different fields. This flexibility accommodates evolving data but shifts validation to the app." },
+                { q: "RDBMS typically scales how?", options: ["Vertical (scale-up)", "Horizontal (scale-out)", "Diagonal", "Not at all"], a: 0,
+                  why: "Preserving ACID across many nodes is hard (2PC, distributed locking), so classic RDBMS scale by adding CPU/RAM to one machine until hardware limits." },
+                { q: "NoSQL typically scales how?", options: ["Horizontal", "Vertical", "Neither", "Diagonal"], a: 0,
+                  why: "By relaxing ACID and accepting eventual consistency, NoSQL can shard freely across hundreds of commodity nodes — the whole design point." },
+                { q: "RDBMS transactions follow which property set?", options: ["ACID", "BASE", "CAP", "BRASS"], a: 0,
+                  why: "ACID = Atomicity, Consistency, Isolation, Durability — the classic guarantees enforced by a transaction manager." },
+                { q: "NoSQL transactions typically follow…", options: ["BASE (Basically Available, Soft state, Eventually consistent)", "ACID", "SOAP", "REST"], a: 0,
+                  why: "BASE is the AP-flavoured counterpart to ACID — the system is basically available, its state may be soft (not immediately consistent), and converges eventually." },
                 { q: "Why do NoSQL DBs often drop ACID?", options: [
                   "Enforcing global ACID across many nodes is expensive (2PC, consensus); NoSQL trades strict C for A/P",
                   "They lack a programmer",
                   "ACID is proprietary",
-                  "They use unsupported CPUs"], a: 0 }
+                  "They use unsupported CPUs"], a: 0,
+                  why: "Two-phase commit and Paxos/Raft add latency and block during partitions. NoSQL deliberately relaxes isolation/consistency to stay fast and available at scale." }
               ]
             },
             {
@@ -1345,12 +1535,14 @@ const DATA = {
                   "Normalised data is spread across nodes → reads require cross-node joins → latency + partition risk",
                   "Normalisation prevents any queries",
                   "Normalisation encrypts all joins",
-                  "Because of IP address exhaustion"], a: 0 },
+                  "Because of IP address exhaustion"], a: 0,
+                  why: "3NF scatters related info across many tables. In a distributed DB those tables live on different nodes, so a read becomes a distributed join — slow and fragile under partitions." },
                 { q: "Denormalisation in NoSQL aims to…", options: [
                   "Store related data together so reads avoid cross-node joins — higher availability at cost of redundancy",
                   "Forbid redundancy",
                   "Encrypt columns",
-                  "Increase latency"], a: 0 }
+                  "Increase latency"], a: 0,
+                  why: "NoSQL duplicates data so one key-lookup returns everything a query needs — trades storage for low-latency, partition-friendly reads." }
               ]
             }
           ]
@@ -1366,25 +1558,32 @@ const DATA = {
                   "Open-source, distributed, column-oriented NoSQL DB modelled on Google Bigtable, built on HDFS",
                   "A relational database",
                   "A message broker",
-                  "A web server"], a: 0 },
-                { q: "Which component assigns regions, does DDL, handles failover?", options: ["HMaster", "RegionServer", "ZooKeeper", "DataNode"], a: 0 },
-                { q: "Which component handles DML (put/get/scan/delete) for a set of regions?", options: ["RegionServer", "HMaster", "ZooKeeper", "NameNode"], a: 0 },
+                  "A web server"], a: 0,
+                  why: "HBase layers low-latency random-access column-family storage on top of HDFS's batch-oriented replicated storage — so you get both OLTP-style gets and OLAP-style scans." },
+                { q: "Which component assigns regions, does DDL, handles failover?", options: ["HMaster", "RegionServer", "ZooKeeper", "DataNode"], a: 0,
+                  why: "HMaster is the HBase cluster coordinator — creates tables, balances regions across RegionServers, and orchestrates failover when a RegionServer dies." },
+                { q: "Which component handles DML (put/get/scan/delete) for a set of regions?", options: ["RegionServer", "HMaster", "ZooKeeper", "NameNode"], a: 0,
+                  why: "RegionServers are the data-plane workers — they own regions and serve reads/writes directly, so the HMaster stays out of the hot path." },
                 { q: "A region is…", options: [
                   "A contiguous row-key range; split when too big",
                   "A column family",
                   "A ZooKeeper znode",
-                  "A MapReduce task"], a: 0 },
+                  "A MapReduce task"], a: 0,
+                  why: "Regions are HBase's unit of distribution and load-balancing — a lexicographic row-key range. When a region outgrows its size threshold it auto-splits in two." },
                 { q: "Writes go first to which two places for durability + performance?", options: [
                   "WAL (Write-Ahead Log) on HDFS, then MemStore (in-memory buffer)",
                   "MemStore then OS cache",
                   "Network socket then HDFS",
-                  "Only HFile directly"], a: 0 },
-                { q: "Immutable on-disk file flushed from MemStore?", options: ["HFile", "SSTable", "MemTable", "Log4j"], a: 0 },
+                  "Only HFile directly"], a: 0,
+                  why: "WAL gives durability (replay after crash), MemStore gives fast writes. Together they're a classic LSM-tree pattern — the MemStore later flushes to immutable HFiles." },
+                { q: "Immutable on-disk file flushed from MemStore?", options: ["HFile", "SSTable", "MemTable", "Log4j"], a: 0,
+                  why: "HFile is HBase's on-disk sorted-string format (its equivalent of Bigtable's SSTable). Once written, it's never modified — just merged by compaction." },
                 { q: "ZooKeeper's role in HBase?", options: [
                   "Keeps -ROOT-/.META. locations, elects HMaster, tracks live RegionServers, provides locks",
                   "Stores user data",
                   "Schedules MapReduce",
-                  "Does SQL parsing"], a: 0 },
+                  "Does SQL parsing"], a: 0,
+                  why: "ZK is the source of truth for cluster metadata: which HMaster is active, which RegionServers are alive, where the META table lives. Clients bootstrap through ZK." },
                 {
                   type: "components",
                   q: "Name 5 core HBase components:",
@@ -1405,32 +1604,38 @@ const DATA = {
                   "create 'employees', 'personal', 'professional'",
                   "CREATE TABLE employees (personal, professional)",
                   "new table employees",
-                  "make 'employees'"], a: 0 },
+                  "make 'employees'"], a: 0,
+                  why: "HBase shell syntax: create 'tableName', 'cf1', 'cf2', ... Column qualifiers inside families don't need to be declared upfront — they're created on first put." },
                 { q: "Insert a cell into emp001:", options: [
                   "put 'employees', 'emp001', 'personal:name', 'Ram'",
                   "insert into employees values (...)",
                   "add employees emp001 Ram",
-                  "update employees set name='Ram'"], a: 0 },
+                  "update employees set name='Ram'"], a: 0,
+                  why: "put 'table', 'rowKey', 'family:qualifier', 'value' — the fundamental HBase write command. Same syntax works for inserts and updates (HBase versions cells with timestamps)." },
                 { q: "Retrieve row emp001:", options: [
                   "get 'employees', 'emp001'",
                   "select * from employees where id='emp001'",
                   "find employees emp001",
-                  "show employees emp001"], a: 0 },
+                  "show employees emp001"], a: 0,
+                  why: "get reads a single row by row-key. For ranges use scan with STARTROW/STOPROW; for one cell add the column qualifier." },
                 { q: "Scan all rows of a table:", options: [
                   "scan 'employees'",
                   "select * from employees",
                   "show all employees",
-                  "dump employees"], a: 0 },
+                  "dump employees"], a: 0,
+                  why: "scan reads contiguous ranges of rows in row-key order. Without filters it returns everything — in production you'd add LIMIT or a start/stop row." },
                 { q: "Delete a full row:", options: [
                   "deleteall 'employees', 'emp001'",
                   "drop 'employees', 'emp001'",
                   "remove 'employees', 'emp001'",
-                  "rm employees emp001"], a: 0 },
+                  "rm employees emp001"], a: 0,
+                  why: "deleteall removes every cell of a row across all families. delete (no 'all') targets one specific column. HBase implements deletes as tombstone markers, reclaimed at compaction." },
                 { q: "Drop a table (requires disabling first):", options: [
                   "disable 'employees' ; drop 'employees'",
                   "drop 'employees'",
                   "DELETE TABLE employees",
-                  "rm -r employees"], a: 0 }
+                  "rm -r employees"], a: 0,
+                  why: "HBase forbids dropping an active table to prevent accidental data loss. You must disable (take offline) then drop." }
               ]
             },
             {
@@ -1440,12 +1645,14 @@ const DATA = {
                   "Cells of a column family are co-located on disk — efficient column scans, compression, sparse data support",
                   "Because columns are expensive",
                   "Because rows are forbidden",
-                  "It's actually row-oriented"], a: 0 },
+                  "It's actually row-oriented"], a: 0,
+                  why: "Each column family stores its cells together, so scanning one family doesn't drag the others off disk. Homogeneous data per family also compresses much better." },
                 { q: "Why is HBase built on HDFS?", options: [
                   "HDFS provides petabyte distributed storage with replication; HBase focuses on low-latency random access",
                   "Because HDFS is the only FS in existence",
                   "To waste disk",
-                  "To slow reads"], a: 0 }
+                  "To slow reads"], a: 0,
+                  why: "Layering lets each system do what it's good at: HDFS handles replication and petabyte throughput; HBase adds the LSM-tree memtable/HFile stack for millisecond gets." }
               ]
             }
           ]
@@ -1461,18 +1668,26 @@ const DATA = {
                   "Dynamo (AP) + Bigtable (data model)",
                   "Oracle + MySQL",
                   "PostgreSQL + Redis",
-                  "Nothing — it is original"], a: 0 },
-                { q: "What is the smallest unit of storage in Cassandra?", options: ["Node", "Data center", "Cluster", "Shard"], a: 0 },
+                  "Nothing — it is original"], a: 0,
+                  why: "Cassandra blends two Amazon/Google papers: Dynamo's P2P ring + eventual consistency for availability, and Bigtable's column-family data model for storage." },
+                { q: "What is the smallest unit of storage in Cassandra?", options: ["Node", "Data center", "Cluster", "Shard"], a: 0,
+                  why: "A single machine running Cassandra is a Node — the atom. Nodes combine into DCs, DCs combine into a cluster." },
                 { q: "A 'cluster' in Cassandra is…", options: [
                   "One or more data centers",
                   "A single node",
                   "A column family",
-                  "A partition key"], a: 0 },
-                { q: "WAL equivalent in Cassandra?", options: ["Commit log", "HFile", "SSTable", "Mem-table"], a: 0 },
-                { q: "In-memory write buffer?", options: ["Mem-table", "Commit log", "SSTable", "Bloom filter"], a: 0 },
-                { q: "Immutable on-disk flushed file?", options: ["SSTable", "Mem-table", "Commit log", "Bloom filter"], a: 0 },
-                { q: "Fast 'is key in SSTable?' probabilistic test?", options: ["Bloom filter", "Linear scan", "Merkle tree", "Hash ring"], a: 0 },
-                { q: "Peer-to-peer membership + failure detection is via…", options: ["Gossip protocol", "Raft", "Paxos", "DHCP"], a: 0 }
+                  "A partition key"], a: 0,
+                  why: "A cluster spans one or more data centers; each DC contains a ring of nodes. Multi-DC clusters enable geographic replication and tunable consistency across regions." },
+                { q: "WAL equivalent in Cassandra?", options: ["Commit log", "HFile", "SSTable", "Mem-table"], a: 0,
+                  why: "The commit log provides durability — every write is appended here before acknowledgement, so a crash can replay in-memory state." },
+                { q: "In-memory write buffer?", options: ["Mem-table", "Commit log", "SSTable", "Bloom filter"], a: 0,
+                  why: "Mem-table holds recent writes in sorted RAM. When it exceeds a threshold it flushes to a new SSTable on disk." },
+                { q: "Immutable on-disk flushed file?", options: ["SSTable", "Mem-table", "Commit log", "Bloom filter"], a: 0,
+                  why: "SSTables (Sorted String Tables) are write-once sorted files. Compaction merges old SSTables into fewer, larger ones to bound read amplification." },
+                { q: "Fast 'is key in SSTable?' probabilistic test?", options: ["Bloom filter", "Linear scan", "Merkle tree", "Hash ring"], a: 0,
+                  why: "A Bloom filter is a tiny in-memory bit-array that answers 'might be present' / 'definitely absent' — avoids unnecessary disk reads on key lookups." },
+                { q: "Peer-to-peer membership + failure detection is via…", options: ["Gossip protocol", "Raft", "Paxos", "DHCP"], a: 0,
+                  why: "Every second each node gossips its state to a few peers. No central coordinator is needed — members learn about each other via pairwise exchanges, which is partition-resilient." }
               ]
             },
             {
@@ -1482,22 +1697,26 @@ const DATA = {
                   "Only one replica needs to respond — highest availability, weakest consistency",
                   "Zero replicas respond",
                   "All replicas respond",
-                  "Odd-numbered replicas respond"], a: 0 },
+                  "Odd-numbered replicas respond"], a: 0,
+                  why: "ONE is the fastest, most available setting. If even one replica is alive the operation succeeds, but reads can be stale until the others catch up." },
                 { q: "What does QUORUM mean?", options: [
                   "Majority of replicas (N/2 + 1) respond — balance of C and A",
                   "All replicas",
                   "Half rounded down",
-                  "Random number"], a: 0 },
+                  "Random number"], a: 0,
+                  why: "QUORUM is the sweet spot — survives minority failures while guaranteeing that any read quorum overlaps with the last write quorum, so you see the latest write." },
                 { q: "What does ALL mean?", options: [
                   "Every replica must respond — strong consistency but lower availability",
                   "All clusters",
                   "No replicas",
-                  "A single DC only"], a: 0 },
+                  "A single DC only"], a: 0,
+                  why: "ALL gives linearisable guarantees but any single slow or dead replica blocks the op. Use sparingly — typically only for operations that cannot tolerate any staleness." },
                 { q: "R + W > N gives which guarantee?", options: [
                   "Strong consistency (quorum reads and writes overlap)",
                   "Eventual consistency only",
                   "Partition intolerance",
-                  "Nothing"], a: 0 }
+                  "Nothing"], a: 0,
+                  why: "If read and write quorums together exceed the replica count, they must share at least one replica — and that replica has seen the latest write. This is the math behind Dynamo-style tunable consistency." }
               ]
             }
           ]
@@ -1513,41 +1732,51 @@ const DATA = {
                   "Open-source document-oriented NoSQL DB storing BSON documents with flexible schema",
                   "A relational DB with strict schema",
                   "A block-storage service",
-                  "A message queue"], a: 0 },
-                { q: "MongoDB horizontal scaling technique?", options: ["Sharding (range/hash on shard key)", "Vertical upgrade", "Tape backup", "RAID"], a: 0 },
+                  "A message queue"], a: 0,
+                  why: "MongoDB stores BSON (binary JSON) documents in collections, letting fields vary per document and supporting rich in-document indexing and queries." },
+                { q: "MongoDB horizontal scaling technique?", options: ["Sharding (range/hash on shard key)", "Vertical upgrade", "Tape backup", "RAID"], a: 0,
+                  why: "Sharding splits a collection across multiple shards by the shard-key. Range sharding preserves locality, hash sharding spreads load uniformly." },
                 { q: "High availability in MongoDB via…", options: [
                   "Replica sets (primary + secondaries + arbiter)",
                   "Single master only",
                   "Rotating backups",
-                  "Shared SAN"], a: 0 },
-                { q: "Default storage engine since 3.0?", options: ["WiredTiger", "MMAPv1", "InMemory", "InnoDB"], a: 0 },
+                  "Shared SAN"], a: 0,
+                  why: "A replica set has one primary taking writes and 2+ secondaries replicating via oplog. If the primary dies, secondaries elect a new primary (optional arbiter breaks ties)." },
+                { q: "Default storage engine since 3.0?", options: ["WiredTiger", "MMAPv1", "InMemory", "InnoDB"], a: 0,
+                  why: "WiredTiger replaced MMAPv1 as default in MongoDB 3.2 — adds document-level locking, compression, and a B-tree + LSM hybrid." },
                 { q: "'mongos' is…", options: [
                   "Query router for sharded clusters",
                   "Replica promoter",
                   "Storage engine",
-                  "Network stack"], a: 0 }
+                  "Network stack"], a: 0,
+                  why: "mongos looks like a single MongoDB server to clients but routes each query to the correct shard(s) using metadata from config servers." }
               ]
             },
             {
               title: "Part B — RDBMS → Mongo mapping + Example queries",
               points: [
-                { q: "RDBMS 'row' maps to Mongo…", options: ["Document", "Collection", "Database", "Field"], a: 0 },
-                { q: "RDBMS 'table' maps to Mongo…", options: ["Collection", "Document", "Field", "Cluster"], a: 0 },
+                { q: "RDBMS 'row' maps to Mongo…", options: ["Document", "Collection", "Database", "Field"], a: 0,
+                  why: "A document is one record (JSON/BSON blob) — the MongoDB analogue of a row in a relational table." },
+                { q: "RDBMS 'table' maps to Mongo…", options: ["Collection", "Document", "Field", "Cluster"], a: 0,
+                  why: "A collection is a group of documents — the MongoDB equivalent of a table. Unlike a table, documents in one collection need not share a schema." },
                 { q: "Insert Tom's post into posts collection:", options: [
                   "db.posts.insertOne({title:'MongoDB', by:'Tom', likes:100})",
                   "INSERT INTO posts VALUES ('MongoDB','Tom',100)",
                   "put('posts','Tom','MongoDB')",
-                  "add posts Tom MongoDB 100"], a: 0 },
+                  "add posts Tom MongoDB 100"], a: 0,
+                  why: "insertOne takes a JS object (auto-converted to BSON). The other options are SQL, HBase, and invented syntax." },
                 { q: "Find titles of posts written by Tom:", options: [
                   "db.posts.find({by:'Tom'}, {title:1, _id:0})",
                   "SELECT title FROM posts WHERE by='Tom'",
                   "get posts where by=Tom",
-                  "find-title posts Tom"], a: 0 },
+                  "find-title posts Tom"], a: 0,
+                  why: "find(filter, projection) — first arg filters, second arg picks fields. 1 includes, 0 excludes. _id is returned by default, so we turn it off explicitly." },
                 { q: "MongoDB mapReduce to count posts per user map function:", options: [
                   "function(){ emit(this.by, 1); }",
                   "function(){ return this.by; }",
                   "function(){ this.count++; }",
-                  "function(){ db.posts.count(); }"], a: 0 }
+                  "function(){ db.posts.count(); }"], a: 0,
+                  why: "emit(key, value) is the map function's output — one (by, 1) pair per post. The reducer then sums the 1s per author." }
               ]
             },
             {
@@ -1557,15 +1786,20 @@ const DATA = {
                   "Analytical scans over few columns + heavy aggregation",
                   "OLTP with row updates",
                   "Document editing",
-                  "Foreign-key joins"], a: 0 },
+                  "Foreign-key joins"], a: 0,
+                  why: "Analytics queries usually touch a handful of columns over millions of rows. Column layout lets the DB read only those columns instead of loading whole rows." },
                 { q: "Row-oriented DBs are best for…", options: [
                   "OLTP row lookups / updates (banking, ERP)",
                   "Big-Data analytics",
                   "Time-series storage at PB scale",
-                  "Sparse wide tables"], a: 0 },
-                { q: "Which storage format compresses better?", options: ["Column-oriented (homogeneous data per column)", "Row-oriented", "Both equally", "Neither"], a: 0 },
-                { q: "Example of columnar DB?", options: ["HBase / Cassandra / Bigtable", "MySQL / Postgres", "SQLite / Access", "Neo4j"], a: 0 },
-                { q: "Which write model do column stores typically use?", options: ["LSM tree (append + flush + compact)", "B-tree in-place updates", "Sparse matrix", "Hash-only"], a: 0 }
+                  "Sparse wide tables"], a: 0,
+                  why: "Transactions usually read/update entire rows (one customer, one order). Row layout fetches the whole record in a single disk seek." },
+                { q: "Which storage format compresses better?", options: ["Column-oriented (homogeneous data per column)", "Row-oriented", "Both equally", "Neither"], a: 0,
+                  why: "All values in a column share a type and often a narrow range, so run-length, dictionary, and delta compression are far more effective than on heterogeneous rows." },
+                { q: "Example of columnar DB?", options: ["HBase / Cassandra / Bigtable", "MySQL / Postgres", "SQLite / Access", "Neo4j"], a: 0,
+                  why: "Bigtable, HBase, and Cassandra all store by column family. MySQL/Postgres/SQLite are row stores; Neo4j is a graph DB." },
+                { q: "Which write model do column stores typically use?", options: ["LSM tree (append + flush + compact)", "B-tree in-place updates", "Sparse matrix", "Hash-only"], a: 0,
+                  why: "LSM trees (Log-Structured Merge) turn random writes into sequential appends — ideal for high-ingest workloads. The trade-off is background compaction to bound read amplification." }
               ]
             }
           ]
@@ -1588,12 +1822,14 @@ const DATA = {
                   "An open-source Java library for full-text indexing and searching (core of Elasticsearch/Solr/OpenSearch)",
                   "A full search engine with UI",
                   "A web browser",
-                  "A database engine"], a: 0 },
+                  "A database engine"], a: 0,
+                  why: "Lucene is just a library — you embed it into your app. The 'search engines' users know (ES, Solr) are full products built around Lucene." },
                 { q: "Which search platforms are built on Lucene?", options: [
                   "Elasticsearch, Solr, OpenSearch, Nutch",
                   "Oracle, MySQL",
                   "PostgreSQL only",
-                  "Cassandra only"], a: 0 }
+                  "Cassandra only"], a: 0,
+                  why: "All four wrap Lucene with clustering, REST APIs, and admin tooling. Oracle/MySQL/Postgres have their own text search; Cassandra doesn't do full-text at all." }
               ]
             },
             {
@@ -1603,31 +1839,39 @@ const DATA = {
                   "Inverted index — maps term → list(docID, positions, frequencies)",
                   "B-tree",
                   "Hash table only",
-                  "Skip list"], a: 0 },
+                  "Skip list"], a: 0,
+                  why: "An inverted index flips a text collection: instead of 'doc → words', it stores 'word → docs'. That's what makes 'find docs containing term X' an O(1) lookup instead of a full scan." },
                 { q: "Analyzer is a pipeline of…", options: [
                   "Tokenizer + filters (lowercase, stop-word, stemming, synonyms)",
                   "CPU instructions",
                   "Database triggers",
-                  "Network packets"], a: 0 },
+                  "Network packets"], a: 0,
+                  why: "The Analyzer turns raw text into terms via a chain of transformations. Query and index must use the same analyzer, or 'Running' won't match 'run'." },
                 { q: "A Lucene Document is…", options: [
                   "A bag of Field(name, value, stored?, indexed?) entries",
                   "A PDF file",
                   "A database table",
-                  "A SQL query"], a: 0 },
+                  "A SQL query"], a: 0,
+                  why: "A Lucene Document is not a PDF or Word file — it's a set of named fields (title, body, timestamp...) each with flags for whether it's stored verbatim and/or indexed for search." },
                 { q: "Lucene segments are…", options: [
                   "Immutable mini-indexes merged periodically",
                   "Mutable tables",
                   "HDFS blocks",
-                  "Cache rows"], a: 0 },
-                { q: "Component that writes documents to the index?", options: ["IndexWriter", "IndexReader", "IndexSearcher", "QueryParser"], a: 0 }
+                  "Cache rows"], a: 0,
+                  why: "Every commit produces a new immutable segment. Immutability avoids locks and lets readers see consistent snapshots while writers keep going. Background merges keep segment count bounded." },
+                { q: "Component that writes documents to the index?", options: ["IndexWriter", "IndexReader", "IndexSearcher", "QueryParser"], a: 0,
+                  why: "IndexWriter adds/updates/deletes and commits segments. IndexReader opens the index for reading; IndexSearcher runs queries; QueryParser parses user input into Query objects." }
               ]
             },
             {
               title: "Part C — Searching side",
               points: [
-                { q: "Component that parses a query string?", options: ["QueryParser", "IndexWriter", "Analyzer", "Collector"], a: 0 },
-                { q: "Component that executes a Query object?", options: ["IndexSearcher", "IndexWriter", "Analyzer", "QueryParser"], a: 0 },
-                { q: "Default scoring in modern Lucene?", options: ["BM25 (TF-IDF in older versions)", "Euclidean distance", "PageRank", "Cosine similarity only"], a: 0 }
+                { q: "Component that parses a query string?", options: ["QueryParser", "IndexWriter", "Analyzer", "Collector"], a: 0,
+                  why: "QueryParser turns a user string like 'title:hadoop AND body:spark' into a structured Query tree that IndexSearcher can evaluate." },
+                { q: "Component that executes a Query object?", options: ["IndexSearcher", "IndexWriter", "Analyzer", "QueryParser"], a: 0,
+                  why: "IndexSearcher walks the inverted index, scores matches, and returns the top-K hits using a Collector." },
+                { q: "Default scoring in modern Lucene?", options: ["BM25 (TF-IDF in older versions)", "Euclidean distance", "PageRank", "Cosine similarity only"], a: 0,
+                  why: "Lucene switched from classic TF-IDF to BM25 (Okapi) in v6 — BM25 saturates term-frequency (diminishing returns) and normalises by document length, giving better rankings." }
               ]
             },
             {
@@ -1669,17 +1913,20 @@ const DATA = {
                     "Optimise / tune (field boost, stored fields, doc values)"
                   ]
                 },
-                { q: "Which step breaks text into tokens?", options: ["Tokenization", "Compression", "Replication", "Sharding"], a: 0 },
+                { q: "Which step breaks text into tokens?", options: ["Tokenization", "Compression", "Replication", "Sharding"], a: 0,
+                  why: "Tokenization splits raw text into indexable units (usually words). Everything else in the analyzer pipeline (lowercasing, stemming, etc.) operates on tokens." },
                 { q: "Purpose of stop-word removal?", options: [
                   "Drop very common terms (the, is, of) that carry little meaning",
                   "Encrypt search",
                   "Merge indexes",
-                  "Compress IDs"], a: 0 },
+                  "Compress IDs"], a: 0,
+                  why: "Stop-words have high TF but near-zero IDF — indexing them wastes space and distorts scoring. Dropping them shrinks the index and speeds up queries." },
                 { q: "Purpose of stemming?", options: [
                   "Reduce words to root form (running → run) so variants match",
                   "Delete words",
                   "Translate words",
-                  "Hash words"], a: 0 }
+                  "Hash words"], a: 0,
+                  why: "Stemming conflates morphological variants ('run', 'runs', 'running') to a common stem so a query matches any of them. Essential for recall in natural-language search." }
               ]
             },
             {
@@ -1689,37 +1936,44 @@ const DATA = {
                   "Splits only on whitespace; preserves case and punctuation",
                   "Removes all punctuation and casing",
                   "Adds stemming automatically",
-                  "Encrypts tokens"], a: 0 },
+                  "Encrypts tokens"], a: 0,
+                  why: "Simplest possible analyzer — tokens are exactly the space-delimited substrings. Useful when tokens are pre-cleaned IDs or structured codes." },
                 { q: "SimpleAnalyzer…", options: [
                   "Splits on non-letters, lowercases",
                   "Preserves case and punctuation",
                   "Adds stemming",
-                  "Adds n-grams"], a: 0 },
+                  "Adds n-grams"], a: 0,
+                  why: "SimpleAnalyzer discards digits/punctuation and lowercases. One step friendlier than Whitespace for natural text, but still no stemming or stop-words." },
                 { q: "StopAnalyzer…", options: [
                   "SimpleAnalyzer + English stop-word removal",
                   "Only whitespace split",
                   "Stem + synonyms",
-                  "N-gram only"], a: 0 },
+                  "N-gram only"], a: 0,
+                  why: "StopAnalyzer adds English stop-word filtering on top of SimpleAnalyzer so the/is/of don't clutter the index." },
                 { q: "StandardAnalyzer (common default)…", options: [
                   "Unicode-aware tokenizer + stop-words + lowercasing",
                   "No tokenization",
                   "Only numeric tokens",
-                  "Only hash-based tokens"], a: 0 },
+                  "Only hash-based tokens"], a: 0,
+                  why: "StandardAnalyzer is the sensible default: it understands Unicode word boundaries (handles CJK, emails, URLs) and applies lowercasing + stop-words out of the box." },
                 { q: "KeywordAnalyzer…", options: [
                   "Treats the whole input as ONE token — ideal for IDs / codes",
                   "Splits every character into a token",
                   "Removes all vowels",
-                  "Rejects non-ASCII"], a: 0 },
+                  "Rejects non-ASCII"], a: 0,
+                  why: "Don't analyze — index literally. Perfect for UUIDs, country codes, enum values where 'HE-LLO' must stay a single token." },
                 { q: "SnowballAnalyzer / EnglishAnalyzer adds…", options: [
                   "Porter/Snowball stemming",
                   "Geospatial filtering",
                   "Vector clocks",
-                  "Encryption"], a: 0 },
+                  "Encryption"], a: 0,
+                  why: "Snowball is a family of stemmers (Porter successor) that reduce inflected words to roots. EnglishAnalyzer bundles this with stop-words + lowercasing." },
                 { q: "NGram / EdgeNGramAnalyzer is used for…", options: [
                   "Autocomplete / fuzzy prefix matching",
                   "Compression",
                   "Replication",
-                  "Routing"], a: 0 }
+                  "Routing"], a: 0,
+                  why: "EdgeNGram breaks 'hadoop' into h/ha/had/hado/hadoo/hadoop — so a user typing 'hado' already matches. Essential for type-ahead search boxes." }
               ]
             }
           ]
@@ -1735,13 +1989,16 @@ const DATA = {
                   "Open-source, distributed, RESTful search & analytics engine built on Lucene",
                   "A relational database",
                   "A CDN",
-                  "A payment gateway"], a: 0 },
+                  "A payment gateway"], a: 0,
+                  why: "ES wraps Lucene with clustering, a JSON/REST API, and an aggregations framework — turning a single-JVM library into a scalable search + analytics product." },
                 { q: "Elasticsearch provides near-real-time search at…", options: [
                   "Millisecond latency over TB-scale indexes with horizontal scaling",
                   "Hour-long delays only",
                   "Only single-node queries",
-                  "Only offline batch search"], a: 0 },
-                { q: "Elasticsearch APIs are typically…", options: ["JSON over REST", "SOAP only", "Protobuf only", "FTP"], a: 0 }
+                  "Only offline batch search"], a: 0,
+                  why: "NRT = ~1 s default refresh window. With sharding + replication it scales horizontally and still serves queries in single-digit ms." },
+                { q: "Elasticsearch APIs are typically…", options: ["JSON over REST", "SOAP only", "Protobuf only", "FTP"], a: 0,
+                  why: "Everything in ES — indexing, querying, cluster admin — happens over JSON-over-HTTP REST calls. That's a big reason for its adoption." }
               ]
             },
             {
@@ -1751,32 +2008,38 @@ const DATA = {
                   "One or more nodes sharing the same cluster name",
                   "A single shard",
                   "A Lucene segment",
-                  "A single document"], a: 0 },
+                  "A single document"], a: 0,
+                  why: "The cluster is the whole system. Nodes discover each other via cluster-name + network config and elect a master to manage state." },
                 { q: "An 'Index' is…", options: [
                   "A logical collection of documents (like a DB)",
                   "A primary key only",
                   "A field name",
-                  "A single document"], a: 0 },
+                  "A single document"], a: 0,
+                  why: "An Elasticsearch index is a namespace for similar documents (e.g. 'orders-2025'). Physically it's broken into shards." },
                 { q: "A 'Shard' is…", options: [
                   "A piece of an index — each shard is itself a Lucene index",
                   "Just a backup copy",
                   "A client request",
-                  "A UI component"], a: 0 },
+                  "A UI component"], a: 0,
+                  why: "A primary shard is an independent Lucene index holding a slice of the data. Queries fan out to shards in parallel — the key to horizontal scale." },
                 { q: "A 'Replica shard' provides…", options: [
                   "HA and query throughput — copy of a primary shard",
                   "Compression",
                   "Encryption",
-                  "Routing only"], a: 0 },
+                  "Routing only"], a: 0,
+                  why: "Replicas duplicate primaries onto other nodes. If a primary fails a replica is promoted; in steady state replicas can also serve read queries to add throughput." },
                 { q: "Indexes used by Elasticsearch include…", options: [
                   "Inverted index (text) + doc-values (columnar) + BKD-tree (numeric/geo) + keyword index",
                   "Only B-tree",
                   "Only hash",
-                  "Only skip list"], a: 0 },
+                  "Only skip list"], a: 0,
+                  why: "ES picks the right structure per field type: inverted index for text, BKD-tree for numeric/geo ranges, doc-values for sorting/aggregations — far richer than a single B-tree." },
                 { q: "'Kibana' is…", options: [
                   "Visualisation / dashboard UI in the Elastic Stack",
                   "The index engine",
                   "A shard",
-                  "A query parser"], a: 0 },
+                  "A query parser"], a: 0,
+                  why: "Kibana is the graphical front-end for Elasticsearch — dashboards, charts, log exploration, dev tools. Search engine back-end + Kibana front-end = the 'ELK stack'." },
                 {
                   type: "components",
                   q: "Name 5 core Elasticsearch concepts:",
@@ -1809,7 +2072,8 @@ const DATA = {
                   "Replica shards get promoted; queries continue",
                   "Queries always fail",
                   "Cluster is restarted",
-                  "Client sleeps for 1 hour"], a: 0 }
+                  "Client sleeps for 1 hour"], a: 0,
+                  why: "When a primary goes down, ES instantly promotes one of its replicas to primary and reroutes traffic — the caller typically doesn't notice." }
               ]
             }
           ]
@@ -1821,23 +2085,28 @@ const DATA = {
             {
               title: "Part A — TF-IDF scoring",
               points: [
-                { q: "TF in TF-IDF stands for…", options: ["Term Frequency", "Top Frequency", "Total Function", "Tuple Factor"], a: 0 },
-                { q: "IDF stands for…", options: ["Inverse Document Frequency", "Indexed Data Format", "Internal Document Fragment", "Item Data Function"], a: 0 },
+                { q: "TF in TF-IDF stands for…", options: ["Term Frequency", "Top Frequency", "Total Function", "Tuple Factor"], a: 0,
+                  why: "Term Frequency = how often the query term appears in a document. More occurrences = stronger signal the doc is about that term." },
+                { q: "IDF stands for…", options: ["Inverse Document Frequency", "Indexed Data Format", "Internal Document Fragment", "Item Data Function"], a: 0,
+                  why: "Inverse Document Frequency penalises terms that appear in many docs. Rare terms are more informative and therefore weighted higher." },
                 { q: "IDF formula (log form)?", options: [
                   "log(totalDocs / docsContaining(t))",
                   "totalDocs * docsContaining(t)",
                   "1 / totalDocs",
-                  "count of words"], a: 0 },
+                  "count of words"], a: 0,
+                  why: "log(N/df) grows for rare terms (small df) and shrinks to zero for terms in every doc. The log softens the curve so one term doesn't dominate." },
                 { q: "Terms common in many documents get…", options: [
                   "Lower IDF (downweighted)",
                   "Higher IDF",
                   "Zero TF",
-                  "Infinite score"], a: 0 },
+                  "Infinite score"], a: 0,
+                  why: "'the' appears everywhere → IDF ≈ 0 → contributes almost nothing to the score. 'Kubernetes' appears rarely → high IDF → dominant ranking signal." },
                 { q: "A Lucene score combines…", options: [
                   "TF × IDF × fieldLengthNorm × boost (older); BM25 in modern Lucene",
                   "Only TF",
                   "Only IDF",
-                  "Random numbers"], a: 0 }
+                  "Random numbers"], a: 0,
+                  why: "Classic Lucene score multiplied TF, IDF, field-length normalisation (short fields score higher), and per-term boosts. Modern Lucene uses BM25 which does the same job with better saturation properties." }
               ]
             },
             {
@@ -1847,22 +2116,26 @@ const DATA = {
                   "Segment-based append-only: writers create new segments; readers keep using old ones — no locking",
                   "Writers always wait for readers",
                   "No concurrency supported",
-                  "Only one user at a time"], a: 0 },
+                  "Only one user at a time"], a: 0,
+                  why: "Immutable segments give MVCC essentially for free — a reader holds a reference to the segment set at its moment of opening, while the writer builds new segments beside them." },
                 { q: "Near-Real-Time (NRT) readers are…", options: [
                   "IndexSearchers refreshed periodically so new data is visible without blocking writes",
                   "Readers from tape",
                   "Readers that run once a day",
-                  "Static cached snapshots"], a: 0 },
+                  "Static cached snapshots"], a: 0,
+                  why: "A refresh reopens the IndexSearcher over the latest segments (default every 1 s in ES). You get 'almost live' visibility without flushing to disk on every write." },
                 { q: "Which operation runs in background threads to keep search fast?", options: [
                   "Segment merging",
                   "Query execution",
                   "User login",
-                  "Shard addition"], a: 0 },
+                  "Shard addition"], a: 0,
+                  why: "Too many small segments = slow search. A background thread merges them into fewer larger ones (and physically deletes tombstoned docs) without pausing foreground traffic." },
                 { q: "How does Elasticsearch spread read+write traffic?", options: [
                   "Distributed sharding — primaries absorb writes, replicas serve reads",
                   "Single-node cache",
                   "Round-robin DNS only",
-                  "It doesn't"], a: 0 }
+                  "It doesn't"], a: 0,
+                  why: "Writes go to the primary shard then replicate; reads can be served by any copy. More replicas → more read throughput at the cost of more disk + write amplification." }
               ]
             }
           ]
@@ -1884,10 +2157,23 @@ const state = {
   answers: {},
   seqShuffled: {},
   seqSlots: {},
+  mcqShuffled: {},
   correctCount: 0,
   compInputs: {},
   flagged: new Set()
 };
+
+function getMCQOrder(key, n) {
+  if (!state.mcqShuffled[key] || state.mcqShuffled[key].length !== n) {
+    const arr = Array.from({ length: n }, (_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    state.mcqShuffled[key] = arr;
+  }
+  return state.mcqShuffled[key];
+}
 
 function loadFlagged() {
   try { const saved = JSON.parse(localStorage.getItem('bd_flagged') || '[]'); state.flagged = new Set(saved); }
@@ -1899,7 +2185,7 @@ function toggleFlag(key) { if (state.flagged.has(key)) state.flagged.delete(key)
 function retryQuestion(key) {
   const ans = state.answers[key];
   if (ans && ans.correct === true) state.correctCount--;
-  delete state.answers[key]; delete state.seqSlots[key]; delete state.seqShuffled[key]; delete state.compInputs[key];
+  delete state.answers[key]; delete state.seqSlots[key]; delete state.seqShuffled[key]; delete state.compInputs[key]; delete state.mcqShuffled[key];
   render();
 }
 
@@ -2150,7 +2436,7 @@ function attachSummaryListeners() {
   const retryBtn = document.getElementById('retryWrongBtn');
   if (retryBtn) retryBtn.addEventListener('click', () => {
     const s = computeSummary(state.chapterId); if (s.wrongKeys.length === 0) return;
-    s.wrongKeys.forEach(({ key }) => { delete state.answers[key]; delete state.seqSlots[key]; delete state.seqShuffled[key]; });
+    s.wrongKeys.forEach(({ key }) => { delete state.answers[key]; delete state.seqSlots[key]; delete state.seqShuffled[key]; delete state.mcqShuffled[key]; });
     state.retryMode = true; state.retryList = s.wrongKeys.map(({ questionIdx, pointIdx }) => ({ questionIdx, pointIdx })); state.retryIdx = 0; state.view = 'practice'; render();
   });
   const backBtn = document.getElementById('backToPracticeBtn');
@@ -2237,21 +2523,24 @@ function attachTypeRecallListeners(point, key) {
 
 function renderMCQ(point, key) {
   const userAns = state.answers[key]; const answered = userAns !== undefined;
-  const opts = point.options.map((o, i) => {
+  const order = getMCQOrder(key, point.options.length);
+  const opts = order.map(origIdx => {
+    const o = point.options[origIdx];
     let cls = 'mcq-option';
-    if (answered) { cls += ' disabled'; if (i === point.a) cls += ' correct'; else if (!userAns.revealed && i === userAns.selected) cls += ' incorrect'; }
-    return `<div class="${cls}" data-idx="${i}">${escapeHtml(o)}</div>`;
+    if (answered) { cls += ' disabled'; if (origIdx === point.a) cls += ' correct'; else if (!userAns.revealed && origIdx === userAns.selected) cls += ' incorrect'; }
+    return `<div class="${cls}" data-idx="${origIdx}">${escapeHtml(o)}</div>`;
   }).join('');
-  let fb = '', revealBtn = '';
+  let fb = '', revealBtn = '', why = '';
   if (answered) {
     if (userAns.revealed) fb = `<div class="feedback revealed show">Answer revealed — the correct option is highlighted. This attempt isn't counted in your score.</div>`;
     else if (userAns.correct) fb = `<div class="feedback correct show">Correct.</div>`;
     else fb = `<div class="feedback incorrect show">Not quite — the correct answer is highlighted in green.</div>`;
+    if (point.why) why = `<div class="why-box"><span class="why-label">Why</span>${escapeHtml(point.why)}</div>`;
   } else revealBtn = `<div class="reveal-row"><button class="btn btn-secondary" id="revealBtn">Show Answer</button><span style="font-size:11.5px;color:#a0aec0;">Doesn't count toward score</span></div>`;
   const flagged = state.flagged.has(key);
   const flagBtnHtml = `<button type="button" class="flag-btn ${flagged ? 'flagged' : ''}" data-flag-key="${escapeHtml(key)}">${flagged ? 'Flagged' : 'Flag'}</button>`;
   const retryBtnHtml = state.answers[key] ? `<button type="button" class="retry-q-btn" data-retry-key="${escapeHtml(key)}" title="Retry this question">Retry</button>` : '';
-  return `<div class="mcq-card">${retryBtnHtml}${flagBtnHtml}<span class="section-badge">${escapeHtml(point._sectionTitle)}</span><div class="mcq-question">${escapeHtml(point.q)}</div><div class="mcq-options">${opts}</div>${revealBtn}${fb}</div>`;
+  return `<div class="mcq-card">${retryBtnHtml}${flagBtnHtml}<span class="section-badge">${escapeHtml(point._sectionTitle)}</span><div class="mcq-question">${escapeHtml(point.q)}</div><div class="mcq-options">${opts}</div>${revealBtn}${fb}${why}</div>`;
 }
 
 function attachMCQListeners(point, key) {
