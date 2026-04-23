@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Big Data Technologies — MCQ Practice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #1a202c; line-height: 1.55; }
+.container { max-width: 920px; margin: 0 auto; padding: 24px; }
+header { text-align: center; margin-bottom: 24px; }
+h1 { font-size: 26px; color: #2d3748; margin-bottom: 6px; }
+.subtitle { color: #718096; font-size: 13px; }
+
+.chapter-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+.chapter-tab { padding: 8px 14px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; font-size: 12.5px; transition: all 0.15s; color: #4a5568; user-select: none; }
+.chapter-tab.active { background: #4c51bf; color: white; border-color: #4c51bf; }
+.chapter-tab.disabled { opacity: 0.4; cursor: not-allowed; }
+.chapter-tab:not(.disabled):not(.active):hover { background: #edf2f7; }
+
+.question-selector { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.qbtn { padding: 6px 12px; background: white; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; font-size: 12px; color: #4a5568; }
+.qbtn.active { background: #2d3748; color: white; border-color: #2d3748; }
+
+.question-header { background: white; padding: 18px 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 18px; }
+.q-title { font-size: 12px; color: #4c51bf; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.q-prompt { font-size: 14.5px; color: #2d3748; }
+.q-marks { display: inline-block; background: #edf2f7; color: #4a5568; padding: 1px 8px; border-radius: 4px; font-size: 11px; margin-left: 6px; font-weight: 600; }
+.q-prob { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 700; margin-left: 6px; letter-spacing: 0.3px; }
+.q-prob.HIGH { background: #fed7d7; color: #742a2a; }
+.q-prob.MEDIUM { background: #feebc8; color: #744210; }
+.q-prob.LOW { background: #e2e8f0; color: #4a5568; }
+.q-years { font-size: 11px; color: #718096; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #e2e8f0; }
+.q-years strong { color: #4a5568; }
+
+.progress-text { display: flex; justify-content: space-between; font-size: 12.5px; color: #718096; margin-bottom: 6px; }
+.progress-bar { background: #e2e8f0; height: 5px; border-radius: 3px; margin-bottom: 18px; overflow: hidden; }
+.progress-fill { background: #48bb78; height: 100%; transition: width 0.3s; }
+
+.mcq-card { background: white; padding: 22px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 18px; position: relative; }
+.section-badge { display: inline-block; font-size: 10.5px; color: #805ad5; background: #faf5ff; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; font-weight: 600; letter-spacing: 0.3px; }
+.mcq-question { font-size: 15px; color: #2d3748; margin-bottom: 14px; font-weight: 500; line-height: 1.5; }
+.mcq-options { display: flex; flex-direction: column; gap: 8px; }
+.mcq-option { padding: 12px 14px; background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: all 0.12s; font-size: 13.5px; -webkit-user-select: none; user-select: none; }
+.mcq-option:hover:not(.disabled) { background: #edf2f7; border-color: #cbd5e0; }
+.mcq-option.selected { border-color: #4c51bf; background: #ebf4ff; }
+.mcq-option.correct { border-color: #48bb78; background: #f0fff4; }
+.mcq-option.incorrect { border-color: #f56565; background: #fff5f5; }
+.mcq-option.disabled { cursor: default; }
+
+.feedback { margin-top: 14px; padding: 10px 14px; border-radius: 8px; font-size: 13px; display: none; }
+.feedback.correct { background: #f0fff4; color: #22543d; border: 1px solid #9ae6b4; }
+.feedback.incorrect { background: #fff5f5; color: #742a2a; border: 1px solid #feb2b2; }
+.feedback.revealed { background: #ebf8ff; color: #2c5282; border: 1px solid #90cdf4; }
+.feedback.show { display: block; }
+
+.reveal-row { margin-top: 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.flag-btn { position: absolute; top: 14px; right: 14px; background: transparent; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #a0aec0; cursor: pointer; transition: all 0.15s; -webkit-user-select: none; user-select: none; z-index: 2; }
+.flag-btn:hover { border-color: #ed8936; color: #c05621; }
+.flag-btn.flagged { background: #fffaf0; border-color: #ed8936; color: #c05621; font-weight: 600; }
+.retry-q-btn { position: absolute; top: 14px; right: 95px; background: transparent; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #a0aec0; cursor: pointer; transition: all 0.15s; -webkit-user-select: none; user-select: none; z-index: 2; }
+.retry-q-btn:hover { border-color: #4299e1; color: #2b6cb0; background: #ebf8ff; }
+
+.flagged-float { position: fixed; top: 14px; right: 14px; z-index: 50; background: white; padding: 8px 14px; border-radius: 8px; font-size: 13px; color: #4a5568; cursor: pointer; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.15s; -webkit-user-select: none; user-select: none; }
+.flagged-float:hover { border-color: #ed8936; background: #fffaf0; color: #c05621; }
+.flagged-float.has-flags { border-color: #ed8936; background: #fffaf0; color: #c05621; font-weight: 600; }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+.modal { background: white; border-radius: 12px; max-width: 720px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modal-title { font-size: 18px; font-weight: 700; color: #2d3748; margin-bottom: 6px; }
+.modal-sub { font-size: 13px; color: #718096; margin-bottom: 16px; }
+.modal-section-hdr { font-size: 12px; color: #4c51bf; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin: 14px 0 6px; }
+.modal-item { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; font-size: 13px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.modal-item-text { flex: 1; min-width: 0; }
+.modal-item-path { color: #a0aec0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; font-weight: 600; }
+.modal-item-q { color: #2d3748; word-break: break-word; }
+.modal-item-unflag { font-size: 11px; padding: 4px 10px; border: 1px solid #cbd5e0; border-radius: 5px; background: white; cursor: pointer; color: #4a5568; white-space: nowrap; }
+.modal-item-unflag:hover { border-color: #f56565; color: #c53030; }
+.modal-copy-area { background: #1a202c; color: #e2e8f0; border-radius: 8px; padding: 14px; margin: 16px 0; font-family: Consolas, 'Courier New', monospace; font-size: 11.5px; white-space: pre-wrap; max-height: 240px; overflow-y: auto; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; margin-top: 12px; }
+.modal-empty { text-align: center; padding: 40px 20px; color: #a0aec0; font-size: 13px; }
+
+.components-grid { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 14px; }
+.component-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; transition: all 0.12s; }
+.component-row.correct { background: #f0fff4; border-color: #9ae6b4; }
+.component-row.incorrect { background: #fff5f5; border-color: #feb2b2; }
+.component-row.revealed { background: #ebf8ff; border-color: #90cdf4; }
+.component-num { background: #4c51bf; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; min-width: 26px; text-align: center; flex-shrink: 0; margin-top: 2px; }
+.component-row.correct .component-num { background: #48bb78; }
+.component-row.incorrect .component-num { background: #f56565; }
+.component-row.revealed .component-num { background: #4299e1; }
+.component-content { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.component-hint { font-size: 12.5px; color: #4a5568; font-style: italic; }
+.component-row.correct .component-hint, .component-row.incorrect .component-hint, .component-row.revealed .component-hint { color: #718096; }
+.component-input { padding: 7px 11px; border: 1.5px solid #e2e8f0; border-radius: 6px; font-size: 14px; font-family: inherit; background: white; width: 100%; transition: border 0.12s; }
+.component-input:focus { outline: none; border-color: #4c51bf; box-shadow: 0 0 0 2px rgba(76,81,191,0.12); }
+.component-given { font-size: 14px; color: #2d3748; font-weight: 500; }
+.component-expected { font-size: 13px; color: #22543d; font-weight: 600; margin-top: 2px; }
+.component-row.incorrect .component-expected { color: #22543d; }
+.component-row.revealed .component-expected { color: #2c5282; }
+
+.type-input { width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 15px; font-family: inherit; background: white; margin: 6px 0 10px; transition: border 0.15s; }
+.type-input:focus { outline: none; border-color: #4c51bf; box-shadow: 0 0 0 3px rgba(76,81,191,0.12); }
+.type-answer-display { padding: 12px 14px; border-radius: 8px; font-size: 15px; border: 2px solid #e2e8f0; background: white; margin: 6px 0 10px; font-family: inherit; }
+.type-answer-display.correct { border-color: #48bb78; background: #f0fff4; color: #22543d; }
+.type-answer-display.incorrect { border-color: #f56565; background: #fff5f5; color: #742a2a; }
+.type-answer-display.revealed { border-color: #90cdf4; background: #ebf8ff; color: #2c5282; }
+.type-answer-display .type-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; margin-bottom: 3px; font-weight: 700; }
+
+.deepak-applause { text-align: center; padding: 18px 22px; background: linear-gradient(135deg, #9f7aea 0%, #4c51bf 100%); color: white; border-radius: 12px; margin-bottom: 20px; font-size: 18px; font-weight: 700; letter-spacing: 0.3px; box-shadow: 0 4px 16px rgba(76,81,191,0.35); animation: applauseIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.deepak-applause .applause-emoji { font-size: 22px; margin: 0 6px; display: inline-block; animation: clapWobble 0.8s ease-in-out infinite; }
+@keyframes applauseIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes clapWobble { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+
+#confettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 150; display: none; }
+
+.retry-banner { background: #fffaf0; border: 1px solid #fbd38d; color: #744210; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.summary-wrap { background: white; padding: 28px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.summary-title { font-size: 20px; color: #2d3748; margin-bottom: 6px; font-weight: 700; }
+.summary-sub { font-size: 13px; color: #718096; margin-bottom: 20px; }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 22px; }
+.summary-cell { padding: 16px; border-radius: 10px; background: #f7fafc; border: 1px solid #e2e8f0; text-align: center; }
+.summary-cell.correct { background: #f0fff4; border-color: #9ae6b4; }
+.summary-cell.wrong { background: #fff5f5; border-color: #feb2b2; }
+.summary-cell.revealed { background: #ebf8ff; border-color: #90cdf4; }
+.summary-cell.skipped { background: #fffaf0; border-color: #fbd38d; }
+.summary-num { font-size: 28px; font-weight: 700; color: #2d3748; }
+.summary-cell.correct .summary-num { color: #22543d; }
+.summary-cell.wrong .summary-num { color: #742a2a; }
+.summary-cell.revealed .summary-num { color: #2c5282; }
+.summary-cell.skipped .summary-num { color: #744210; }
+.summary-label { font-size: 12px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; font-weight: 600; }
+.summary-pct { font-size: 11px; color: #a0aec0; margin-top: 2px; }
+.summary-bar { height: 10px; border-radius: 6px; overflow: hidden; display: flex; margin-bottom: 18px; border: 1px solid #e2e8f0; }
+.summary-bar-seg { height: 100%; }
+.summary-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+.controls { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 12px; flex-wrap: wrap; }
+.btn { padding: 9px 18px; border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.btn-primary { background: #4c51bf; color: white; }
+.btn-primary:hover:not(:disabled) { background: #434190; }
+.btn-secondary { background: #e2e8f0; color: #2d3748; }
+.btn-secondary:hover:not(:disabled) { background: #cbd5e0; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.score-badge { background: white; padding: 8px 14px; border-radius: 8px; font-size: 13px; color: #4a5568; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.score-badge strong { color: #48bb78; }
+
+.seq-label { font-size: 11px; color: #718096; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; font-weight: 600; }
+.seq-selected-area, .seq-available-area { background: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 8px; padding: 12px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px; min-height: 56px; align-items: flex-start; }
+.seq-selected-area { border-color: #b794f4; background: #faf5ff; }
+.seq-empty-hint { color: #a0aec0; font-size: 12.5px; padding: 4px 8px; font-style: italic; }
+.seq-chip { display: inline-flex; align-items: center; padding: 8px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; -webkit-user-select: none; user-select: none; transition: all 0.12s; border: 1px solid #e2e8f0; background: white; }
+.seq-chip.available:hover { background: #edf2f7; border-color: #9f7aea; transform: translateY(-1px); }
+.seq-chip.selected { border-color: #805ad5; }
+.seq-chip.selected:hover { background: #fef5fb; border-color: #6b46c1; }
+.seq-chip.correct-chip { border-color: #48bb78; background: #f0fff4; cursor: default; }
+.seq-chip.incorrect-chip { border-color: #f56565; background: #fff5f5; cursor: default; }
+.seq-chip-num { display: inline-block; background: #805ad5; color: white; padding: 2px 9px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-right: 8px; min-width: 24px; text-align: center; }
+.seq-chip.correct-chip .seq-chip-num { background: #48bb78; }
+.seq-chip.incorrect-chip .seq-chip-num { background: #f56565; }
+.seq-chip-text { font-size: 13px; }
+
+.placeholder { text-align: center; padding: 70px 20px; color: #a0aec0; font-size: 14px; background: white; border-radius: 12px; }
+
+.note { background: #fffaf0; border-left: 3px solid #ed8936; padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; font-size: 12.5px; color: #744210; }
+
+footer { text-align: center; margin-top: 36px; padding: 16px; color: #a0aec0; font-size: 11.5px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Big Data Technologies &mdash; MCQ Practice</h1>
+    <div class="subtitle">BCT/BEI/BEX Year IV Part II &middot; CT 76507 &middot; Built from 20 past papers (2071&ndash;2082)</div>
+  </header>
+
+  <nav class="chapter-tabs" id="chapterTabs"></nav>
+
+  <div id="content"></div>
+
+  <footer>Big Data Technologies (CT 76507) &middot; 6 chapters &middot; Compiled from IOE past questions, the syllabus PDF, the Big Data Technology book, and the Q&amp;A reference document.</footer>
+</div>
+
+<button type="button" class="flagged-float" id="flaggedBtn" title="View flagged questions">Flagged: <span id="flaggedCount">0</span></button>
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+const DATA = {
+  chapters: [
+    // ===================== CH 1 =====================
+    {
+      id: 1, title: "Ch 1: Intro to Big Data", available: true,
+      questions: [
+        {
+          id: "Q1", marks: "[4+5] / [2+8] / [6+6]", probability: "HIGH", appearances: 7, years: "2082, 2080, 2078, 2077, 2076, 2073, 2072",
+          prompt: "Define Big Data and explain the 5 V's with real-world examples. Justify the role of distributed systems in Big Data.",
+          sections: [
+            {
+              title: "Part A — What is Big Data",
+              points: [
+                { q: "What best defines 'Big Data'?", options: [
+                  "A single database that stores > 1 GB of rows",
+                  "Datasets so large, fast, or varied that traditional tools cannot capture, store, or analyze them in a tolerable time",
+                  "Any data stored in the cloud",
+                  "Only unstructured data like video and audio"], a: 1 },
+                { q: "Which was the original set of V's associated with Big Data?", options: [
+                  "Volume, Velocity, Value",
+                  "Volume, Variety, Velocity",
+                  "Volume, Veracity, Value",
+                  "Variety, Veracity, Value"], a: 1 },
+                { q: "Which two V's were added later to complete the 5 V's?", options: [
+                  "Veracity and Value",
+                  "Validity and Volatility",
+                  "Virality and Vision",
+                  "Visibility and Virtualization"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Identify each V",
+              points: [
+                { q: "Which V describes the sheer amount of generated and stored data (TB → PB → EB)?", options: ["Velocity", "Volume", "Veracity", "Value"], a: 1 },
+                { q: "Which V describes the speed at which data is generated and processed (batch / real-time / streaming)?", options: ["Velocity", "Variety", "Value", "Volume"], a: 0 },
+                { q: "Which V covers structured, semi-structured and unstructured data types?", options: ["Veracity", "Value", "Variety", "Velocity"], a: 2 },
+                { q: "Which V relates to trustworthiness, noise and quality of data?", options: ["Veracity", "Volume", "Value", "Variety"], a: 0 },
+                { q: "Which V represents the ultimate goal — turning raw data into actionable insight?", options: ["Velocity", "Variety", "Volume", "Value"], a: 3 },
+                { q: "Facebook ingesting ~4 PB/day best illustrates which V?", options: ["Volume", "Velocity", "Veracity", "Value"], a: 0 },
+                { q: "Twitter firehose / stock-tick streams best illustrate which V?", options: ["Volume", "Velocity", "Variety", "Value"], a: 1 },
+                { q: "A healthcare dataset mixing tabular records, MRI images, and doctor notes illustrates which V?", options: ["Value", "Variety", "Volume", "Veracity"], a: 1 },
+                { q: "Social-media text full of sarcasm, spam, and duplicates illustrates which V?", options: ["Volume", "Velocity", "Veracity", "Value"], a: 2 },
+                { q: "Amazon's recommendation engine driving ~35 % of sales illustrates which V?", options: ["Value", "Volume", "Variety", "Velocity"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Distributed Systems in Big Data",
+              points: [
+                { q: "What is a distributed system?", options: [
+                  "A collection of autonomous computers connected by a network, appearing to users as a single coherent system",
+                  "A supercomputer with many CPUs in one box",
+                  "A single database replicated on one server",
+                  "A cloud storage bucket"], a: 0 },
+                { q: "Which architecture is used by HDFS, GFS, and HBase?", options: ["Peer-to-peer", "Client-server only", "Master–Slave", "Mesh"], a: 2 },
+                { q: "Why do Big-Data workloads need distributed systems (choose the best)?", options: [
+                  "Only to share printers",
+                  "Scalability + fault tolerance + parallel processing + data locality + cost efficiency",
+                  "Because a single computer is faster",
+                  "Only for data backup"], a: 1 },
+                { q: "Moving computation to where the data already lives is called…", options: ["Data gravity", "Data locality", "Data sharding", "Data warehousing"], a: 1 },
+                { q: "Replicating data across many nodes primarily provides…", options: ["Faster CPUs", "Fault tolerance and high availability", "Smaller storage usage", "Faster compilation"], a: 1 },
+                {
+                  type: "components",
+                  q: "Name the 5 V's of Big Data (one word each, in any order):",
+                  items: [
+                    { hint: "Sheer quantity — TB / PB / EB (V)", answers: ["Volume"] },
+                    { hint: "Speed of generation and processing (V)", answers: ["Velocity"] },
+                    { hint: "Structured + semi-structured + unstructured (V)", answers: ["Variety"] },
+                    { hint: "Trustworthiness and noise level (V)", answers: ["Veracity"] },
+                    { hint: "Actionable insight extracted (V)", answers: ["Value"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q2", marks: "[5] / [6] / [10]", probability: "HIGH", appearances: 5, years: "2082, 2079, 2074, 2073, 2072",
+          prompt: "Explain the role of a Data Scientist in Big Data Analytics and the skills expected.",
+          sections: [
+            {
+              title: "Part A — Roles",
+              points: [
+                { q: "What is a Data Scientist?", options: [
+                  "A professional who combines statistics, programming and domain knowledge to extract insight from large messy data",
+                  "A database administrator",
+                  "A network engineer",
+                  "A UI designer"], a: 0 },
+                { q: "Which of these is NOT a typical role of a data scientist?", options: [
+                  "Data acquisition and cleaning",
+                  "Exploration and modelling",
+                  "Manually racking servers in a data center",
+                  "Data visualisation and storytelling"], a: 2 },
+                { q: "Which is a data-scientist activity?", options: [
+                  "Running A/B tests / hypothesis testing",
+                  "Fabricating silicon chips",
+                  "Writing compilers",
+                  "Designing printer drivers"], a: 0 },
+                { q: "Data scientists are often described as members of a 'community of …'", options: ["Gaming", "Science", "Celebrities", "Politics"], a: 1 }
+              ]
+            },
+            {
+              title: "Part B — Skills",
+              points: [
+                { q: "Which programming languages are most commonly used by data scientists?", options: ["Python and R", "Fortran and COBOL", "Pascal and Delphi", "Assembly and VB6"], a: 0 },
+                { q: "Which skill area is essential for a data scientist?", options: ["Statistics and mathematics", "Physical cabling", "Soldering", "Industrial design"], a: 0 },
+                { q: "Which Big-Data technologies are a data scientist expected to know?", options: ["Hadoop, Spark, HDFS, SQL", "Only Microsoft Word", "Only Excel", "Only Photoshop"], a: 0 },
+                { q: "Which non-technical skill is critical for a data scientist?", options: ["Business communication / storytelling", "Welding", "Gardening", "Cooking"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 5 core skills a data scientist typically needs:",
+                  items: [
+                    { hint: "Math / probability foundation", answers: ["Statistics", "Math", "Mathematics"] },
+                    { hint: "Primary coding language (begins with P)", answers: ["Python"] },
+                    { hint: "Querying relational data (3 letters)", answers: ["SQL"] },
+                    { hint: "Distributed processing framework / ecosystem", answers: ["Hadoop", "Spark", "Hadoop/Spark"] },
+                    { hint: "Turning numbers into dashboards / charts", answers: ["Visualization", "Visualisation", "Data Visualization"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q3", marks: "[5+5] / [3+7] / [10]", probability: "HIGH", appearances: 4, years: "2079 Chaitra, 2079 Jestha, 2073 Magh, 2071",
+          prompt: "Explain Big-Data challenges and the five phases of the data-analytics process.",
+          sections: [
+            {
+              title: "Part A — Challenges",
+              points: [
+                { q: "Which is NOT a challenge of Big Data?", options: [
+                  "Identifying relevant data among massive, heterogeneous volumes",
+                  "Integrating structured, semi-structured and unstructured sources",
+                  "Talent gap for combined tech + analytics skills",
+                  "Lack of any real-world applications"], a: 3 },
+                { q: "Why is data integration a challenge?", options: [
+                  "Different types, formats and sources must be linked together for a single insight",
+                  "All data is already in one table",
+                  "Integration is trivial with MS Excel",
+                  "Integration is forbidden by law"], a: 0 },
+                { q: "Which is commonly cited as a Big-Data problem?", options: [
+                  "Customer churn prediction",
+                  "Modelling true risk",
+                  "Recommendation engines, ad targeting, fraud detection",
+                  "All of the above"], a: 3 }
+              ]
+            },
+            {
+              title: "Part B — 5 phases of real-time Big-Data analytics",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the 5 phases of the Big-Data analytics process in the correct order.",
+                  sequence: [
+                    "Data Acquisition / Ingestion",
+                    "Data Storage",
+                    "Data Processing / Cleaning / Transformation",
+                    "Data Analysis",
+                    "Visualisation & Decision-Making"
+                  ]
+                },
+                { q: "Which tool is commonly used for streaming ingestion?", options: ["Kafka", "Microsoft Paint", "Notepad", "VLC"], a: 0 },
+                { q: "Which is a typical Big-Data storage layer?", options: ["HDFS / S3 / HBase / Cassandra", "FAT32 only", "ZIP files only", "CD-ROM"], a: 0 },
+                { q: "Which engine is used for in-memory processing of big data?", options: ["Apache Spark", "Microsoft Word", "Bluetooth stack", "Internet Explorer"], a: 0 },
+                { q: "Which tool is commonly used for dashboards / visualisation?", options: ["Tableau / Power BI / Kibana / Zeppelin", "FTP", "Telnet", "Ping"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q4", marks: "[5]", probability: "MEDIUM", appearances: 2, years: "2082, 2073 Magh",
+          prompt: "Differentiate between horizontal and vertical scalability.",
+          sections: [
+            {
+              title: "Part A — Definitions & contrast",
+              points: [
+                { q: "Horizontal scalability means…", options: [
+                  "Adding more machines / nodes (scale-out)",
+                  "Adding more CPU/RAM to one box (scale-up)",
+                  "Replacing hardware with older hardware",
+                  "Reducing the cluster size"], a: 0 },
+                { q: "Vertical scalability means…", options: [
+                  "Adding more machines",
+                  "Upgrading CPU/RAM/disk on a single machine (scale-up)",
+                  "Distributing data across many racks",
+                  "Turning servers off"], a: 1 },
+                { q: "Which scaling approach is limited by hardware ceilings?", options: ["Horizontal", "Vertical", "Both equally", "Neither"], a: 1 },
+                { q: "Which scaling approach naturally provides high availability?", options: ["Horizontal (cluster survives a node loss)", "Vertical", "Neither", "Only physical security"], a: 0 },
+                { q: "Big-Data frameworks (Hadoop, Cassandra, MongoDB sharding) are designed for which kind of scaling?", options: ["Horizontal", "Vertical", "Diagonal", "Temporal"], a: 0 },
+                { q: "Which typically uses commodity hardware?", options: ["Horizontal", "Vertical", "Neither", "Both"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[4] / [10] / [8]", probability: "HIGH", appearances: 5, years: "2078, 2076, 2074 Bhadra, 2074 Magh, 2072 Magh",
+          prompt: "Differentiate between structured, semi-structured, and unstructured data with examples.",
+          sections: [
+            {
+              title: "Part A — Core differences",
+              points: [
+                { q: "Structured data is best defined as…", options: [
+                  "Organised rows/columns with a fixed schema (relational tables)",
+                  "Tweets, images and videos",
+                  "Free-text emails",
+                  "HTML-only documents"], a: 0 },
+                { q: "Semi-structured data is best described by…", options: [
+                  "JSON / XML / BSON — flexible, self-describing tags",
+                  "Rigid fixed-schema tables",
+                  "Only raw binary images",
+                  "Only UTF-8 plain text"], a: 0 },
+                { q: "Unstructured data includes…", options: [
+                  "Images, videos, audio, PDFs, emails, tweets",
+                  "Only numeric columns",
+                  "Only SQL rows",
+                  "Only primary keys"], a: 0 },
+                { q: "Approximately what share of enterprise data is unstructured?", options: ["~5 %", "~20 %", "~50 %", "~80 %"], a: 3 },
+                { q: "Which requires NLP / ML / indexing for effective search?", options: ["Structured", "Semi-structured", "Unstructured", "Relational"], a: 2 }
+              ]
+            },
+            {
+              title: "Part B — Real-world sources (match to category)",
+              points: [
+                { q: "Source of STRUCTURED data?", options: ["MySQL customer table / ERP system", "CCTV footage", "WhatsApp voice notes", "Scanned PDFs"], a: 0 },
+                { q: "Source of SEMI-STRUCTURED data?", options: ["Web-server JSON logs / IoT config files / REST API responses", "Photographs", "Radio audio", "Oil-painting archives"], a: 0 },
+                { q: "Source of UNSTRUCTURED data?", options: ["Social media posts, CCTV, call recordings, medical images", "SQL primary-key tables", "B-tree indexes", "Stored procedures"], a: 0 },
+                { q: "'Hybrid data' in a Big-Data warehouse refers to…", options: [
+                  "A mix of structured + semi + unstructured unified via schema-on-read (e.g., Hive)",
+                  "Only encrypted data",
+                  "Only compressed data",
+                  "Only streaming data"], a: 0 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // ===================== CH 2 =====================
+    {
+      id: 2, title: "Ch 2: Google File System", available: true,
+      questions: [
+        {
+          id: "Q1", marks: "[4+4+4] / [2+8] / [10]", probability: "HIGH", appearances: 9, years: "2082, 2079 Chaitra, 2079 Shrawan, 2077, 2076, 2075, 2074, 2073, 2072",
+          prompt: "Draw the architecture of Google File System (GFS). Explain the read and write algorithms in GFS.",
+          sections: [
+            {
+              title: "Part A — Architecture",
+              points: [
+                { q: "What are the three main components of GFS?", options: [
+                  "Client, Master, Chunkservers",
+                  "Client, Server, Router",
+                  "NameNode, DataNode, SecondaryNode",
+                  "Producer, Broker, Consumer"], a: 0 },
+                { q: "GFS splits files into fixed-size chunks of…", options: ["4 KB", "64 KB", "64 MB", "1 GB"], a: 2 },
+                { q: "Default replication factor for GFS chunks?", options: ["1", "2", "3", "10"], a: 2 },
+                { q: "Metadata in GFS is stored by…", options: ["Every chunkserver", "The single Master", "The client", "A dedicated RDBMS"], a: 1 },
+                { q: "Actual file data in GFS is stored on…", options: ["The master", "Chunkservers", "Clients", "Zookeeper nodes"], a: 1 },
+                {
+                  type: "components",
+                  q: "Name the 3 GFS architecture components:",
+                  items: [
+                    { hint: "Application library that talks to GFS", answers: ["Client", "GFS Client"] },
+                    { hint: "Single coordinator holding metadata / namespace", answers: ["Master", "GFS Master"] },
+                    { hint: "Machines that actually store the 64 MB chunks", answers: ["Chunkserver", "Chunkservers"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part B — Read algorithm",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the GFS READ algorithm steps in order.",
+                  sequence: [
+                    "Client sends (filename, byte-offset) to the Master",
+                    "Master replies with chunk-handle + list of chunkserver replicas",
+                    "Client caches the returned chunk-location information",
+                    "Client contacts the nearest chunkserver directly (master not on data path)",
+                    "Chunkserver streams the requested data back to the client"
+                  ]
+                },
+                { q: "Why is the GFS master NOT involved in the actual data transfer?", options: [
+                  "To keep the master lightly loaded — only metadata flows through it",
+                  "Because the master has no network card",
+                  "For security reasons only",
+                  "Because chunkservers cannot talk to clients"], a: 0 },
+                { q: "What does the client cache after the first metadata lookup?", options: [
+                  "Chunk locations for the file",
+                  "The entire file",
+                  "The master's source code",
+                  "Nothing — cache is disabled"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Write algorithm (with lease)",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the GFS WRITE mutation steps in order.",
+                  sequence: [
+                    "Client asks Master for the chunkserver holding the lease",
+                    "Master grants a lease to one replica (primary) and returns primary + secondaries",
+                    "Client pushes data to ALL replicas along the closest topological chain (pipelined data flow)",
+                    "Once replicas ACK receipt, client sends the WRITE request to the primary",
+                    "Primary assigns a serial number, applies locally, forwards to secondaries in the same order",
+                    "Secondaries apply the write and ACK the primary",
+                    "Primary ACKs the client (failures → retry)"
+                  ]
+                },
+                { q: "Which of the following is DECOUPLED in GFS write to save bandwidth?", options: [
+                  "Control flow vs data flow",
+                  "Read vs delete",
+                  "Open vs close",
+                  "Flush vs fsync"], a: 0 },
+                { q: "Typical duration of a chunk lease is approximately…", options: ["0.5 s", "60 s", "30 min", "24 hours"], a: 1 },
+                { q: "Who assigns the serial order of concurrent writes to a chunk?", options: [
+                  "The Master",
+                  "The client",
+                  "The PRIMARY chunkserver that holds the lease",
+                  "Any secondary chosen randomly"], a: 2 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q2", marks: "[2] / [4] / [5]", probability: "HIGH", appearances: 5, years: "2081, 2077, 2073, 2072 Ashwin, 2071",
+          prompt: "Why is a single master NOT a bottleneck in a GFS cluster?",
+          sections: [
+            {
+              title: "Part A — Reasons",
+              points: [
+                { q: "Which is the MOST fundamental reason the master is not a bottleneck?", options: [
+                  "Clients never read/write actual file data through the master — only metadata",
+                  "The master is the fastest server",
+                  "The master is replicated on every chunkserver",
+                  "The master uses SSDs"], a: 0 },
+                { q: "Why can the master's metadata fit entirely in RAM?", options: [
+                  "Metadata per file is tiny — with large 64 MB chunks there are relatively few entries",
+                  "Because GFS forbids large files",
+                  "Because metadata is compressed to zero bytes",
+                  "It cannot — metadata is stored on tape"], a: 0 },
+                { q: "What does the client CACHE to avoid repeated master lookups?", options: [
+                  "Chunk locations",
+                  "The whole filesystem",
+                  "User passwords",
+                  "Kernel source"], a: 0 },
+                { q: "Who coordinates ordering of concurrent chunk mutations — offloading the master?", options: [
+                  "Primary chunkserver (via lease)",
+                  "Master itself for every write",
+                  "Client directly",
+                  "Random secondary"], a: 0 },
+                { q: "Shadow masters provide…", options: [
+                  "Read-only metadata access and quick fail-over",
+                  "Extra disk capacity for chunks",
+                  "GPU acceleration",
+                  "Nothing — they are disabled"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 4 reasons the GFS single master is not a bottleneck:",
+                  items: [
+                    { hint: "Data path bypasses the master entirely", answers: ["Data flows directly client to chunkserver", "Clients bypass master for data", "Data path skips master"] },
+                    { hint: "All of master's metadata lives here for speed", answers: ["RAM", "In-memory metadata", "Memory"] },
+                    { hint: "Client keeps this locally so it doesn't re-ask the master", answers: ["Cache", "Client cache", "Metadata cache"] },
+                    { hint: "Read-only stand-by metadata replica for failover", answers: ["Shadow Master", "Shadow", "Shadow Masters"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q3", marks: "[4] / [10]", probability: "HIGH", appearances: 3, years: "2081, 2073 Magh, 2072 Magh",
+          prompt: "Advantages and disadvantages of the 64 MB fixed chunk size in GFS.",
+          sections: [
+            {
+              title: "Part A — Advantages",
+              points: [
+                { q: "Why do large chunks reduce master workload?", options: [
+                  "Fewer chunks per TB → fewer metadata entries + fewer client-master round-trips",
+                  "The master becomes faster when sleeping",
+                  "Chunks compress automatically",
+                  "Master runs less code"], a: 0 },
+                { q: "Large chunks are optimised for which access pattern?", options: [
+                  "Sequential / streaming reads (MapReduce scans)",
+                  "Tiny random reads",
+                  "Random overwrites",
+                  "Timestamp-only queries"], a: 0 },
+                { q: "Why can a client amortise a persistent TCP connection?", options: [
+                  "Many operations happen on the same 64 MB chunk before the client moves on",
+                  "TCP never closes in GFS",
+                  "The master forces persistent connections",
+                  "TCP uses UDP underneath"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Disadvantages",
+              points: [
+                { q: "Main problem for a file smaller than 64 MB?", options: [
+                  "Internal fragmentation — wasted space inside the chunk",
+                  "The file cannot be stored",
+                  "Replication fails",
+                  "It is duplicated 1000 times"], a: 0 },
+                { q: "What is 'hot spotting' in GFS?", options: [
+                  "A tiny but popular file lives on only 3 chunkservers — mitigated by raising replicas",
+                  "The master overheats",
+                  "Chunks catch fire",
+                  "Data races"], a: 0 },
+                { q: "Large chunks are NOT ideal for which workload?", options: [
+                  "Many tiny random reads/writes",
+                  "Streaming reads",
+                  "Sequential appends",
+                  "MapReduce"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q4", marks: "[4] / [5] / [10]", probability: "HIGH", appearances: 5, years: "2081, 2080 (short), 2074 Bhadra, 2074 Magh, 2072 Magh",
+          prompt: "Explain how GFS achieves fault tolerance, high availability, garbage collection and stale-replica detection.",
+          sections: [
+            {
+              title: "Part A — Fault Tolerance",
+              points: [
+                { q: "Which provides the core of GFS fault tolerance?", options: [
+                  "Chunk replication across racks (default 3×)",
+                  "Daily human backups",
+                  "RAID5 only",
+                  "Nothing — GFS is not fault tolerant"], a: 0 },
+                { q: "How does GFS detect a chunkserver failure?", options: [
+                  "Heartbeat messages to the master",
+                  "SMS alerts",
+                  "Manual daily checks",
+                  "It doesn't"], a: 0 },
+                { q: "Which guards each 64 KB block against silent corruption?", options: ["A 32-bit checksum", "RSA signature", "HMAC-SHA256", "Parity"], a: 0 },
+                { q: "What replays the operation log to recover the master?", options: [
+                  "Newly-started master reads checkpoints + log",
+                  "The client",
+                  "A chunkserver",
+                  "Nothing — master is stateless"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Garbage Collection (Lazy)",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange GFS lazy garbage collection steps in order.",
+                  sequence: [
+                    "File is 'deleted' — master renames it to a hidden name with timestamp",
+                    "During periodic namespace scan, hidden files older than threshold are removed from namespace",
+                    "In next heartbeat, chunkservers report their chunk IDs",
+                    "Master replies with chunk IDs that are no longer referenced",
+                    "Chunkservers delete the unreferenced chunks locally"
+                  ]
+                },
+                { q: "Why does GFS prefer lazy over eager deletion?", options: [
+                  "Amortises cost with other master work, allows recovery window, avoids bursty I/O",
+                  "Eager deletion is impossible",
+                  "Chunks are immortal",
+                  "The master has no disk"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Stale-Replica Detection",
+              points: [
+                { q: "How does the master detect a stale replica?", options: [
+                  "Version numbers — chunks with older versions reported in heartbeats are marked stale",
+                  "By reading each byte",
+                  "By user complaints",
+                  "It cannot detect staleness"], a: 0 },
+                { q: "When is a chunk's version number incremented?", options: [
+                  "Every time the master grants a new lease",
+                  "Every minute",
+                  "Only at cluster restart",
+                  "Never"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[8] / [5]", probability: "MEDIUM", appearances: 2, years: "2078, 2076",
+          prompt: "Why was GFS created? What assumptions does GFS make?",
+          sections: [
+            {
+              title: "Part A — Why created",
+              points: [
+                { q: "GFS was created primarily for…", options: [
+                  "Google's petabyte workloads (crawling, indexing, MapReduce) on commodity hardware",
+                  "Video games",
+                  "Desktop backups",
+                  "Personal email"], a: 0 },
+                { q: "GFS optimises for which pattern?", options: [
+                  "Large sequential reads + large sequential appends",
+                  "Tiny random reads/writes",
+                  "Transactional ACID updates",
+                  "Point-of-sale queries"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Assumptions",
+              points: [
+                { q: "Which is NOT a GFS design assumption?", options: [
+                  "Component failures are the norm",
+                  "Files are huge (multi-GB)",
+                  "Workload is dominated by tiny random point lookups",
+                  "Workload is dominated by large sequential access"], a: 2 },
+                { q: "GFS assumes high sustained bandwidth is preferred over…", options: [
+                  "Low latency",
+                  "Low energy use",
+                  "Small file count",
+                  "Strong consistency"], a: 0 },
+                { q: "GFS expects applications to be…", options: [
+                  "POSIX-compliant only",
+                  "Cooperative with the FS via a custom (non-POSIX) API",
+                  "Unable to see the FS",
+                  "Oracle-only"], a: 1 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // ===================== CH 3 =====================
+    {
+      id: 3, title: "Ch 3: MapReduce", available: true,
+      questions: [
+        {
+          id: "Q1", marks: "[10] / [12]", probability: "HIGH", appearances: 9, years: "2082, 2079 Chaitra, 2079 Shrawan, 2077, 2075, 2074 Magh, 2073, 2072 Ashwin, 2071",
+          prompt: "Explain how MapReduce works with the WordCount example.",
+          sections: [
+            {
+              title: "Part A — MapReduce basics",
+              points: [
+                { q: "A MapReduce user writes which two functions?", options: [
+                  "map(k1,v1)→list(k2,v2) and reduce(k2,list(v2))→list(v3)",
+                  "select() and update()",
+                  "push() and pop()",
+                  "encrypt() and decrypt()"], a: 0 },
+                { q: "Why do we need a MapReduce framework (best choice)?", options: [
+                  "Scalability + fault tolerance + parallelism + data locality + simple abstraction",
+                  "To speed up Excel",
+                  "To compile Java",
+                  "To render 3D graphics"], a: 0 },
+                { q: "MapReduce typically reads input from…", options: ["HDFS / GFS", "A single laptop disk", "A CD-ROM", "Paper tape"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Execution stages",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the MapReduce execution stages in order.",
+                  sequence: [
+                    "Input split — HDFS splits the file; one split per map task",
+                    "Map phase — user's map() runs on each split",
+                    "Partition + Shuffle + Sort — keys partitioned (hash(k) mod R) and sorted at reducers",
+                    "Combine (optional) — local mini-reduce on mapper to cut network traffic",
+                    "Reduce phase — user's reduce() runs per unique key",
+                    "Output — results written to HDFS"
+                  ]
+                },
+                { q: "Where does intermediate (map output) data live?", options: [
+                  "On the mapper's LOCAL disk — NOT HDFS",
+                  "In HDFS with replication 3",
+                  "On the master only",
+                  "In the client's browser"], a: 0 },
+                { q: "How is a key routed to a reducer by default?", options: [
+                  "hash(key) mod numReducers",
+                  "Round-robin ignoring the key",
+                  "Alphabetical",
+                  "Random"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — WordCount example",
+              points: [
+                { q: "In WordCount, the mapper emits…", options: [
+                  "(word, 1) for each token",
+                  "(lineNumber, lineText)",
+                  "(1, word)",
+                  "(word, lineNumber)"], a: 0 },
+                { q: "In WordCount, the reducer emits…", options: [
+                  "(word, sum(counts))",
+                  "(word, random)",
+                  "(1, word)",
+                  "(count, word)"], a: 0 },
+                { q: "For the line 'How is your family': reducer output for 'is' given entire text has 'is' appearing 6 times is…", options: ["(is, 6)", "(is, 1)", "(is, 0)", "(family, 6)"], a: 0 },
+                { q: "For the 2072 Ashwin input — how many times does the word 'big' appear?", options: ["2", "3", "4", "5"], a: 2 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q2", marks: "[3+2] / [2+3] / [4]", probability: "HIGH", appearances: 7, years: "2082, 2081, 2080, 2079 Chaitra, 2079 Shrawan, 2078, 2074 Bhadra",
+          prompt: "Explain functional programming — advantages, higher-order functions, lambda, and pure vs impure functions.",
+          sections: [
+            {
+              title: "Part A — Basics",
+              points: [
+                { q: "Functional programming treats computation as…", options: [
+                  "Evaluation of mathematical functions; avoids mutable state and side effects",
+                  "Hand-written assembly only",
+                  "Mutable shared state everywhere",
+                  "GUI click handlers"], a: 0 },
+                { q: "Which is an ADVANTAGE of FP?", options: [
+                  "Natural concurrency (no shared state)",
+                  "Lots of hidden side effects",
+                  "Tight coupling to hardware",
+                  "Forces global variables"], a: 0 },
+                { q: "Which foundational operations did FP contribute to distributed computing?", options: [
+                  "map() and reduce() — basis of MapReduce",
+                  "goto and jump",
+                  "malloc and free",
+                  "lock and unlock"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Higher-order functions",
+              points: [
+                { q: "A higher-order function…", options: [
+                  "Takes another function as argument OR returns a function",
+                  "Runs at a higher CPU clock",
+                  "Uses only integers",
+                  "Is compiled last"], a: 0 },
+                { q: "Which is a classic higher-order function?", options: ["map / filter / reduce", "printf", "sleep", "exit"], a: 0 },
+                { q: "In Python, list(map(lambda x: x*x, [1,2,3,4])) returns…", options: ["[1,4,9,16]", "[2,4,6,8]", "[1,2,3,4]", "10"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Lambda, pure vs impure",
+              points: [
+                { q: "A lambda function is…", options: [
+                  "Anonymous, one-line function — e.g., lambda x,y: x+y",
+                  "A heavyweight class",
+                  "A virus",
+                  "A database trigger"], a: 0 },
+                { q: "A PURE function…", options: [
+                  "Output depends only on input; no side effects; referentially transparent",
+                  "Writes to disk each call",
+                  "Relies on global mutable state",
+                  "Randomises without a seed each call"], a: 0 },
+                { q: "Which of these is IMPURE?", options: [
+                  "def inc(): global count; count += 1",
+                  "def add(a,b): return a+b",
+                  "def square(x): return x*x",
+                  "def neg(x): return -x"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 3 properties of a pure function:",
+                  items: [
+                    { hint: "No observable effects outside of returning a value", answers: ["No Side Effects", "Side-effect free", "Side effect free"] },
+                    { hint: "Same input always yields same output", answers: ["Deterministic", "Deterministic Output", "Same output for same input"] },
+                    { hint: "Expression can be replaced by its value without changing behavior", answers: ["Referential Transparency", "Referentially Transparent", "Referential transparency"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q3", marks: "[5] / [7] / [10]", probability: "HIGH", appearances: 4, years: "2081, 2078, 2073 Magh, 2072 Magh",
+          prompt: "How is the MapReduce framework designed to tolerate failures of map/reduce nodes?",
+          sections: [
+            {
+              title: "Part A — Mechanisms",
+              points: [
+                { q: "If a WORKER fails, the master does what?", options: [
+                  "Re-executes in-progress AND completed map tasks on other nodes; in-progress reduce tasks too",
+                  "Ignores the failure",
+                  "Shuts the job down",
+                  "Asks the client to restart"], a: 0 },
+                { q: "Why must COMPLETED map tasks be re-executed on another node on failure?", options: [
+                  "Intermediate map output lived on that node's LOCAL disk — it is lost",
+                  "For security reasons",
+                  "To waste time",
+                  "Map output is always in HDFS"], a: 0 },
+                { q: "What is SPECULATIVE execution?", options: [
+                  "Launching duplicate copies of slow stragglers; the first to finish wins",
+                  "Running tasks on one node at a time",
+                  "Running tasks in the future",
+                  "Guessing the output"], a: 0 },
+                { q: "How does the framework detect worker failure?", options: [
+                  "Master pings / heartbeats; no response → mark failed",
+                  "User phone calls",
+                  "Email notifications",
+                  "Chunkserver UDP broadcasts"], a: 0 },
+                { q: "Atomic commit of reduce output means…", options: [
+                  "Output written to a temp file, then renamed — partial outputs never pollute results",
+                  "Every byte is encrypted",
+                  "Output is never written",
+                  "Output is sent to Kafka"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q4", marks: "[4+4+3] / [8]", probability: "HIGH", appearances: 4, years: "2080, 2074 Bhadra, 2073 Magh, 2072 Magh (combiner), 2072 Ashwin (combiner)",
+          prompt: "Explain the components of a MapReduce job, data flow, and the role of the combiner function.",
+          sections: [
+            {
+              title: "Part A — Components",
+              points: [
+                { q: "Which is NOT a MapReduce component?", options: [
+                  "InputFormat / InputSplit / RecordReader",
+                  "Mapper",
+                  "Combiner (optional)",
+                  "SQL Parser"], a: 3 },
+                { q: "RecordReader's job is to…", options: [
+                  "Convert byte-oriented input splits into key-value records for the mapper",
+                  "Write output to HDFS",
+                  "Merge reducers",
+                  "Schedule tasks"], a: 0 },
+                { q: "Partitioner default formula?", options: [
+                  "key.hashCode() % numReducers",
+                  "random()",
+                  "round-robin ignoring key",
+                  "lineNumber / 10"], a: 0 },
+                { q: "RecordWriter's job is to…", options: [
+                  "Write the reducer's key-value output to final files",
+                  "Read splits for the mapper",
+                  "Launch JVMs",
+                  "Monitor HDFS"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Combiner function",
+              points: [
+                { q: "A combiner is a…", options: [
+                  "Local mini-reducer that runs on each mapper before shuffle, to cut network traffic",
+                  "Global coordinator",
+                  "Backup of reduce output",
+                  "Error logger"], a: 0 },
+                { q: "Which property must a combiner satisfy?", options: [
+                  "Associative and commutative (may be called 0, 1 or many times)",
+                  "Thread-unsafe",
+                  "Blocking I/O",
+                  "Recursive"], a: 0 },
+                { q: "Which operation is SAFE with a combiner without modification?", options: [
+                  "Sum / count / max / min",
+                  "Plain average (needs extra state)",
+                  "Random sampling",
+                  "Password hashing"], a: 0 },
+                { q: "In WordCount, the combiner converts 1000× (the,1) into…", options: [
+                  "(the, 1000) — 1 record across the network",
+                  "(the, 1) — still 1000 records",
+                  "(the, -1)",
+                  "(the, error)"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Data-flow + DataNode failure during HDFS write",
+              points: [
+                { q: "Where does intermediate (post-map) data live during a MR job?", options: [
+                  "On the mapper's LOCAL disk",
+                  "In HDFS with replication 3",
+                  "Only in RAM",
+                  "In S3 only"], a: 0 },
+                {
+                  type: "sequence",
+                  q: "Arrange what happens when a DataNode fails DURING an HDFS write pipeline:",
+                  sequence: [
+                    "Pipeline is closed",
+                    "Packets in the ack queue move back to the data queue",
+                    "Current block on remaining good DataNodes gets a new identifier",
+                    "Bad DataNode removed from the pipeline",
+                    "NameNode sees under-replication and schedules re-replication later",
+                    "Write continues with the remaining nodes — client is unaware"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[10]", probability: "MEDIUM", appearances: 3, years: "2079 Jestha, 2075, 2074 Magh",
+          prompt: "How is the clock-synchronisation problem in a distributed file system / MapReduce addressed?",
+          sections: [
+            {
+              title: "Part A — Options",
+              points: [
+                { q: "Which protocol offers COARSE physical-clock sync?", options: ["NTP", "FTP", "SMTP", "RPC"], a: 0 },
+                { q: "Which gives happened-before ordering WITHOUT physical clocks?", options: [
+                  "Lamport logical clocks",
+                  "NTP",
+                  "GPS only",
+                  "DNS"], a: 0 },
+                { q: "Which clock captures causality across concurrent events (used by Cassandra / Dynamo)?", options: ["Vector clocks", "Atomic clocks", "Wall clocks", "Cuckoo clocks"], a: 0 },
+                { q: "Which system is the common centralised ordering authority in Big-Data stacks?", options: ["ZooKeeper", "Cron", "Syslog", "SSH"], a: 0 },
+                { q: "In MapReduce, ordering is typically achieved via…", options: [
+                  "Master-assigned task IDs, lease sequence numbers, monotonic job counters",
+                  "Wall-clock timestamps on every worker",
+                  "GPS hardware on every node",
+                  "Human operators"], a: 0 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // ===================== CH 4 =====================
+    {
+      id: 4, title: "Ch 4: Hadoop", available: true,
+      questions: [
+        {
+          id: "Q1", marks: "[8] / [10]", probability: "HIGH", appearances: 5, years: "2082, 2079 Chaitra, 2074 Bhadra, 2073 Magh, 2071",
+          prompt: "Explain in brief the five daemons of Hadoop.",
+          sections: [
+            {
+              title: "Part A — Classic 5 daemons",
+              points: [
+                { q: "Which daemon is the HDFS master?", options: ["NameNode", "DataNode", "JobTracker", "TaskTracker"], a: 0 },
+                { q: "Which daemon stores actual HDFS blocks?", options: ["DataNode", "NameNode", "JobTracker", "Secondary NameNode"], a: 0 },
+                { q: "Which daemon merges NameNode's edit log into a new fsimage?", options: [
+                  "Secondary NameNode (housekeeping — NOT a stand-by)",
+                  "JobTracker",
+                  "TaskTracker",
+                  "DataNode"], a: 0 },
+                { q: "Which was the MapReduce master in Hadoop 1?", options: ["JobTracker", "TaskTracker", "NameNode", "Zookeeper"], a: 0 },
+                { q: "Which was the per-node worker running map/reduce tasks in Hadoop 1?", options: ["TaskTracker", "JobTracker", "NodeManager", "ResourceManager"], a: 0 },
+                { q: "In Hadoop 2+, what REPLACED JobTracker and TaskTracker?", options: [
+                  "ResourceManager + NodeManager + ApplicationMaster",
+                  "Nothing — same names",
+                  "Zookeeper alone",
+                  "A single daemon called SuperNode"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 5 classic Hadoop daemons:",
+                  items: [
+                    { hint: "HDFS master — holds namespace and block map", answers: ["NameNode"] },
+                    { hint: "HDFS slave — stores actual blocks", answers: ["DataNode"] },
+                    { hint: "Housekeeping helper that merges edit logs (NOT a standby)", answers: ["Secondary NameNode", "SecondaryNameNode"] },
+                    { hint: "MapReduce master (Hadoop 1)", answers: ["JobTracker"] },
+                    { hint: "MapReduce slave that runs tasks (Hadoop 1)", answers: ["TaskTracker"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q2", marks: "[10]", probability: "HIGH", appearances: 4, years: "2079 Jestha, 2076, 2075, 2074 Magh",
+          prompt: "Explain HDFS architecture and the anatomy of file read and file write in HDFS.",
+          sections: [
+            {
+              title: "Part A — Basics",
+              points: [
+                { q: "Default HDFS block size?", options: ["4 KB", "64 MB (Hadoop 1 era)", "128 MB (modern default)", "1 GB"], a: 2 },
+                { q: "Default HDFS replication factor?", options: ["1", "2", "3", "10"], a: 2 },
+                { q: "HDFS follows which write model?", options: [
+                  "Write-Once-Read-Many (WORM) — cannot modify, only append",
+                  "Random-access updates",
+                  "Read-Only",
+                  "Copy-On-Write with snapshots only"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — File READ",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the HDFS file-READ steps in order.",
+                  sequence: [
+                    "Client calls FileSystem.open() → returns FSDataInputStream",
+                    "DistributedFileSystem RPCs NameNode for block locations",
+                    "NameNode returns DataNode addresses sorted by network proximity",
+                    "Client reads from the closest DataNode",
+                    "At block boundaries, stream reconnects to the next DataNode",
+                    "On DataNode failure, stream fails over to another replica",
+                    "Client calls close() when done"
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part C — File WRITE",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the HDFS file-WRITE steps in order.",
+                  sequence: [
+                    "Client calls create() → returns FSDataOutputStream",
+                    "DistributedFileSystem RPCs NameNode to create file (no blocks yet)",
+                    "NameNode does permission check + creates record",
+                    "Writes buffered into packets → data queue",
+                    "DataStreamer asks NameNode for 3 DataNodes forming a pipeline",
+                    "Packets stream through pipeline: DN1 → DN2 → DN3 (each stores + forwards)",
+                    "DN3 ACKs back up; packet leaves ack queue only when all DNs stored it",
+                    "close() flushes remaining packets and notifies NameNode"
+                  ]
+                },
+                { q: "On DataNode failure during write, what happens?", options: [
+                  "Pipeline closes, bad DN removed, new pipeline continues; NameNode later re-replicates",
+                  "Entire write aborts",
+                  "Client must re-upload from scratch",
+                  "File is lost"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q3", marks: "[6] / [10]", probability: "HIGH", appearances: 6, years: "2081, 2079 Shrawan, 2078, 2077, 2072 Ashwin, 2073 Bhadra",
+          prompt: "Give an overview of the Hadoop ecosystem.",
+          sections: [
+            {
+              title: "Part A — Core",
+              points: [
+                { q: "Which is HDFS's role in Hadoop?", options: ["Distributed storage layer", "Resource scheduler", "Stream engine", "UI dashboard"], a: 0 },
+                { q: "Which is the resource manager introduced in Hadoop 2?", options: ["YARN", "HDFS", "Oozie", "Zookeeper"], a: 0 },
+                { q: "Which is the in-memory engine up to 100× faster than MR?", options: ["Apache Spark", "Apache Flume", "Apache Pig", "Apache Mahout"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Ecosystem tools",
+              points: [
+                { q: "SQL-on-Hadoop tool using HiveQL?", options: ["Hive", "Pig", "Flume", "Sqoop"], a: 0 },
+                { q: "Scripting tool using Pig Latin?", options: ["Pig", "Hive", "Spark", "Storm"], a: 0 },
+                { q: "Columnar NoSQL DB on top of HDFS?", options: ["HBase", "MongoDB", "MySQL", "Redis"], a: 0 },
+                { q: "Tool for bulk-transfer between RDBMS and HDFS/Hive?", options: ["Sqoop", "Flume", "Kafka", "Pig"], a: 0 },
+                { q: "Tool for streaming log-data ingestion into HDFS?", options: ["Flume", "Sqoop", "Spark", "Hive"], a: 0 },
+                { q: "Distributed event-streaming platform?", options: ["Kafka", "Hive", "Pig", "Oozie"], a: 0 },
+                { q: "Workflow scheduler for Hadoop jobs?", options: ["Oozie", "Pig", "Hive", "Flume"], a: 0 },
+                { q: "Distributed coordination service used by HBase / Kafka?", options: ["ZooKeeper", "Flume", "Sqoop", "Oozie"], a: 0 },
+                { q: "ML library on Hadoop?", options: ["Mahout", "Oozie", "Sqoop", "Flume"], a: 0 },
+                { q: "Notebook UI for interactive Big-Data analysis?", options: ["Zeppelin", "Oozie", "HBase", "Flume"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 5 Hadoop ecosystem tools and their role (any 5):",
+                  items: [
+                    { hint: "SQL-on-Hadoop (HiveQL)", answers: ["Hive"] },
+                    { hint: "Scripting language Pig Latin for ETL", answers: ["Pig"] },
+                    { hint: "In-memory distributed processing engine", answers: ["Spark", "Apache Spark"] },
+                    { hint: "Columnar NoSQL on top of HDFS", answers: ["HBase"] },
+                    { hint: "Distributed coordinator (used by HBase, Kafka)", answers: ["ZooKeeper", "Zookeeper"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q4", marks: "[4+4] / [6] / [4]", probability: "MEDIUM", appearances: 4, years: "2080, 2079 Shrawan, 2081 (HDFS commands), 2079 Chaitra (commands)",
+          prompt: "Compare Hadoop configuration modes and give HDFS shell commands for common file ops.",
+          sections: [
+            {
+              title: "Part A — Configuration modes",
+              points: [
+                { q: "'Local (Standalone)' mode runs…", options: [
+                  "Single JVM, no daemons, local FS — dev / debugging",
+                  "A full production cluster",
+                  "Pseudo-distributed with multiple JVMs",
+                  "Only YARN"], a: 0 },
+                { q: "'Pseudo-distributed' mode runs…", options: [
+                  "Each daemon in its own JVM on ONE machine, uses HDFS — for integration testing",
+                  "Fully-distributed production",
+                  "Only Spark",
+                  "Windows file shares"], a: 0 },
+                { q: "'Fully-distributed' mode is used for…", options: ["Production on a real multi-machine cluster", "Laptops only", "Browsers", "Mobile devices"], a: 0 },
+                { q: "Can Hadoop run in the cloud?", options: [
+                  "Yes — EC2/Azure/GCP VMs or managed services like Amazon EMR, Google Dataproc, Azure HDInsight, Databricks",
+                  "No — Hadoop is on-prem only",
+                  "Only on mainframes",
+                  "Only on macOS"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — HDFS shell commands",
+              points: [
+                { q: "Upload a local file to HDFS:", options: [
+                  "hdfs dfs -put localfile.txt /user/hadoop/",
+                  "hdfs dfs -cat localfile.txt",
+                  "hdfs dfs -rm localfile.txt",
+                  "hdfs dfs -ls localfile.txt"], a: 0 },
+                { q: "Download a file from HDFS to local:", options: [
+                  "hdfs dfs -get /user/hadoop/file.txt ./",
+                  "hdfs dfs -put /user/hadoop/file.txt ./",
+                  "hdfs dfs -mkdir /user/hadoop/file.txt",
+                  "hdfs dfs -rm /user/hadoop/file.txt"], a: 0 },
+                { q: "List files in an HDFS directory:", options: [
+                  "hdfs dfs -ls /user/hadoop/",
+                  "hdfs dfs -cat /user/hadoop/",
+                  "hdfs dfs -rm /user/hadoop/",
+                  "hdfs dfs -put /user/hadoop/"], a: 0 },
+                { q: "View content of an HDFS file:", options: [
+                  "hdfs dfs -cat /user/hadoop/file.txt",
+                  "hdfs dfs -ls /user/hadoop/file.txt",
+                  "hdfs dfs -mkdir /user/hadoop/file.txt",
+                  "hdfs dfs -get /user/hadoop/file.txt"], a: 0 },
+                { q: "View MapReduce job output (typical)?", options: [
+                  "hdfs dfs -cat /output/part-r-00000",
+                  "hdfs dfs -rm /output",
+                  "hdfs dfs -ls /input",
+                  "hadoop jar"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[4] / [10]", probability: "MEDIUM", appearances: 3, years: "2079 Jestha (YARN), 2078 (fault/scale), 2072 Magh (mappers calc)",
+          prompt: "Explain YARN architecture, Hadoop fault tolerance / scalability, and compute mapper count for 1 GB data with 128 MB blocks.",
+          sections: [
+            {
+              title: "Part A — YARN components",
+              points: [
+                { q: "Global scheduler + ApplicationsManager daemon is…", options: ["ResourceManager", "NodeManager", "ApplicationMaster", "Container"], a: 0 },
+                { q: "Per-node agent that launches/monitors containers is…", options: ["NodeManager", "ResourceManager", "DataNode", "TaskTracker"], a: 0 },
+                { q: "One per application — negotiates containers + tracks tasks…", options: ["ApplicationMaster", "ResourceManager", "NodeManager", "NameNode"], a: 0 },
+                { q: "Encapsulation of CPU + memory running ONE task is a…", options: ["Container", "Block", "Chunk", "Shard"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Fault tolerance & scalability",
+              points: [
+                { q: "Main mechanism for HDFS fault tolerance?", options: ["Block replication (default 3)", "Daily human backups", "RAID only", "Tape backup"], a: 0 },
+                { q: "What eliminates NameNode single-point-of-failure?", options: [
+                  "HA NameNode (active + standby + ZK + QJM shared edits)",
+                  "Secondary NameNode (it is NOT a stand-by)",
+                  "RAID",
+                  "Tape backup"], a: 0 },
+                { q: "Hadoop scales by…", options: [
+                  "Adding more commodity DataNodes/NodeManagers (horizontal scale-out)",
+                  "Buying bigger mainframes",
+                  "Upgrading to quantum CPUs",
+                  "Reducing replica count"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Mapper count calculation",
+              points: [
+                { q: "For 1 GB of data with 128 MB block size, how many mappers does Hadoop launch?", options: ["4", "6", "8", "16"], a: 2 },
+                { q: "Why exactly 8?", options: [
+                  "1 GB = 1024 MB; splits = ⌈1024/128⌉ = 8 — one mapper per input split",
+                  "Because the NameNode chooses randomly",
+                  "Hadoop always uses 8 mappers",
+                  "Replication factor = 8"], a: 0 },
+                { q: "If block size were 64 MB instead, how many mappers for 1 GB?", options: ["4", "8", "16", "32"], a: 2 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // ===================== CH 5 =====================
+    {
+      id: 5, title: "Ch 5: NoSQL Technology", available: true,
+      questions: [
+        {
+          id: "Q1", marks: "[5+5] / [3+7] / [8]", probability: "HIGH", appearances: 8, years: "2082, 2079 Chaitra, 2079 Shrawan, 2077 (short), 2073 Magh, 2073 Bhadra (short), 2072 Ashwin, 2071",
+          prompt: "Explain CAP theorem, its implications, and eventual consistency in NoSQL.",
+          sections: [
+            {
+              title: "Part A — CAP basics",
+              points: [
+                { q: "CAP theorem states a distributed store can guarantee at most how many of {Consistency, Availability, Partition-tolerance}?", options: ["1", "2", "3", "4"], a: 1 },
+                { q: "Who originally proposed the CAP theorem (2000)?", options: ["Brewer", "Codd", "Turing", "Knuth"], a: 0 },
+                { q: "Because network partitions are unavoidable at scale, the real choice is…", options: ["CP or AP", "CA or PA", "CC or AA", "PP or CC"], a: 0 },
+                { q: "'Consistency' in CAP means…", options: [
+                  "Every read sees the most recent write",
+                  "The system never returns errors",
+                  "The system runs through network partitions",
+                  "Data is encrypted"], a: 0 },
+                { q: "'Availability' in CAP means…", options: [
+                  "Every request gets a response (not an error) — may be stale",
+                  "Every read sees the latest write",
+                  "Partitions are tolerated",
+                  "Strong schema enforcement"], a: 0 },
+                { q: "'Partition tolerance' in CAP means…", options: [
+                  "System keeps running despite arbitrary network partitions",
+                  "System is shut down on network failure",
+                  "Replicas are split by hash",
+                  "SQL JOINs are avoided"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Classifications",
+              points: [
+                { q: "A single-node RDBMS is classified as…", options: ["CA", "CP", "AP", "None"], a: 0 },
+                { q: "HBase and MongoDB (default) are classified as…", options: ["CP", "AP", "CA", "None"], a: 0 },
+                { q: "Cassandra and DynamoDB are classified as…", options: ["AP", "CP", "CA", "None"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Eventual consistency",
+              points: [
+                { q: "Eventual consistency means…", options: [
+                  "If writes stop, all replicas eventually converge to the same value; reads may return stale data in between",
+                  "All replicas are always identical at every instant",
+                  "Data is never replicated",
+                  "Consistency is guaranteed by hardware"], a: 0 },
+                { q: "Which mechanism helps an AP system converge?", options: [
+                  "Read-repair, hinted handoff, anti-entropy repair",
+                  "RAID 5",
+                  "WORM policy",
+                  "TCP retransmits"], a: 0 },
+                { q: "Why do systems like Cassandra sacrifice absolute C for A?", options: [
+                  "Modern apps need 24/7 responsiveness; strict C across regions is too slow; tunable consistency gives flexibility",
+                  "They can't implement consensus",
+                  "To save electricity",
+                  "To simplify schema"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q2", marks: "[8] / [6]", probability: "HIGH", appearances: 6, years: "2082 (short), 2081, 2080, 2079 Chaitra, 2078, 2072 Ashwin",
+          prompt: "Describe NoSQL taxonomy (types) and compare NoSQL with RDBMS.",
+          sections: [
+            {
+              title: "Part A — NoSQL types",
+              points: [
+                { q: "Which store uses (key → opaque value)?", options: ["Key-Value", "Document", "Column-family", "Graph"], a: 0 },
+                { q: "Which uses JSON / BSON / XML documents?", options: ["Document", "Key-Value", "Graph", "Column-family"], a: 0 },
+                { q: "Which uses rows with columns grouped into families (wide-column)?", options: ["Column-family", "Document", "Key-Value", "Graph"], a: 0 },
+                { q: "Which uses nodes + edges + properties?", options: ["Graph", "Document", "Column-family", "Key-Value"], a: 0 },
+                { q: "Redis / DynamoDB / Riak are…", options: ["Key-Value", "Document", "Column-family", "Graph"], a: 0 },
+                { q: "MongoDB / CouchDB are…", options: ["Document", "Key-Value", "Column-family", "Graph"], a: 0 },
+                { q: "HBase / Cassandra / Bigtable are…", options: ["Column-family", "Document", "Key-Value", "Graph"], a: 0 },
+                { q: "Neo4j / JanusGraph / Neptune are…", options: ["Graph", "Document", "Column-family", "Key-Value"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name the 4 NoSQL categories:",
+                  items: [
+                    { hint: "Simple key → opaque value (Redis, DynamoDB)", answers: ["Key-Value", "Key Value", "KV"] },
+                    { hint: "JSON/BSON documents per key (MongoDB)", answers: ["Document", "Document-Based"] },
+                    { hint: "Rows with flexible column families (HBase, Cassandra)", answers: ["Column-Family", "Column Family", "Columnar", "Wide-Column"] },
+                    { hint: "Nodes + edges (Neo4j)", answers: ["Graph"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part B — NoSQL vs RDBMS",
+              points: [
+                { q: "RDBMS uses which data model?", options: ["Tables (rows/cols)", "JSON documents", "Key-value pairs", "Graphs"], a: 0 },
+                { q: "NoSQL schema is typically…", options: ["Flexible / schemaless", "Fixed", "Impossible", "Only XML"], a: 0 },
+                { q: "RDBMS typically scales how?", options: ["Vertical (scale-up)", "Horizontal (scale-out)", "Diagonal", "Not at all"], a: 0 },
+                { q: "NoSQL typically scales how?", options: ["Horizontal", "Vertical", "Neither", "Diagonal"], a: 0 },
+                { q: "RDBMS transactions follow which property set?", options: ["ACID", "BASE", "CAP", "BRASS"], a: 0 },
+                { q: "NoSQL transactions typically follow…", options: ["BASE (Basically Available, Soft state, Eventually consistent)", "ACID", "SOAP", "REST"], a: 0 },
+                { q: "Why do NoSQL DBs often drop ACID?", options: [
+                  "Enforcing global ACID across many nodes is expensive (2PC, consensus); NoSQL trades strict C for A/P",
+                  "They lack a programmer",
+                  "ACID is proprietary",
+                  "They use unsupported CPUs"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Normalisation contradicts availability",
+              points: [
+                { q: "In a distributed scenario, why does normalisation contradict availability?", options: [
+                  "Normalised data is spread across nodes → reads require cross-node joins → latency + partition risk",
+                  "Normalisation prevents any queries",
+                  "Normalisation encrypts all joins",
+                  "Because of IP address exhaustion"], a: 0 },
+                { q: "Denormalisation in NoSQL aims to…", options: [
+                  "Store related data together so reads avoid cross-node joins — higher availability at cost of redundancy",
+                  "Forbid redundancy",
+                  "Encrypt columns",
+                  "Increase latency"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q3", marks: "[5] / [9] / [10]", probability: "HIGH", appearances: 8, years: "2082, 2081, 2080, 2079 Jestha, 2078, 2077, 2076, 2074 Bhadra, 2073 Bhadra",
+          prompt: "Explain the architecture of HBase and write CRUD commands.",
+          sections: [
+            {
+              title: "Part A — HBase components",
+              points: [
+                { q: "What is HBase?", options: [
+                  "Open-source, distributed, column-oriented NoSQL DB modelled on Google Bigtable, built on HDFS",
+                  "A relational database",
+                  "A message broker",
+                  "A web server"], a: 0 },
+                { q: "Which component assigns regions, does DDL, handles failover?", options: ["HMaster", "RegionServer", "ZooKeeper", "DataNode"], a: 0 },
+                { q: "Which component handles DML (put/get/scan/delete) for a set of regions?", options: ["RegionServer", "HMaster", "ZooKeeper", "NameNode"], a: 0 },
+                { q: "A region is…", options: [
+                  "A contiguous row-key range; split when too big",
+                  "A column family",
+                  "A ZooKeeper znode",
+                  "A MapReduce task"], a: 0 },
+                { q: "Writes go first to which two places for durability + performance?", options: [
+                  "WAL (Write-Ahead Log) on HDFS, then MemStore (in-memory buffer)",
+                  "MemStore then OS cache",
+                  "Network socket then HDFS",
+                  "Only HFile directly"], a: 0 },
+                { q: "Immutable on-disk file flushed from MemStore?", options: ["HFile", "SSTable", "MemTable", "Log4j"], a: 0 },
+                { q: "ZooKeeper's role in HBase?", options: [
+                  "Keeps -ROOT-/.META. locations, elects HMaster, tracks live RegionServers, provides locks",
+                  "Stores user data",
+                  "Schedules MapReduce",
+                  "Does SQL parsing"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 5 core HBase components:",
+                  items: [
+                    { hint: "Master — region assignment / DDL / failover", answers: ["HMaster", "Master"] },
+                    { hint: "Serves reads/writes for a set of regions", answers: ["RegionServer", "Region Server"] },
+                    { hint: "Subset of a table (row-key range)", answers: ["Region"] },
+                    { hint: "Durability — Write-Ahead Log", answers: ["WAL", "Write-Ahead Log"] },
+                    { hint: "Coordinator that elects HMaster, tracks RegionServers", answers: ["ZooKeeper", "Zookeeper"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part B — HBase shell CRUD commands",
+              points: [
+                { q: "Create a table 'employees' with column families 'personal' and 'professional':", options: [
+                  "create 'employees', 'personal', 'professional'",
+                  "CREATE TABLE employees (personal, professional)",
+                  "new table employees",
+                  "make 'employees'"], a: 0 },
+                { q: "Insert a cell into emp001:", options: [
+                  "put 'employees', 'emp001', 'personal:name', 'Ram'",
+                  "insert into employees values (...)",
+                  "add employees emp001 Ram",
+                  "update employees set name='Ram'"], a: 0 },
+                { q: "Retrieve row emp001:", options: [
+                  "get 'employees', 'emp001'",
+                  "select * from employees where id='emp001'",
+                  "find employees emp001",
+                  "show employees emp001"], a: 0 },
+                { q: "Scan all rows of a table:", options: [
+                  "scan 'employees'",
+                  "select * from employees",
+                  "show all employees",
+                  "dump employees"], a: 0 },
+                { q: "Delete a full row:", options: [
+                  "deleteall 'employees', 'emp001'",
+                  "drop 'employees', 'emp001'",
+                  "remove 'employees', 'emp001'",
+                  "rm employees emp001"], a: 0 },
+                { q: "Drop a table (requires disabling first):", options: [
+                  "disable 'employees' ; drop 'employees'",
+                  "drop 'employees'",
+                  "DELETE TABLE employees",
+                  "rm -r employees"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Why column-oriented on HDFS?",
+              points: [
+                { q: "Why is HBase called column-oriented?", options: [
+                  "Cells of a column family are co-located on disk — efficient column scans, compression, sparse data support",
+                  "Because columns are expensive",
+                  "Because rows are forbidden",
+                  "It's actually row-oriented"], a: 0 },
+                { q: "Why is HBase built on HDFS?", options: [
+                  "HDFS provides petabyte distributed storage with replication; HBase focuses on low-latency random access",
+                  "Because HDFS is the only FS in existence",
+                  "To waste disk",
+                  "To slow reads"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q4", marks: "[5] / [10]", probability: "HIGH", appearances: 5, years: "2082 (short), 2081 (short), 2079 Chaitra (short), 2078 (short), 2073 Bhadra",
+          prompt: "Explain Cassandra: components, replication, and tunable / eventual consistency.",
+          sections: [
+            {
+              title: "Part A — Components",
+              points: [
+                { q: "Cassandra is modelled on…", options: [
+                  "Dynamo (AP) + Bigtable (data model)",
+                  "Oracle + MySQL",
+                  "PostgreSQL + Redis",
+                  "Nothing — it is original"], a: 0 },
+                { q: "What is the smallest unit of storage in Cassandra?", options: ["Node", "Data center", "Cluster", "Shard"], a: 0 },
+                { q: "A 'cluster' in Cassandra is…", options: [
+                  "One or more data centers",
+                  "A single node",
+                  "A column family",
+                  "A partition key"], a: 0 },
+                { q: "WAL equivalent in Cassandra?", options: ["Commit log", "HFile", "SSTable", "Mem-table"], a: 0 },
+                { q: "In-memory write buffer?", options: ["Mem-table", "Commit log", "SSTable", "Bloom filter"], a: 0 },
+                { q: "Immutable on-disk flushed file?", options: ["SSTable", "Mem-table", "Commit log", "Bloom filter"], a: 0 },
+                { q: "Fast 'is key in SSTable?' probabilistic test?", options: ["Bloom filter", "Linear scan", "Merkle tree", "Hash ring"], a: 0 },
+                { q: "Peer-to-peer membership + failure detection is via…", options: ["Gossip protocol", "Raft", "Paxos", "DHCP"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Tunable consistency",
+              points: [
+                { q: "What does ONE consistency level mean?", options: [
+                  "Only one replica needs to respond — highest availability, weakest consistency",
+                  "Zero replicas respond",
+                  "All replicas respond",
+                  "Odd-numbered replicas respond"], a: 0 },
+                { q: "What does QUORUM mean?", options: [
+                  "Majority of replicas (N/2 + 1) respond — balance of C and A",
+                  "All replicas",
+                  "Half rounded down",
+                  "Random number"], a: 0 },
+                { q: "What does ALL mean?", options: [
+                  "Every replica must respond — strong consistency but lower availability",
+                  "All clusters",
+                  "No replicas",
+                  "A single DC only"], a: 0 },
+                { q: "R + W > N gives which guarantee?", options: [
+                  "Strong consistency (quorum reads and writes overlap)",
+                  "Eventual consistency only",
+                  "Partition intolerance",
+                  "Nothing"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q5", marks: "[4] / [6] / [10]", probability: "MEDIUM", appearances: 5, years: "2080 (short), 2079 Jestha (short), 2077, 2072 Ashwin, 2075/2074 Magh (column vs row)",
+          prompt: "Explain MongoDB features/architecture, and compare column- vs row-oriented databases.",
+          sections: [
+            {
+              title: "Part A — MongoDB features",
+              points: [
+                { q: "MongoDB is best described as…", options: [
+                  "Open-source document-oriented NoSQL DB storing BSON documents with flexible schema",
+                  "A relational DB with strict schema",
+                  "A block-storage service",
+                  "A message queue"], a: 0 },
+                { q: "MongoDB horizontal scaling technique?", options: ["Sharding (range/hash on shard key)", "Vertical upgrade", "Tape backup", "RAID"], a: 0 },
+                { q: "High availability in MongoDB via…", options: [
+                  "Replica sets (primary + secondaries + arbiter)",
+                  "Single master only",
+                  "Rotating backups",
+                  "Shared SAN"], a: 0 },
+                { q: "Default storage engine since 3.0?", options: ["WiredTiger", "MMAPv1", "InMemory", "InnoDB"], a: 0 },
+                { q: "'mongos' is…", options: [
+                  "Query router for sharded clusters",
+                  "Replica promoter",
+                  "Storage engine",
+                  "Network stack"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — RDBMS → Mongo mapping + Example queries",
+              points: [
+                { q: "RDBMS 'row' maps to Mongo…", options: ["Document", "Collection", "Database", "Field"], a: 0 },
+                { q: "RDBMS 'table' maps to Mongo…", options: ["Collection", "Document", "Field", "Cluster"], a: 0 },
+                { q: "Insert Tom's post into posts collection:", options: [
+                  "db.posts.insertOne({title:'MongoDB', by:'Tom', likes:100})",
+                  "INSERT INTO posts VALUES ('MongoDB','Tom',100)",
+                  "put('posts','Tom','MongoDB')",
+                  "add posts Tom MongoDB 100"], a: 0 },
+                { q: "Find titles of posts written by Tom:", options: [
+                  "db.posts.find({by:'Tom'}, {title:1, _id:0})",
+                  "SELECT title FROM posts WHERE by='Tom'",
+                  "get posts where by=Tom",
+                  "find-title posts Tom"], a: 0 },
+                { q: "MongoDB mapReduce to count posts per user map function:", options: [
+                  "function(){ emit(this.by, 1); }",
+                  "function(){ return this.by; }",
+                  "function(){ this.count++; }",
+                  "function(){ db.posts.count(); }"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Column-oriented vs row-oriented",
+              points: [
+                { q: "Column-oriented DBs are best for…", options: [
+                  "Analytical scans over few columns + heavy aggregation",
+                  "OLTP with row updates",
+                  "Document editing",
+                  "Foreign-key joins"], a: 0 },
+                { q: "Row-oriented DBs are best for…", options: [
+                  "OLTP row lookups / updates (banking, ERP)",
+                  "Big-Data analytics",
+                  "Time-series storage at PB scale",
+                  "Sparse wide tables"], a: 0 },
+                { q: "Which storage format compresses better?", options: ["Column-oriented (homogeneous data per column)", "Row-oriented", "Both equally", "Neither"], a: 0 },
+                { q: "Example of columnar DB?", options: ["HBase / Cassandra / Bigtable", "MySQL / Postgres", "SQLite / Access", "Neo4j"], a: 0 },
+                { q: "Which write model do column stores typically use?", options: ["LSM tree (append + flush + compact)", "B-tree in-place updates", "Sparse matrix", "Hash-only"], a: 0 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // ===================== CH 6 =====================
+    {
+      id: 6, title: "Ch 6: Searching & Indexing", available: true,
+      questions: [
+        {
+          id: "Q1", marks: "[2+8] / [6+5] / [10]", probability: "HIGH", appearances: 8, years: "2081, 2080, 2079 Chaitra, 2077, 2073 Magh, 2073 Bhadra, 2072 Ashwin, 2071",
+          prompt: "Define Lucene. Describe its architecture and the typical components of a search application.",
+          sections: [
+            {
+              title: "Part A — What is Lucene",
+              points: [
+                { q: "Apache Lucene is…", options: [
+                  "An open-source Java library for full-text indexing and searching (core of Elasticsearch/Solr/OpenSearch)",
+                  "A full search engine with UI",
+                  "A web browser",
+                  "A database engine"], a: 0 },
+                { q: "Which search platforms are built on Lucene?", options: [
+                  "Elasticsearch, Solr, OpenSearch, Nutch",
+                  "Oracle, MySQL",
+                  "PostgreSQL only",
+                  "Cassandra only"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Indexing side",
+              points: [
+                { q: "The core Lucene data structure?", options: [
+                  "Inverted index — maps term → list(docID, positions, frequencies)",
+                  "B-tree",
+                  "Hash table only",
+                  "Skip list"], a: 0 },
+                { q: "Analyzer is a pipeline of…", options: [
+                  "Tokenizer + filters (lowercase, stop-word, stemming, synonyms)",
+                  "CPU instructions",
+                  "Database triggers",
+                  "Network packets"], a: 0 },
+                { q: "A Lucene Document is…", options: [
+                  "A bag of Field(name, value, stored?, indexed?) entries",
+                  "A PDF file",
+                  "A database table",
+                  "A SQL query"], a: 0 },
+                { q: "Lucene segments are…", options: [
+                  "Immutable mini-indexes merged periodically",
+                  "Mutable tables",
+                  "HDFS blocks",
+                  "Cache rows"], a: 0 },
+                { q: "Component that writes documents to the index?", options: ["IndexWriter", "IndexReader", "IndexSearcher", "QueryParser"], a: 0 }
+              ]
+            },
+            {
+              title: "Part C — Searching side",
+              points: [
+                { q: "Component that parses a query string?", options: ["QueryParser", "IndexWriter", "Analyzer", "Collector"], a: 0 },
+                { q: "Component that executes a Query object?", options: ["IndexSearcher", "IndexWriter", "Analyzer", "QueryParser"], a: 0 },
+                { q: "Default scoring in modern Lucene?", options: ["BM25 (TF-IDF in older versions)", "Euclidean distance", "PageRank", "Cosine similarity only"], a: 0 }
+              ]
+            },
+            {
+              title: "Part D — Components of a search application",
+              points: [
+                {
+                  type: "components",
+                  q: "Name 6 typical components of a search application:",
+                  items: [
+                    { hint: "Fetching raw data (web crawler / feed / DB pull)", answers: ["Crawler", "Acquire Content", "Content Acquisition"] },
+                    { hint: "Structuring documents + fields before indexing", answers: ["Content Model", "Document Model", "Build Content Model"] },
+                    { hint: "Writing the content to an inverted index", answers: ["Indexer", "Indexing", "Index Builder"] },
+                    { hint: "Front-end where user types a query (UI)", answers: ["Search UI", "Search Interface", "UI"] },
+                    { hint: "Parses/executes the query, ranks results", answers: ["Search Engine", "Query Execution", "Search & Rank"] },
+                    { hint: "Shows results to the user", answers: ["Rendering", "Results Display", "Display"] }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q2", marks: "[5] / [8]", probability: "HIGH", appearances: 4, years: "2080, 2078, 2073 Magh (short), 2072 Magh",
+          prompt: "Describe the data-indexing steps and the analyzers available in Lucene.",
+          sections: [
+            {
+              title: "Part A — Indexing pipeline",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the Lucene data-indexing steps in the correct order.",
+                  sequence: [
+                    "Acquire content (crawl, DB, feed)",
+                    "Build content model (Document + Fields)",
+                    "Analyze text (tokenize → lowercase → stop-word → stem → synonyms)",
+                    "Write to index (IndexWriter creates segments)",
+                    "Merge segments in background",
+                    "Commit / refresh — data becomes searchable",
+                    "Optimise / tune (field boost, stored fields, doc values)"
+                  ]
+                },
+                { q: "Which step breaks text into tokens?", options: ["Tokenization", "Compression", "Replication", "Sharding"], a: 0 },
+                { q: "Purpose of stop-word removal?", options: [
+                  "Drop very common terms (the, is, of) that carry little meaning",
+                  "Encrypt search",
+                  "Merge indexes",
+                  "Compress IDs"], a: 0 },
+                { q: "Purpose of stemming?", options: [
+                  "Reduce words to root form (running → run) so variants match",
+                  "Delete words",
+                  "Translate words",
+                  "Hash words"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Analyzers",
+              points: [
+                { q: "WhitespaceAnalyzer…", options: [
+                  "Splits only on whitespace; preserves case and punctuation",
+                  "Removes all punctuation and casing",
+                  "Adds stemming automatically",
+                  "Encrypts tokens"], a: 0 },
+                { q: "SimpleAnalyzer…", options: [
+                  "Splits on non-letters, lowercases",
+                  "Preserves case and punctuation",
+                  "Adds stemming",
+                  "Adds n-grams"], a: 0 },
+                { q: "StopAnalyzer…", options: [
+                  "SimpleAnalyzer + English stop-word removal",
+                  "Only whitespace split",
+                  "Stem + synonyms",
+                  "N-gram only"], a: 0 },
+                { q: "StandardAnalyzer (common default)…", options: [
+                  "Unicode-aware tokenizer + stop-words + lowercasing",
+                  "No tokenization",
+                  "Only numeric tokens",
+                  "Only hash-based tokens"], a: 0 },
+                { q: "KeywordAnalyzer…", options: [
+                  "Treats the whole input as ONE token — ideal for IDs / codes",
+                  "Splits every character into a token",
+                  "Removes all vowels",
+                  "Rejects non-ASCII"], a: 0 },
+                { q: "SnowballAnalyzer / EnglishAnalyzer adds…", options: [
+                  "Porter/Snowball stemming",
+                  "Geospatial filtering",
+                  "Vector clocks",
+                  "Encryption"], a: 0 },
+                { q: "NGram / EdgeNGramAnalyzer is used for…", options: [
+                  "Autocomplete / fuzzy prefix matching",
+                  "Compression",
+                  "Replication",
+                  "Routing"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q3", marks: "[2+3+5] / [10]", probability: "HIGH", appearances: 7, years: "2082, 2079 Chaitra (short), 2079 Shrawan (short), 2077 (short), 2076, 2074 Bhadra (short), 2072 Magh, 2078 (distributed search)",
+          prompt: "Define Elasticsearch, list its core components, and explain distributed searching.",
+          sections: [
+            {
+              title: "Part A — What is Elasticsearch",
+              points: [
+                { q: "Elasticsearch is…", options: [
+                  "Open-source, distributed, RESTful search & analytics engine built on Lucene",
+                  "A relational database",
+                  "A CDN",
+                  "A payment gateway"], a: 0 },
+                { q: "Elasticsearch provides near-real-time search at…", options: [
+                  "Millisecond latency over TB-scale indexes with horizontal scaling",
+                  "Hour-long delays only",
+                  "Only single-node queries",
+                  "Only offline batch search"], a: 0 },
+                { q: "Elasticsearch APIs are typically…", options: ["JSON over REST", "SOAP only", "Protobuf only", "FTP"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Core components",
+              points: [
+                { q: "A 'Cluster' is…", options: [
+                  "One or more nodes sharing the same cluster name",
+                  "A single shard",
+                  "A Lucene segment",
+                  "A single document"], a: 0 },
+                { q: "An 'Index' is…", options: [
+                  "A logical collection of documents (like a DB)",
+                  "A primary key only",
+                  "A field name",
+                  "A single document"], a: 0 },
+                { q: "A 'Shard' is…", options: [
+                  "A piece of an index — each shard is itself a Lucene index",
+                  "Just a backup copy",
+                  "A client request",
+                  "A UI component"], a: 0 },
+                { q: "A 'Replica shard' provides…", options: [
+                  "HA and query throughput — copy of a primary shard",
+                  "Compression",
+                  "Encryption",
+                  "Routing only"], a: 0 },
+                { q: "Indexes used by Elasticsearch include…", options: [
+                  "Inverted index (text) + doc-values (columnar) + BKD-tree (numeric/geo) + keyword index",
+                  "Only B-tree",
+                  "Only hash",
+                  "Only skip list"], a: 0 },
+                { q: "'Kibana' is…", options: [
+                  "Visualisation / dashboard UI in the Elastic Stack",
+                  "The index engine",
+                  "A shard",
+                  "A query parser"], a: 0 },
+                {
+                  type: "components",
+                  q: "Name 5 core Elasticsearch concepts:",
+                  items: [
+                    { hint: "Group of nodes sharing a cluster name", answers: ["Cluster"] },
+                    { hint: "Single ES instance (role can be master/data/ingest)", answers: ["Node"] },
+                    { hint: "Logical collection of documents — DB-like", answers: ["Index"] },
+                    { hint: "JSON record", answers: ["Document"] },
+                    { hint: "Piece of an index = a Lucene index", answers: ["Shard"] }
+                  ]
+                }
+              ]
+            },
+            {
+              title: "Part C — Distributed searching (scatter-gather)",
+              points: [
+                {
+                  type: "sequence",
+                  q: "Arrange the Elasticsearch distributed-search steps in order.",
+                  sequence: [
+                    "Client sends query to any node (becomes coordinator)",
+                    "Coordinator picks shards to query (all by default, or routing-aware)",
+                    "Query phase — each shard runs Lucene, returns top-K docIDs + scores",
+                    "Coordinator merges per-shard results, globally sorts, picks top-K",
+                    "Fetch phase — coordinator fetches full documents for the final top-K",
+                    "Response returned to client"
+                  ]
+                },
+                { q: "Why can Elasticsearch tolerate a shard failure?", options: [
+                  "Replica shards get promoted; queries continue",
+                  "Queries always fail",
+                  "Cluster is restarted",
+                  "Client sleeps for 1 hour"], a: 0 }
+              ]
+            }
+          ]
+        },
+        {
+          id: "Q4", marks: "[10]", probability: "MEDIUM", appearances: 1, years: "2079 Jestha",
+          prompt: "Why is Lucene index called TF-IDF? How does it resolve read/write congestion?",
+          sections: [
+            {
+              title: "Part A — TF-IDF scoring",
+              points: [
+                { q: "TF in TF-IDF stands for…", options: ["Term Frequency", "Top Frequency", "Total Function", "Tuple Factor"], a: 0 },
+                { q: "IDF stands for…", options: ["Inverse Document Frequency", "Indexed Data Format", "Internal Document Fragment", "Item Data Function"], a: 0 },
+                { q: "IDF formula (log form)?", options: [
+                  "log(totalDocs / docsContaining(t))",
+                  "totalDocs * docsContaining(t)",
+                  "1 / totalDocs",
+                  "count of words"], a: 0 },
+                { q: "Terms common in many documents get…", options: [
+                  "Lower IDF (downweighted)",
+                  "Higher IDF",
+                  "Zero TF",
+                  "Infinite score"], a: 0 },
+                { q: "A Lucene score combines…", options: [
+                  "TF × IDF × fieldLengthNorm × boost (older); BM25 in modern Lucene",
+                  "Only TF",
+                  "Only IDF",
+                  "Random numbers"], a: 0 }
+              ]
+            },
+            {
+              title: "Part B — Read/write congestion",
+              points: [
+                { q: "Why can writes and reads largely co-exist without blocking?", options: [
+                  "Segment-based append-only: writers create new segments; readers keep using old ones — no locking",
+                  "Writers always wait for readers",
+                  "No concurrency supported",
+                  "Only one user at a time"], a: 0 },
+                { q: "Near-Real-Time (NRT) readers are…", options: [
+                  "IndexSearchers refreshed periodically so new data is visible without blocking writes",
+                  "Readers from tape",
+                  "Readers that run once a day",
+                  "Static cached snapshots"], a: 0 },
+                { q: "Which operation runs in background threads to keep search fast?", options: [
+                  "Segment merging",
+                  "Query execution",
+                  "User login",
+                  "Shard addition"], a: 0 },
+                { q: "How does Elasticsearch spread read+write traffic?", options: [
+                  "Distributed sharding — primaries absorb writes, replicas serve reads",
+                  "Single-node cache",
+                  "Round-robin DNS only",
+                  "It doesn't"], a: 0 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ---------- State ----------
+const state = {
+  chapterId: 1,
+  questionIdx: 0,
+  pointIdx: 0,
+  view: 'practice',
+  retryMode: false,
+  retryList: [],
+  retryIdx: 0,
+  answers: {},
+  seqShuffled: {},
+  seqSlots: {},
+  correctCount: 0,
+  compInputs: {},
+  flagged: new Set()
+};
+
+function loadFlagged() {
+  try { const saved = JSON.parse(localStorage.getItem('bd_flagged') || '[]'); state.flagged = new Set(saved); }
+  catch (_) { state.flagged = new Set(); }
+}
+function saveFlagged() { try { localStorage.setItem('bd_flagged', JSON.stringify([...state.flagged])); } catch (_) {} }
+function toggleFlag(key) { if (state.flagged.has(key)) state.flagged.delete(key); else state.flagged.add(key); saveFlagged(); updateFlaggedFloat(); }
+
+function retryQuestion(key) {
+  const ans = state.answers[key];
+  if (ans && ans.correct === true) state.correctCount--;
+  delete state.answers[key]; delete state.seqSlots[key]; delete state.seqShuffled[key]; delete state.compInputs[key];
+  render();
+}
+
+function findPointByKey(key) {
+  const m = key.match(/^c(\d+)\.q(\d+)\.p(\d+)$/);
+  if (!m) return null;
+  const chId = parseInt(m[1], 10), qIdx = parseInt(m[2], 10), pIdx = parseInt(m[3], 10);
+  const chapter = DATA.chapters.find(c => c.id === chId);
+  if (!chapter || !chapter.questions) return null;
+  const question = chapter.questions[qIdx]; if (!question) return null;
+  const pts = flatPoints(question); const pt = pts[pIdx]; if (!pt) return null;
+  return { chapterId: chId, chapterTitle: chapter.title, questionId: question.id, sectionTitle: pt._sectionTitle, question: pt.q, key };
+}
+
+function buildFlaggedCopyText() {
+  const items = [...state.flagged].map(findPointByKey).filter(Boolean);
+  if (items.length === 0) return '(no flagged questions)';
+  const byCh = {};
+  items.forEach(it => { if (!byCh[it.chapterId]) byCh[it.chapterId] = { title: it.chapterTitle, items: [] }; byCh[it.chapterId].items.push(it); });
+  let out = `FLAGGED QUESTIONS (${items.length}):`;
+  Object.keys(byCh).sort((a, b) => parseInt(a) - parseInt(b)).forEach(chId => {
+    const group = byCh[chId]; out += `\n\n── ${group.title} ──`;
+    group.items.forEach(it => { out += `\n  [${it.key}] ${it.questionId} · ${it.sectionTitle}\n    "${it.question}"`; });
+  });
+  return out;
+}
+
+function updateFlaggedFloat() {
+  const btn = document.getElementById('flaggedBtn'); const count = document.getElementById('flaggedCount');
+  if (btn && count) { count.textContent = state.flagged.size; btn.classList.toggle('has-flags', state.flagged.size > 0); }
+}
+
+function showFlaggedModal() {
+  const items = [...state.flagged].map(findPointByKey).filter(Boolean);
+  const byCh = {};
+  items.forEach(it => { if (!byCh[it.chapterId]) byCh[it.chapterId] = { title: it.chapterTitle, items: [] }; byCh[it.chapterId].items.push(it); });
+  let content = '';
+  if (items.length === 0) {
+    content = '<div class="modal-empty">No flagged questions yet. Click the "Flag" button on any question to mark it.</div>';
+  } else {
+    content = Object.keys(byCh).sort((a, b) => parseInt(a) - parseInt(b)).map(chId => {
+      const group = byCh[chId];
+      const itemsHtml = group.items.map(it => `
+        <div class="modal-item">
+          <div class="modal-item-text">
+            <div class="modal-item-path">${escapeHtml(it.questionId)} · ${escapeHtml(it.sectionTitle)}</div>
+            <div class="modal-item-q">${escapeHtml(it.question)}</div>
+          </div>
+          <button type="button" class="modal-item-unflag" data-key="${escapeHtml(it.key)}">Unflag</button>
+        </div>`).join('');
+      return `<div class="modal-section-hdr">${escapeHtml(group.title)}</div>${itemsHtml}`;
+    }).join('');
+  }
+  const copyText = buildFlaggedCopyText();
+  const overlay = document.createElement('div'); overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <div class="modal-title">Flagged Questions (${items.length})</div>
+      <div class="modal-sub">Click "Copy for chat" to copy a list you can paste to the assistant.</div>
+      ${content}
+      ${items.length > 0 ? `<div class="modal-copy-area" id="modalCopyArea">${escapeHtml(copyText)}</div>` : ''}
+      <div class="modal-actions">
+        ${items.length > 0 ? '<button type="button" class="btn btn-primary" id="modalCopyBtn">Copy for chat</button>' : ''}
+        ${items.length > 0 ? '<button type="button" class="btn btn-secondary" id="modalClearBtn">Clear All</button>' : ''}
+        <button type="button" class="btn btn-secondary" id="modalCloseBtn">Close</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const close = () => overlay.remove();
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  overlay.querySelector('#modalCloseBtn')?.addEventListener('click', close);
+  overlay.querySelector('#modalCopyBtn')?.addEventListener('click', () => {
+    const txt = buildFlaggedCopyText();
+    const done = () => { const btn = overlay.querySelector('#modalCopyBtn'); if (!btn) return; btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy for chat'; }, 1200); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, () => alert('Copy failed — manually select and copy from the black area.'));
+    else alert('Clipboard not available — manually select and copy from the black area.');
+  });
+  overlay.querySelector('#modalClearBtn')?.addEventListener('click', () => {
+    if (!confirm('Clear all flags? This cannot be undone.')) return;
+    state.flagged.clear(); saveFlagged(); updateFlaggedFloat(); close(); render();
+  });
+  overlay.querySelectorAll('.modal-item-unflag').forEach(btn => {
+    btn.addEventListener('click', () => { state.flagged.delete(btn.dataset.key); saveFlagged(); close(); updateFlaggedFloat(); showFlaggedModal(); render(); });
+  });
+}
+
+function getChapterPoints(chapterId) {
+  const ch = DATA.chapters.find(c => c.id === chapterId);
+  if (!ch || !ch.questions) return [];
+  const list = [];
+  ch.questions.forEach((q, qIdx) => { const pts = flatPoints(q); pts.forEach((p, pIdx) => { list.push({ point: p, key: `c${chapterId}.q${qIdx}.p${pIdx}`, questionIdx: qIdx, pointIdx: pIdx }); }); });
+  return list;
+}
+
+function computeSummary(chapterId) {
+  const pts = getChapterPoints(chapterId); let correct = 0, wrong = 0, revealed = 0, skipped = 0; const wrongKeys = [];
+  pts.forEach(({ key, questionIdx, pointIdx }) => {
+    const ans = state.answers[key];
+    if (!ans) skipped++; else if (ans.revealed) revealed++; else if (ans.correct) correct++; else { wrong++; wrongKeys.push({ questionIdx, pointIdx, key }); }
+  });
+  return { total: pts.length, correct, wrong, revealed, skipped, wrongKeys };
+}
+
+function flatPoints(question) { const pts = []; question.sections.forEach((s, si) => { s.points.forEach((p, pi) => { pts.push({ ...p, _sectionTitle: s.title, _si: si, _pi: pi }); }); }); return pts; }
+function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function normalizeAnswer(s) { return String(s || '').toLowerCase().trim().replace(/[.,!?;:]/g, '').replace(/\s+/g, ' '); }
+function checkTypeAnswer(input, accepted) { const n = normalizeAnswer(input); if (!n) return false; return accepted.some(a => normalizeAnswer(a) === n); }
+
+// ---------- Render ----------
+function renderTabs() {
+  const el = document.getElementById('chapterTabs');
+  el.innerHTML = DATA.chapters.map(c => {
+    let cls = 'chapter-tab';
+    if (!c.available) cls += ' disabled';
+    else if (c.id === state.chapterId) cls += ' active';
+    return `<div class="${cls}" data-id="${c.id}">${escapeHtml(c.title)}</div>`;
+  }).join('');
+  el.querySelectorAll('.chapter-tab:not(.disabled)').forEach(tab => {
+    tab.addEventListener('click', () => {
+      state.chapterId = parseInt(tab.dataset.id, 10);
+      state.questionIdx = 0; state.pointIdx = 0; state.view = 'practice';
+      state.retryMode = false; state.retryList = []; state.retryIdx = 0;
+      render();
+    });
+  });
+}
+
+function render() {
+  renderTabs();
+  const ch = DATA.chapters.find(c => c.id === state.chapterId);
+  const content = document.getElementById('content');
+  if (!ch.available || !ch.questions || ch.questions.length === 0) { content.innerHTML = '<div class="placeholder">Coming soon — this chapter is still being built.</div>'; return; }
+  if (state.view === 'summary') { content.innerHTML = renderSummary(state.chapterId); attachSummaryListeners(); return; }
+  if (state.retryMode) {
+    if (state.retryIdx >= state.retryList.length) { state.retryMode = false; state.view = 'summary'; return render(); }
+    const cur = state.retryList[state.retryIdx]; state.questionIdx = cur.questionIdx; state.pointIdx = cur.pointIdx;
+  }
+  const qIdx = state.questionIdx, pIdx = state.pointIdx;
+  const q = ch.questions[qIdx]; const points = flatPoints(q);
+  if (pIdx >= points.length) state.pointIdx = 0;
+  const cp = points[state.pointIdx]; const key = `c${state.chapterId}.q${qIdx}.p${state.pointIdx}`;
+  let bodyHtml = '';
+  if (cp.type === 'sequence') bodyHtml = renderSequence(cp, key);
+  else if (cp.type === 'type') bodyHtml = renderTypeRecall(cp, key);
+  else if (cp.type === 'components') bodyHtml = renderComponents(cp, key);
+  else bodyHtml = renderMCQ(cp, key);
+
+  const totalAnswered = Object.values(state.answers).filter(a => !a.revealed).length;
+  const qSelectorHtml = (!state.retryMode && ch.questions.length > 1) ? `<div class="question-selector">${ch.questions.map((qq, i) => `<div class="qbtn ${i === qIdx ? 'active' : ''}" data-idx="${i}">${escapeHtml(qq.id)}</div>`).join('')}</div>` : '';
+  const retryBanner = state.retryMode ? `<div class="retry-banner"><div>Retry mode · <strong>${state.retryIdx + 1}</strong> of <strong>${state.retryList.length}</strong> previously-wrong questions</div><button class="btn btn-secondary" id="exitRetryBtn" style="padding:6px 12px;font-size:12px;">Exit Retry</button></div>` : '';
+  let canPrev, canNext, nextLabel;
+  if (state.retryMode) { canPrev = state.retryIdx > 0; canNext = true; nextLabel = state.retryIdx === state.retryList.length - 1 ? 'Finish Retry' : 'Next &rarr;'; }
+  else { canPrev = state.pointIdx > 0 || qIdx > 0; canNext = true; const isLastPoint = state.pointIdx >= points.length - 1; const isLastQ = qIdx >= ch.questions.length - 1; nextLabel = (isLastPoint && isLastQ) ? 'Finish Chapter' : 'Next &rarr;'; }
+  const progressLabel = state.retryMode ? `Retry point ${state.retryIdx + 1} of ${state.retryList.length}` : `${q.id} · Point ${state.pointIdx + 1} of ${points.length}`;
+  const progressPct = state.retryMode ? Math.round(((state.retryIdx + 1) / state.retryList.length) * 100) : Math.round(((state.pointIdx + 1) / points.length) * 100);
+
+  content.innerHTML = `
+    ${qSelectorHtml}
+    ${retryBanner}
+    <div class="question-header">
+      <div class="q-title">${escapeHtml(q.id)} <span class="q-marks">${escapeHtml(q.marks)}</span>${q.probability ? `<span class="q-prob ${q.probability}">${q.probability} &middot; ${q.appearances}&times;</span>` : ''}</div>
+      <div class="q-prompt">${escapeHtml(q.prompt)}</div>
+      ${q.years ? `<div class="q-years"><strong>Past exam years (BS):</strong> ${escapeHtml(q.years)}</div>` : ''}
+    </div>
+    <div class="progress-text"><div>${progressLabel}</div><div>${escapeHtml(cp._sectionTitle)}</div></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progressPct}%"></div></div>
+    ${bodyHtml}
+    <div class="controls">
+      <button class="btn btn-secondary" id="prevBtn" ${canPrev ? '' : 'disabled'}>&larr; Previous</button>
+      <div class="score-badge" id="scoreBadge" title="Click for chapter summary" style="cursor:pointer;">Score: <strong>${state.correctCount}</strong> / ${totalAnswered} · View Summary</div>
+      <button class="btn btn-primary" id="nextBtn">${nextLabel}</button>
+    </div>`;
+
+  if (qSelectorHtml) { content.querySelectorAll('.qbtn').forEach(b => { b.addEventListener('click', () => { state.questionIdx = parseInt(b.dataset.idx, 10); state.pointIdx = 0; render(); }); }); }
+  if (cp.type === 'sequence') attachSequenceListeners(cp, key);
+  else if (cp.type === 'type') attachTypeRecallListeners(cp, key);
+  else if (cp.type === 'components') attachComponentsListeners(cp, key);
+  else attachMCQListeners(cp, key);
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (!canPrev) return;
+    if (state.retryMode) state.retryIdx--;
+    else if (state.pointIdx > 0) state.pointIdx--;
+    else if (qIdx > 0) { state.questionIdx--; const prevQ = ch.questions[state.questionIdx]; state.pointIdx = flatPoints(prevQ).length - 1; }
+    render();
+  });
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (state.retryMode) { if (state.retryIdx < state.retryList.length - 1) state.retryIdx++; else { state.retryMode = false; state.view = 'summary'; } }
+    else {
+      const curPoints = flatPoints(ch.questions[state.questionIdx]);
+      if (state.pointIdx < curPoints.length - 1) state.pointIdx++;
+      else if (state.questionIdx < ch.questions.length - 1) { state.questionIdx++; state.pointIdx = 0; }
+      else { state.view = 'summary'; }
+    }
+    render();
+  });
+  document.getElementById('scoreBadge').addEventListener('click', () => { state.view = 'summary'; render(); });
+  const exitBtn = document.getElementById('exitRetryBtn');
+  if (exitBtn) exitBtn.addEventListener('click', () => { state.retryMode = false; state.view = 'summary'; render(); });
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas'); if (!canvas) return;
+  canvas.style.display = 'block'; canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const colors = ['#f56565', '#ed8936', '#ecc94b', '#48bb78', '#4299e1', '#9f7aea', '#ed64a6'];
+  const particles = []; const count = 180;
+  for (let i = 0; i < count; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * -canvas.height * 0.5, vx: (Math.random() - 0.5) * 5, vy: Math.random() * 3 + 2, size: Math.random() * 9 + 4, color: colors[Math.floor(Math.random() * colors.length)], rotation: Math.random() * 360, rotationSpeed: (Math.random() - 0.5) * 12, shape: Math.random() > 0.5 ? 'rect' : 'circle' });
+  const start = Date.now(); const duration = 4500;
+  function tick() {
+    const elapsed = Date.now() - start; const progress = elapsed / duration;
+    if (progress >= 1) { ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.style.display = 'none'; return; }
+    ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.globalAlpha = progress > 0.75 ? 1 - (progress - 0.75) / 0.25 : 1;
+    particles.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.rotation += p.rotationSpeed; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180); ctx.fillStyle = p.color; if (p.shape === 'rect') ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2); else { ctx.beginPath(); ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2); ctx.fill(); } ctx.restore(); });
+    requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function renderSummary(chapterId) {
+  const ch = DATA.chapters.find(c => c.id === chapterId); const s = computeSummary(chapterId);
+  const pct = n => s.total > 0 ? Math.round((n / s.total) * 100) : 0;
+  const barSegs = [ { count: s.correct, color: '#48bb78' }, { count: s.wrong, color: '#f56565' }, { count: s.revealed, color: '#4299e1' }, { count: s.skipped, color: '#ed8936' } ].filter(seg => seg.count > 0).map(seg => `<div class="summary-bar-seg" style="width:${(seg.count/s.total)*100}%;background:${seg.color};"></div>`).join('');
+  const retryBtn = s.wrong > 0 ? `<button class="btn btn-primary" id="retryWrongBtn">Retry ${s.wrong} Wrong Question${s.wrong === 1 ? '' : 's'}</button>` : '';
+  return `
+    <div class="summary-wrap">
+      <div class="deepak-applause"><span class="applause-emoji">👏</span>Deepak applauds you<span class="applause-emoji">👏</span></div>
+      <div class="summary-title">${escapeHtml(ch.title)} — Summary</div>
+      <div class="summary-sub">${s.total} total question${s.total === 1 ? '' : 's'} in this chapter</div>
+      <div class="summary-bar">${barSegs || '<div class="summary-bar-seg" style="width:100%;background:#e2e8f0;"></div>'}</div>
+      <div class="summary-grid">
+        <div class="summary-cell correct"><div class="summary-num">${s.correct}</div><div class="summary-label">Correct</div><div class="summary-pct">${pct(s.correct)}%</div></div>
+        <div class="summary-cell wrong"><div class="summary-num">${s.wrong}</div><div class="summary-label">Wrong</div><div class="summary-pct">${pct(s.wrong)}%</div></div>
+        <div class="summary-cell revealed"><div class="summary-num">${s.revealed}</div><div class="summary-label">Revealed</div><div class="summary-pct">${pct(s.revealed)}%</div></div>
+        <div class="summary-cell skipped"><div class="summary-num">${s.skipped}</div><div class="summary-label">Skipped</div><div class="summary-pct">${pct(s.skipped)}%</div></div>
+      </div>
+      <div class="summary-actions">${retryBtn}<button class="btn btn-secondary" id="backToPracticeBtn">Back to Practice</button></div>
+      <div style="text-align:center;margin-top:22px;padding:16px;background:linear-gradient(135deg,#fef5fb 0%,#ebf4ff 100%);border:1px dashed #d6bcfa;border-radius:10px;">
+        <div style="font-size:13px;color:#744210;margin-bottom:8px;">You finished the chapter! Claim your reward:</div>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:10px 22px;background:#4c51bf;color:white;font-weight:600;text-decoration:none;border-radius:8px;font-size:14px;box-shadow:0 2px 6px rgba(76,81,191,0.3);">Click Here</a>
+      </div>
+    </div>`;
+}
+
+function attachSummaryListeners() {
+  launchConfetti();
+  const retryBtn = document.getElementById('retryWrongBtn');
+  if (retryBtn) retryBtn.addEventListener('click', () => {
+    const s = computeSummary(state.chapterId); if (s.wrongKeys.length === 0) return;
+    s.wrongKeys.forEach(({ key }) => { delete state.answers[key]; delete state.seqSlots[key]; delete state.seqShuffled[key]; });
+    state.retryMode = true; state.retryList = s.wrongKeys.map(({ questionIdx, pointIdx }) => ({ questionIdx, pointIdx })); state.retryIdx = 0; state.view = 'practice'; render();
+  });
+  const backBtn = document.getElementById('backToPracticeBtn');
+  if (backBtn) backBtn.addEventListener('click', () => { state.view = 'practice'; state.questionIdx = 0; state.pointIdx = 0; render(); });
+}
+
+function renderComponents(point, key) {
+  const userAns = state.answers[key]; const answered = userAns !== undefined;
+  const flagged = state.flagged.has(key);
+  const flagBtnHtml = `<button type="button" class="flag-btn ${flagged ? 'flagged' : ''}" data-flag-key="${escapeHtml(key)}">${flagged ? 'Flagged' : 'Flag'}</button>`;
+  const retryBtnHtml = state.answers[key] ? `<button type="button" class="retry-q-btn" data-retry-key="${escapeHtml(key)}" title="Retry this question">Retry</button>` : '';
+  const n = point.items.length;
+  if (!state.compInputs[key]) state.compInputs[key] = new Array(n).fill('');
+  const inputs = state.compInputs[key];
+  let rowsHtml = '';
+  point.items.forEach((item, i) => {
+    let cls = 'component-row'; let inner;
+    if (answered) {
+      if (userAns.revealed) { cls += ' revealed'; inner = `<div class="component-content"><div class="component-hint">Hint: ${escapeHtml(item.hint)}</div><div class="component-expected">Answer: ${escapeHtml(item.answers[0])}</div></div>`; }
+      else if (userAns.itemsCorrect[i]) { cls += ' correct'; inner = `<div class="component-content"><div class="component-hint">Hint: ${escapeHtml(item.hint)}</div><div class="component-given">${escapeHtml(userAns.inputs[i])}</div></div>`; }
+      else { cls += ' incorrect'; inner = `<div class="component-content"><div class="component-hint">Hint: ${escapeHtml(item.hint)}</div><div class="component-given">Your answer: ${escapeHtml(userAns.inputs[i] || '(empty)')}</div><div class="component-expected">Correct: ${escapeHtml(item.answers[0])}</div></div>`; }
+    } else inner = `<div class="component-content"><div class="component-hint">Hint: ${escapeHtml(item.hint)}</div><input type="text" class="component-input" data-idx="${i}" value="${escapeHtml(inputs[i])}" placeholder="Type component name or acronym..." autocomplete="off" spellcheck="false"></div>`;
+    rowsHtml += `<div class="${cls}"><span class="component-num">${i+1}</span>${inner}</div>`;
+  });
+  let fb = ''; let actions = '';
+  if (answered) {
+    const correctCount = userAns.itemsCorrect ? userAns.itemsCorrect.filter(x => x).length : 0;
+    if (userAns.revealed) fb = `<div class="feedback revealed show">Answer revealed — all ${n} components shown above. This attempt isn't counted in your score.</div>`;
+    else if (userAns.correct) fb = `<div class="feedback correct show">All ${n} correct — great job!</div>`;
+    else fb = `<div class="feedback incorrect show">You got <strong>${correctCount} of ${n}</strong> correct. Review the red rows above.</div>`;
+  } else actions = `<div class="reveal-row"><button type="button" class="btn btn-primary" id="compSubmit">Submit All</button><button type="button" class="btn btn-secondary" id="revealBtn">Show Answer</button><span style="font-size:11.5px;color:#a0aec0;">Press Enter in any field to submit · Reveal doesn't count</span></div>`;
+  return `<div class="mcq-card">${retryBtnHtml}${flagBtnHtml}<span class="section-badge">${escapeHtml(point._sectionTitle)}</span><div class="mcq-question">${escapeHtml(point.q)}</div><div class="components-grid">${rowsHtml}</div>${actions}${fb}</div>`;
+}
+
+function attachComponentsListeners(point, key) {
+  attachFlagListener();
+  if (state.answers[key]) return;
+  const submitAll = () => {
+    const inputs = state.compInputs[key];
+    const itemsCorrect = point.items.map((item, i) => checkTypeAnswer(inputs[i], item.answers));
+    const allCorrect = itemsCorrect.every(x => x);
+    state.answers[key] = { inputs: [...inputs], itemsCorrect, correct: allCorrect };
+    if (allCorrect) state.correctCount++;
+    render();
+  };
+  document.querySelectorAll('.component-input').forEach(inp => {
+    inp.addEventListener('input', () => { const idx = parseInt(inp.dataset.idx, 10); state.compInputs[key][idx] = inp.value; });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitAll(); } });
+  });
+  setTimeout(() => { const first = document.querySelector('.component-input'); if (first) first.focus(); }, 0);
+  const submit = document.getElementById('compSubmit'); if (submit) submit.addEventListener('click', submitAll);
+  const revealBtn = document.getElementById('revealBtn');
+  if (revealBtn) revealBtn.addEventListener('click', () => {
+    state.answers[key] = { inputs: point.items.map(it => it.answers[0]), itemsCorrect: point.items.map(() => true), correct: null, revealed: true };
+    render();
+  });
+}
+
+function renderTypeRecall(point, key) {
+  const userAns = state.answers[key]; const answered = userAns !== undefined;
+  const flagged = state.flagged.has(key);
+  const flagBtnHtml = `<button type="button" class="flag-btn ${flagged ? 'flagged' : ''}" data-flag-key="${escapeHtml(key)}">${flagged ? 'Flagged' : 'Flag'}</button>`;
+  const retryBtnHtml = state.answers[key] ? `<button type="button" class="retry-q-btn" data-retry-key="${escapeHtml(key)}" title="Retry this question">Retry</button>` : '';
+  const expected = point.answers[0];
+  let inputArea = '', fb = '', actions = '';
+  if (answered) {
+    if (userAns.revealed) { inputArea = `<div class="type-answer-display revealed"><div class="type-label">Correct answer</div>${escapeHtml(expected)}</div>`; fb = `<div class="feedback revealed show">Answer revealed. This attempt isn't counted in your score.</div>`; }
+    else if (userAns.correct) { inputArea = `<div class="type-answer-display correct"><div class="type-label">Your answer</div>${escapeHtml(userAns.text)}</div>`; fb = `<div class="feedback correct show">Correct.</div>`; }
+    else { inputArea = `<div class="type-answer-display incorrect"><div class="type-label">Your answer</div>${escapeHtml(userAns.text || '(empty)')}</div><div class="type-answer-display correct" style="margin-top:0;"><div class="type-label">Correct answer</div>${escapeHtml(expected)}</div>`; fb = `<div class="feedback incorrect show">Not quite — compare your answer to the correct one above.</div>`; }
+  } else { inputArea = `<input type="text" class="type-input" id="typeInput" placeholder="Type your answer and press Enter..." autocomplete="off" spellcheck="false">`; actions = `<div class="reveal-row"><button type="button" class="btn btn-primary" id="typeSubmit">Submit</button><button type="button" class="btn btn-secondary" id="revealBtn">Show Answer</button><span style="font-size:11.5px;color:#a0aec0;">Press Enter to submit · Reveal doesn't count</span></div>`; }
+  return `<div class="mcq-card">${retryBtnHtml}${flagBtnHtml}<span class="section-badge">${escapeHtml(point._sectionTitle)}</span><div class="mcq-question">${escapeHtml(point.q)}</div>${inputArea}${actions}${fb}</div>`;
+}
+
+function attachTypeRecallListeners(point, key) {
+  attachFlagListener();
+  if (state.answers[key]) return;
+  const input = document.getElementById('typeInput'); const submit = document.getElementById('typeSubmit');
+  const doSubmit = () => { if (!input) return; const text = input.value.trim(); if (!text) return; const correct = checkTypeAnswer(text, point.answers); state.answers[key] = { text, correct }; if (correct) state.correctCount++; render(); };
+  if (input) { setTimeout(() => input.focus(), 0); input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSubmit(); } }); }
+  if (submit) submit.addEventListener('click', doSubmit);
+  const revealBtn = document.getElementById('revealBtn');
+  if (revealBtn) revealBtn.addEventListener('click', () => { state.answers[key] = { text: point.answers[0], correct: null, revealed: true }; render(); });
+}
+
+function renderMCQ(point, key) {
+  const userAns = state.answers[key]; const answered = userAns !== undefined;
+  const opts = point.options.map((o, i) => {
+    let cls = 'mcq-option';
+    if (answered) { cls += ' disabled'; if (i === point.a) cls += ' correct'; else if (!userAns.revealed && i === userAns.selected) cls += ' incorrect'; }
+    return `<div class="${cls}" data-idx="${i}">${escapeHtml(o)}</div>`;
+  }).join('');
+  let fb = '', revealBtn = '';
+  if (answered) {
+    if (userAns.revealed) fb = `<div class="feedback revealed show">Answer revealed — the correct option is highlighted. This attempt isn't counted in your score.</div>`;
+    else if (userAns.correct) fb = `<div class="feedback correct show">Correct.</div>`;
+    else fb = `<div class="feedback incorrect show">Not quite — the correct answer is highlighted in green.</div>`;
+  } else revealBtn = `<div class="reveal-row"><button class="btn btn-secondary" id="revealBtn">Show Answer</button><span style="font-size:11.5px;color:#a0aec0;">Doesn't count toward score</span></div>`;
+  const flagged = state.flagged.has(key);
+  const flagBtnHtml = `<button type="button" class="flag-btn ${flagged ? 'flagged' : ''}" data-flag-key="${escapeHtml(key)}">${flagged ? 'Flagged' : 'Flag'}</button>`;
+  const retryBtnHtml = state.answers[key] ? `<button type="button" class="retry-q-btn" data-retry-key="${escapeHtml(key)}" title="Retry this question">Retry</button>` : '';
+  return `<div class="mcq-card">${retryBtnHtml}${flagBtnHtml}<span class="section-badge">${escapeHtml(point._sectionTitle)}</span><div class="mcq-question">${escapeHtml(point.q)}</div><div class="mcq-options">${opts}</div>${revealBtn}${fb}</div>`;
+}
+
+function attachMCQListeners(point, key) {
+  attachFlagListener();
+  if (state.answers[key]) return;
+  document.querySelectorAll('.mcq-option:not(.disabled)').forEach(opt => {
+    opt.addEventListener('click', () => { const idx = parseInt(opt.dataset.idx, 10); const correct = idx === point.a; state.answers[key] = { selected: idx, correct }; if (correct) state.correctCount++; render(); });
+  });
+  const revealBtn = document.getElementById('revealBtn');
+  if (revealBtn) revealBtn.addEventListener('click', () => { state.answers[key] = { selected: point.a, correct: null, revealed: true }; render(); });
+}
+
+function attachFlagListener() {
+  const flagBtn = document.querySelector('.flag-btn');
+  if (flagBtn) flagBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFlag(flagBtn.dataset.flagKey); render(); });
+  const retryBtn = document.querySelector('.retry-q-btn');
+  if (retryBtn) retryBtn.addEventListener('click', (e) => { e.stopPropagation(); retryQuestion(retryBtn.dataset.retryKey); });
+}
+
+function renderSequence(point, key) {
+  const userAns = state.answers[key]; const answered = userAns !== undefined;
+  if (!state.seqShuffled[key]) state.seqShuffled[key] = shuffle(point.sequence);
+  if (!state.seqSlots[key]) state.seqSlots[key] = [];
+  const selected = state.seqSlots[key]; const available = state.seqShuffled[key].filter(x => !selected.includes(x));
+  const selectedHtml = selected.length > 0 ? selected.map((item, i) => { let cls = 'seq-chip selected'; if (answered) cls += point.sequence[i] === item ? ' correct-chip' : ' incorrect-chip'; return `<div class="${cls}" data-item="${escapeHtml(item)}" data-action="deselect"><span class="seq-chip-num">${i+1}</span><span class="seq-chip-text">${escapeHtml(item)}</span></div>`; }).join('') : '<div class="seq-empty-hint">Click items below in the correct order.</div>';
+  const availableHtml = available.length > 0 ? available.map(item => `<div class="seq-chip available" data-item="${escapeHtml(item)}" data-action="select"><span class="seq-chip-text">${escapeHtml(item)}</span></div>`).join('') : '<div class="seq-empty-hint">All items selected.</div>';
+  let fb = '', actions = '';
+  if (answered) {
+    if (userAns.revealed) fb = `<div class="feedback revealed show">Answer revealed — correct order shown above. This attempt isn't counted in your score.</div>`;
+    else if (userAns.correct) fb = `<div class="feedback correct show">Correct order.</div>`;
+    else { const correctOrder = point.sequence.map((item, i) => `<div style="background:white;border:1px solid #9ae6b4;border-radius:6px;padding:8px 12px;margin-top:4px;font-size:13px;display:flex;align-items:center;"><span class="seq-chip-num" style="background:#c6f6d5;color:#22543d;">${i+1}</span>${escapeHtml(item)}</div>`).join(''); fb = `<div class="feedback incorrect show">Some items are out of order. The correct order is:<div style="margin-top:10px;">${correctOrder}</div></div>`; }
+  } else actions = `<div class="reveal-row"><button class="btn btn-secondary" id="revealBtn">Show Answer</button><span style="font-size:11.5px;color:#a0aec0;">Auto-checks when all items are selected · Reveal doesn't count</span></div>`;
+  const flagged = state.flagged.has(key);
+  const flagBtnHtml = `<button type="button" class="flag-btn ${flagged ? 'flagged' : ''}" data-flag-key="${escapeHtml(key)}">${flagged ? 'Flagged' : 'Flag'}</button>`;
+  const retryBtnHtml = state.answers[key] ? `<button type="button" class="retry-q-btn" data-retry-key="${escapeHtml(key)}" title="Retry this question">Retry</button>` : '';
+  return `<div class="mcq-card">${retryBtnHtml}${flagBtnHtml}<span class="section-badge">${escapeHtml(point._sectionTitle)}</span><div class="mcq-question">${escapeHtml(point.q)}</div><div class="seq-label">Your order (click a chip to remove it)</div><div class="seq-selected-area">${selectedHtml}</div><div class="seq-label">Available items (click in correct order)</div><div class="seq-available-area">${availableHtml}</div>${actions}${fb}</div>`;
+}
+
+function attachSequenceListeners(point, key) {
+  attachFlagListener();
+  document.querySelectorAll('.seq-chip[data-action]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      if (state.answers[key]) return;
+      const item = chip.dataset.item; const action = chip.dataset.action; const selected = state.seqSlots[key];
+      if (action === 'select') { if (!selected.includes(item)) selected.push(item); }
+      else { const idx = selected.indexOf(item); if (idx > -1) selected.splice(idx, 1); }
+      if (!state.answers[key] && selected.length === point.sequence.length) {
+        const correct = selected.every((x, i) => x === point.sequence[i]);
+        state.answers[key] = { seq: [...selected], correct };
+        if (correct) state.correctCount++;
+      }
+      render();
+    });
+  });
+  const revealBtn = document.getElementById('revealBtn');
+  if (revealBtn) revealBtn.addEventListener('click', () => { state.seqSlots[key] = [...point.sequence]; state.answers[key] = { seq: [...point.sequence], correct: null, revealed: true }; render(); });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadFlagged(); updateFlaggedFloat();
+  const flagBtn = document.getElementById('flaggedBtn');
+  if (flagBtn) flagBtn.addEventListener('click', showFlaggedModal);
+  render();
+});
+</script>
+</body>
+</html>
