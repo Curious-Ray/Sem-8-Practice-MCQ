@@ -869,9 +869,7 @@ const DATA = {
                   "(count, word)"], a: 0,
                   why: "The reducer receives (word, [1,1,1,...]) from the shuffle and emits (word, total) — the final frequency." },
                 { q: "For the line 'How is your family': reducer output for 'is' given entire text has 'is' appearing 6 times is…", options: ["(is, 6)", "(is, 1)", "(is, 0)", "(family, 6)"], a: 0,
-                  why: "The reducer aggregates counts across the WHOLE input, not just one line. 'is' appears 6 times in the full text → output (is, 6)." },
-                { q: "For the 2072 Ashwin input — how many times does the word 'big' appear?", options: ["2", "3", "4", "5"], a: 2,
-                  why: "Counting 'big' in the two lines: 'big users big volume data cloud contributes bid data' (2) + 'facebook has big users facebook operates big data' (2) = 4." }
+                  why: "The reducer aggregates counts across the WHOLE input, not just one line. 'is' appears 6 times in the full text → output (is, 6)." }
               ]
             }
           ]
@@ -1012,12 +1010,6 @@ const DATA = {
                   "Merge reducers",
                   "Schedule tasks"], a: 0,
                   why: "RecordReader sits between raw bytes and the mapper, yielding logical records (e.g., one line per record for text). This decouples the mapper from file format details." },
-                { q: "Partitioner default formula?", options: [
-                  "key.hashCode() % numReducers",
-                  "random()",
-                  "round-robin ignoring key",
-                  "lineNumber / 10"], a: 0,
-                  why: "Hashing the key modulo R reducers is deterministic (same key → same reducer) and typically uniform — the two properties the shuffle needs." },
                 { q: "RecordWriter's job is to…", options: [
                   "Write the reducer's key-value output to final files",
                   "Read splits for the mapper",
@@ -2346,6 +2338,11 @@ function render() {
   content.innerHTML = `
     ${qSelectorHtml}
     ${retryBanner}
+    <div class="controls">
+      <button class="btn btn-secondary" id="prevBtn" ${canPrev ? '' : 'disabled'}>&larr; Previous</button>
+      <div class="score-badge" id="scoreBadge" title="Click for chapter summary" style="cursor:pointer;">Score: <strong>${state.correctCount}</strong> / ${totalAnswered} · View Summary</div>
+      <button class="btn btn-primary" id="nextBtn">${nextLabel}</button>
+    </div>
     <div class="question-header">
       <div class="q-title">${escapeHtml(q.id)} <span class="q-marks">${escapeHtml(q.marks)}</span>${q.probability ? `<span class="q-prob ${q.probability}">${q.probability} &middot; ${q.appearances}&times;</span>` : ''}</div>
       <div class="q-prompt">${escapeHtml(q.prompt)}</div>
@@ -2353,12 +2350,7 @@ function render() {
     </div>
     <div class="progress-text"><div>${progressLabel}</div><div>${escapeHtml(cp._sectionTitle)}</div></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${progressPct}%"></div></div>
-    ${bodyHtml}
-    <div class="controls">
-      <button class="btn btn-secondary" id="prevBtn" ${canPrev ? '' : 'disabled'}>&larr; Previous</button>
-      <div class="score-badge" id="scoreBadge" title="Click for chapter summary" style="cursor:pointer;">Score: <strong>${state.correctCount}</strong> / ${totalAnswered} · View Summary</div>
-      <button class="btn btn-primary" id="nextBtn">${nextLabel}</button>
-    </div>`;
+    ${bodyHtml}`;
 
   if (qSelectorHtml) { content.querySelectorAll('.qbtn').forEach(b => { b.addEventListener('click', () => { state.questionIdx = parseInt(b.dataset.idx, 10); state.pointIdx = 0; render(); }); }); }
   if (cp.type === 'sequence') attachSequenceListeners(cp, key);
